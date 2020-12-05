@@ -9,9 +9,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<elemental2.version>1.1.0</elemental2.version>
-		<gwtmaterialdesign.version>2.4.1</gwtmaterialdesign.version>
-		<saxon.version>10.3</saxon.version>
+		<gwt.version>2.9.0</gwt.version>
 	</properties>
 
 	<build>
@@ -41,6 +39,24 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
 			<version>30.0-jre</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
