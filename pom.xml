@@ -13,7 +13,7 @@
 	</properties>
 
 	<build>
-		<outputDirectory>war/WEB-INF/classes</outputDirectory>
+		<outputDirectory>docs/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
