@@ -10,12 +10,12 @@
 target/
 
 # gwt caches and compiled units #
-war/gwt_bree/
+docs/gwt_bree/
 gwt-unitCache/
 
 # more caches and things from deploy #
-war/WEB-INF/deploy/
-war/WEB-INF/classes/
+docs/war/WEB-INF/deploy/
+docs/war/WEB-INF/classes/
 
 #gwt junit compilation files
 www-test/
