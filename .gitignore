@@ -1,21 +1,11 @@
 .*
 !.gitignore
 
-*.class
-
-# Package Files #
-*.jar
-*.war
-
 target/
 
 # gwt caches and compiled units #
 docs/gwt_bree/
 gwt-unitCache/
-
-# more caches and things from deploy #
-docs/war/WEB-INF/deploy/
-docs/war/WEB-INF/classes/
 
 #gwt junit compilation files
 www-test/
