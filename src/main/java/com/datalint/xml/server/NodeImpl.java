@@ -8,9 +8,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
 
-import com.datalint.xml.shared.IUtil;
+import com.datalint.xml.shared.IBasicUtil;
 
-public abstract class NodeImpl implements Node, IUtil {
+public abstract class NodeImpl implements Node, IBasicUtil {
 	protected Node owner;
 
 	public NodeImpl(Node owner) {

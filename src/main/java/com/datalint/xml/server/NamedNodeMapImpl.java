@@ -9,9 +9,9 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.datalint.xml.shared.IUtil;
+import com.datalint.xml.shared.IBasicUtil;
 
-public class NamedNodeMapImpl implements NamedNodeMap, IUtil {
+public class NamedNodeMapImpl implements NamedNodeMap, IBasicUtil {
 	private final Node owner;
 	private final Map<String, String> attrs;
 
