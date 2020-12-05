@@ -1,2 +1,0 @@
-# Module com.datalint.xml.Xml
-# RPC service class, partial path of RPC policy file
