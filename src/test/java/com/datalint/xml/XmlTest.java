@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-import com.datalint.xml.server.DocumentImpl;
+import com.datalint.xml.server.dom.DocumentImpl;
 
 public class XmlTest {
 	@Test

@@ -1,6 +1,6 @@
 package com.datalint.xml.shared;
 
-public interface IXmlExpression extends IBasicUtil {
+public interface IXmlExpression extends ICommon {
 	abstract StringBuilder append(StringBuilder target);
 
 	default boolean isEmpty() {

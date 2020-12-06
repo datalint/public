@@ -10,6 +10,7 @@
 
 	<properties>
 		<gwt.version>2.9.0</gwt.version>
+		<saxon.version>10.3</saxon.version>
 	</properties>
 
 	<build>
@@ -36,9 +37,25 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
 			<version>30.0-jre</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>${saxon.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>${saxon.version}</version>
+			<classifier>xqj</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>

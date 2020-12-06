@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.datalint.xml.shared.xpath.*;
 
-public interface IXPathExpression extends IBasicUtil {
+public interface IXPathExpression extends ICommon {
 	abstract StringBuilder append(StringBuilder target);
 
 	default String build() {
