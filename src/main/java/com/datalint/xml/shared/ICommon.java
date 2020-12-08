@@ -4,8 +4,12 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.google.common.xml.XmlEscapers;
 
 public interface ICommon {
 	char _APOSTROPHE = '\'';
@@ -14,6 +18,7 @@ public interface ICommon {
 	char _LESS_THAN = '<';
 	char _SLASH = '/';
 	char _SPACE = ' ';
+	char _UNDERSCORE = '_';
 
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -23,11 +28,31 @@ public interface ICommon {
 	String SPACE = " ";
 	String WILDCARD = "*";
 
-	default UnsupportedOperationException createUnsupportedOperationException(String operatonName) {
+	default boolean iIsEven(int x) {
+		return (x & 1) == 0;
+	}
+
+	default boolean iIsEmpty(@Nullable String source) {
+		return source == null || source.isEmpty();
+	}
+
+	default String iNonNull(@Nullable String source) {
+		return iNonNull(source, EMPTY);
+	}
+
+	default String iNonNull(@Nullable String source, String substitution) {
+		return source == null ? substitution : source;
+	}
+
+	default String iEscapeAttr(String attribute) {
+		return XmlEscapers.xmlAttributeEscaper().escape(attribute);
+	}
+
+	default UnsupportedOperationException iCreateUoException(String operatonName) {
 		return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operatonName);
 	}
 
-	default List<Node> asList(NodeList nodeList) {
+	default List<Node> iAsList(NodeList nodeList) {
 		return new NodeListWrapper(nodeList);
 	}
 

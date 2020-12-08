@@ -63,16 +63,16 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public Element getOwnerElement() {
-		throw createUnsupportedOperationException("getOwnerElement");
+		throw iCreateUoException("getOwnerElement");
 	}
 
 	@Override
 	public TypeInfo getSchemaTypeInfo() {
-		throw createUnsupportedOperationException("getSchemaTypeInfo");
+		throw iCreateUoException("getSchemaTypeInfo");
 	}
 
 	@Override
 	public boolean isId() {
-		throw createUnsupportedOperationException("isId");
+		throw iCreateUoException("isId");
 	}
 }

@@ -23,7 +23,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * Native implementation associated with
- * {@link com.datalint.open.shared.xml.XmlParser}.
+ * {@link com.datalint.xml.shared.XmlParser}.
  */
 public abstract class XmlParserImpl {
 	private static XmlParserImpl impl = GWT.create(XmlParserImpl.class);

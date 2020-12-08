@@ -104,7 +104,7 @@ public class XPathImpl implements ICommon {
 	}
 
 	public List<Node> evaluateNodes(Element element, String xPath) {
-		return asList(evaluateNodeList(element, xPath));
+		return iAsList(evaluateNodeList(element, xPath));
 	}
 
 	public NodeList evaluateNodeList(Element element, String xPath) {

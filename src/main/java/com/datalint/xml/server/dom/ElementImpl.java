@@ -176,66 +176,66 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public Attr setAttributeNode(Attr newAttr) {
-		throw createUnsupportedOperationException("setAttributeNode");
+		throw iCreateUoException("setAttributeNode");
 	}
 
 	@Override
 	public Attr removeAttributeNode(Attr oldAttr) {
-		throw createUnsupportedOperationException("removeAttributeNode");
+		throw iCreateUoException("removeAttributeNode");
 	}
 
 	@Override
 	public String getAttributeNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("getAttributeNS");
+		throw iCreateUoException("getAttributeNS");
 	}
 
 	@Override
 	public void setAttributeNS(String namespaceURI, String qualifiedName, String value) {
-		throw createUnsupportedOperationException("setAttributeNS");
+		throw iCreateUoException("setAttributeNS");
 	}
 
 	@Override
 	public void removeAttributeNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("removeAttributeNS");
+		throw iCreateUoException("removeAttributeNS");
 	}
 
 	@Override
 	public Attr getAttributeNodeNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("getAttributeNodeNS");
+		throw iCreateUoException("getAttributeNodeNS");
 	}
 
 	@Override
 	public Attr setAttributeNodeNS(Attr newAttr) {
-		throw createUnsupportedOperationException("setAttributeNodeNS");
+		throw iCreateUoException("setAttributeNodeNS");
 	}
 
 	@Override
 	public NodeList getElementsByTagNameNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("getElementsByTagNameNS");
+		throw iCreateUoException("getElementsByTagNameNS");
 	}
 
 	@Override
 	public boolean hasAttributeNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("hasAttributeNS");
+		throw iCreateUoException("hasAttributeNS");
 	}
 
 	@Override
 	public TypeInfo getSchemaTypeInfo() {
-		throw createUnsupportedOperationException("getSchemaTypeInfo");
+		throw iCreateUoException("getSchemaTypeInfo");
 	}
 
 	@Override
 	public void setIdAttribute(String name, boolean isId) {
-		throw createUnsupportedOperationException("setIdAttribute");
+		throw iCreateUoException("setIdAttribute");
 	}
 
 	@Override
 	public void setIdAttributeNS(String namespaceURI, String localName, boolean isId) {
-		throw createUnsupportedOperationException("setIdAttributeNS");
+		throw iCreateUoException("setIdAttributeNS");
 	}
 
 	@Override
 	public void setIdAttributeNode(Attr idAttr, boolean isId) {
-		throw createUnsupportedOperationException("setIdAttributeNode");
+		throw iCreateUoException("setIdAttributeNode");
 	}
 }

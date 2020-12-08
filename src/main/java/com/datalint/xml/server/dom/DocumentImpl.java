@@ -129,106 +129,106 @@ public class DocumentImpl extends NodeImpl implements Document {
 
 	@Override
 	public DocumentType getDoctype() {
-		throw createUnsupportedOperationException("getDoctype");
+		throw iCreateUoException("getDoctype");
 	}
 
 	@Override
 	public DOMImplementation getImplementation() {
-		throw createUnsupportedOperationException("getImplementation");
+		throw iCreateUoException("getImplementation");
 	}
 
 	@Override
 	public Attr createAttribute(String name) {
-		throw createUnsupportedOperationException("createAttribute");
+		throw iCreateUoException("createAttribute");
 	}
 
 	@Override
 	public EntityReference createEntityReference(String name) {
-		throw createUnsupportedOperationException("createEntityReference");
+		throw iCreateUoException("createEntityReference");
 	}
 
 	@Override
 	public Element createElementNS(String namespaceURI, String qualifiedName) {
-		throw createUnsupportedOperationException("createElementNS");
+		throw iCreateUoException("createElementNS");
 	}
 
 	@Override
 	public Attr createAttributeNS(String namespaceURI, String qualifiedName) {
-		throw createUnsupportedOperationException("createAttributeNS");
+		throw iCreateUoException("createAttributeNS");
 	}
 
 	@Override
 	public NodeList getElementsByTagNameNS(String namespaceURI, String localName) {
-		throw createUnsupportedOperationException("getElementsByTagNameNS");
+		throw iCreateUoException("getElementsByTagNameNS");
 	}
 
 	@Override
 	public String getInputEncoding() {
-		throw createUnsupportedOperationException("getInputEncoding");
+		throw iCreateUoException("getInputEncoding");
 	}
 
 	@Override
 	public String getXmlEncoding() {
-		throw createUnsupportedOperationException("getXmlEncoding");
+		throw iCreateUoException("getXmlEncoding");
 	}
 
 	@Override
 	public boolean getXmlStandalone() {
-		throw createUnsupportedOperationException("getXmlStandalone");
+		throw iCreateUoException("getXmlStandalone");
 	}
 
 	@Override
 	public void setXmlStandalone(boolean xmlStandalone) {
-		throw createUnsupportedOperationException("setXmlStandalone");
+		throw iCreateUoException("setXmlStandalone");
 	}
 
 	@Override
 	public String getXmlVersion() {
-		throw createUnsupportedOperationException("getXmlVersion");
+		throw iCreateUoException("getXmlVersion");
 	}
 
 	@Override
 	public void setXmlVersion(String xmlVersion) {
-		throw createUnsupportedOperationException("setXmlVersion");
+		throw iCreateUoException("setXmlVersion");
 	}
 
 	@Override
 	public boolean getStrictErrorChecking() {
-		throw createUnsupportedOperationException("getStrictErrorChecking");
+		throw iCreateUoException("getStrictErrorChecking");
 	}
 
 	@Override
 	public void setStrictErrorChecking(boolean strictErrorChecking) {
-		throw createUnsupportedOperationException("setStrictErrorChecking");
+		throw iCreateUoException("setStrictErrorChecking");
 	}
 
 	@Override
 	public String getDocumentURI() {
-		throw createUnsupportedOperationException("getDocumentURI");
+		throw iCreateUoException("getDocumentURI");
 	}
 
 	@Override
 	public void setDocumentURI(String documentURI) {
-		throw createUnsupportedOperationException("setDocumentURI");
+		throw iCreateUoException("setDocumentURI");
 	}
 
 	@Override
 	public Node adoptNode(Node source) {
-		throw createUnsupportedOperationException("adoptNode");
+		throw iCreateUoException("adoptNode");
 	}
 
 	@Override
 	public DOMConfiguration getDomConfig() {
-		throw createUnsupportedOperationException("getDomConfig");
+		throw iCreateUoException("getDomConfig");
 	}
 
 	@Override
 	public void normalizeDocument() {
-		throw createUnsupportedOperationException("normalizeDocument");
+		throw iCreateUoException("normalizeDocument");
 	}
 
 	@Override
 	public Node renameNode(Node n, String namespaceURI, String qualifiedName) {
-		throw createUnsupportedOperationException("renameNode");
+		throw iCreateUoException("renameNode");
 	}
 }

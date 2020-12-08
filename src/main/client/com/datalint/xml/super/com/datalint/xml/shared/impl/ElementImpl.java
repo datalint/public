@@ -15,20 +15,20 @@
  */
 package com.datalint.xml.shared.impl;
 
-import com.datalint.open.shared.util.StringUtil;
-import com.datalint.open.shared.xml.XmlUtil;
-import com.google.gwt.core.client.JavaScriptException;
-import com.google.gwt.core.client.JavaScriptObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.datalint.xml.shared.ICommon;
+import com.datalint.xml.shared.XmlUtil;
+import com.google.gwt.core.client.JavaScriptException;
+import com.google.gwt.core.client.JavaScriptObject;
+
 /**
  * This method implements the Element interface.
  */
-class ElementImpl extends NodeImpl implements Element {
-
+class ElementImpl extends NodeImpl implements Element, ICommon {
   protected ElementImpl(JavaScriptObject o) {
     super(o);
   }
@@ -38,7 +38,7 @@ class ElementImpl extends NodeImpl implements Element {
    * XmlParserImpl.
    */
   public String getAttribute(String tagName) {
-    return StringUtil.nonNull(XmlParserImpl.getAttribute(this.getJsObject(), tagName));
+    return iNonNull(XmlParserImpl.getAttribute(this.getJsObject(), tagName));
   }
 
   /**

@@ -138,77 +138,77 @@ public abstract class NodeImpl implements Node, ICommon {
 
 	@Override
 	public boolean isSupported(String feature, String version) {
-		throw createUnsupportedOperationException("isSupported");
+		throw iCreateUoException("isSupported");
 	}
 
 	@Override
 	public void setPrefix(String prefix) {
-		throw createUnsupportedOperationException("setPrefix");
+		throw iCreateUoException("setPrefix");
 	}
 
 	@Override
 	public String getLocalName() {
-		throw createUnsupportedOperationException("getLocalName");
+		throw iCreateUoException("getLocalName");
 	}
 
 	@Override
 	public String getBaseURI() {
-		throw createUnsupportedOperationException("getBaseURI");
+		throw iCreateUoException("getBaseURI");
 	}
 
 	@Override
 	public short compareDocumentPosition(Node other) {
-		throw createUnsupportedOperationException("compareDocumentPosition");
+		throw iCreateUoException("compareDocumentPosition");
 	}
 
 	@Override
 	public String getTextContent() {
-		throw createUnsupportedOperationException("getTextContent");
+		throw iCreateUoException("getTextContent");
 	}
 
 	@Override
 	public void setTextContent(String textContent) {
-		throw createUnsupportedOperationException("textContent");
+		throw iCreateUoException("textContent");
 	}
 
 	@Override
 	public boolean isSameNode(Node other) {
-		throw createUnsupportedOperationException("isSameNode");
+		throw iCreateUoException("isSameNode");
 	}
 
 	@Override
 	public String lookupPrefix(String namespaceURI) {
-		throw createUnsupportedOperationException("namespaceURI");
+		throw iCreateUoException("namespaceURI");
 	}
 
 	@Override
 	public boolean isDefaultNamespace(String namespaceURI) {
-		throw createUnsupportedOperationException("isDefaultNamespace");
+		throw iCreateUoException("isDefaultNamespace");
 	}
 
 	@Override
 	public String lookupNamespaceURI(String prefix) {
-		throw createUnsupportedOperationException("lookupNamespaceURI");
+		throw iCreateUoException("lookupNamespaceURI");
 	}
 
 	@Override
 	public boolean isEqualNode(Node arg) {
-		throw createUnsupportedOperationException("isEqualNode");
+		throw iCreateUoException("isEqualNode");
 	}
 
 	@Override
 	public Object getFeature(String feature, String version) {
-		throw createUnsupportedOperationException("getFeature");
+		throw iCreateUoException("getFeature");
 	}
 
 	@Override
 	public Object setUserData(String key, Object data, UserDataHandler handler) {
-		throw createUnsupportedOperationException("setUserData");
+		throw iCreateUoException("setUserData");
 	}
 
 	@Override
 	public Object getUserData(String key) {
-		throw createUnsupportedOperationException("getUserData");
+		throw iCreateUoException("getUserData");
 	}
 
 	@Override
