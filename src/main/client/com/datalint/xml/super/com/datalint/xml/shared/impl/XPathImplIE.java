@@ -15,7 +15,7 @@ class XPathImplIE extends XPathImpl {
 		@DefaultMessage("<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
 				+ "<xsl:output method=\"text\"/>"
 				+ "<xsl:template match=\"*\"><xsl:value-of select=\"{0}\"/></xsl:template></xsl:stylesheet>")
-		String xSL(String xPath);
+		String xsl(String xPath);
 	}
 
 	@Override
@@ -43,11 +43,11 @@ class XPathImplIE extends XPathImpl {
 
 	@Override
 	protected double evaluateNumberImpl(JavaScriptObject element, String xPath) {
-		XSLT xSLT = new XSLT();
+		Xslt xslt = new Xslt();
 
-		xSLT.importStyleSheet(XPathImplIEMessages.INSTANCE.xSL(xPath));
+		xslt.importStyleSheet(XPathImplIEMessages.INSTANCE.xsl(xPath));
 
-		return parseFloat(xSLT.transformToString((Element) XmlUtilImpl.getInstance().build(element)));
+		return parseFloat(xslt.transformToString((Element) XmlUtilImpl.getInstance().build(element)));
 	}
 
 	protected native double parseFloat(String value) /*-{
