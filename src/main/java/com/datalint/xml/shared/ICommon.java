@@ -28,6 +28,21 @@ public interface ICommon {
 	String SPACE = " ";
 	String WILDCARD = "*";
 
+	default int iParseInt(String source) {
+		return iParseInt(source, 0);
+	}
+
+	default int iParseInt(String source, int defaultValue) {
+		if (!iIsEmpty(source))
+			try {
+				return Integer.parseInt(source);
+			} catch (NumberFormatException e) {
+				// Ignore
+			}
+
+		return defaultValue;
+	}
+
 	default boolean iIsEven(int x) {
 		return (x & 1) == 0;
 	}

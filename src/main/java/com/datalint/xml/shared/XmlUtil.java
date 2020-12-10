@@ -246,12 +246,12 @@ public class XmlUtil implements ICommon {
 	 */
 	public static String concatenateSiblings(Node referenceNodeFrom, Node referenceNodeTo) {
 		if (referenceNodeFrom == null && referenceNodeTo == null)
-			return "";
+			return EMPTY;
 
 		if (referenceNodeFrom == null)
 			referenceNodeFrom = referenceNodeTo.getParentNode().getFirstChild();
 		else if (referenceNodeFrom.equals(referenceNodeTo))
-			return "";
+			return EMPTY;
 		else
 			referenceNodeFrom = referenceNodeFrom.getNextSibling();
 
