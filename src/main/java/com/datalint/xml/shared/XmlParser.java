@@ -27,7 +27,8 @@ import com.datalint.xml.shared.impl.XmlParserImpl;
  * read-only operations, which means XPath operations can be parallel executed.
  * 
  * For write operations, the <code>Document</code> object needs to be external
- * synchronized.
+ * synchronized. In other words, no any read and/or other write operations of
+ * different thread are allowed during writing process.
  */
 public class XmlParser {
 	private static final XmlParserImpl impl = XmlParserImpl.getInstance();
