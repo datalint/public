@@ -1,22 +1,10 @@
-/*
- * Copyright 2008 Google Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package com.datalint.xml.shared;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
@@ -26,34 +14,61 @@ import org.w3c.dom.Text;
 import com.datalint.xml.shared.impl.XmlParserImpl;
 
 /**
- * This class represents the client interface to XML parsing.
+ * This utility class is used for XML parsing. All operations in this class are
+ * thread-safe.
+ * 
+ * The returned <code>Document</code> object can be used on both client and
+ * server side.
+ * 
+ * On client side (browser), the returned <code>Document</code> object is
+ * thread-safe due to JavaScript's single-threaded nature.
+ * 
+ * On server side, the returned <code>Document</code> object is thread-safe for
+ * read-only operations, which means XPath operations can be parallel executed.
+ * 
+ * For write operations, the <code>Document</code> object needs to be external
+ * synchronized.
  */
 public class XmlParser {
 	private static final XmlParserImpl impl = XmlParserImpl.getInstance();
 
 	/**
-	 * This method creates a new document, to be manipulated by the DOM API.
+	 * This method creates a new document.
 	 * 
-	 * @return the newly created document
+	 * @return the newly created <code>Document</code>
 	 */
 	public static Document createDocument() {
 		return impl.createDocument();
 	}
 
 	/**
-	 * This method parses a new document from the supplied string, throwing a
-	 * <code>DOMParseException</code> if the parse fails.
+	 * This method parses a new document from the supplied string.
 	 * 
 	 * @param contents the String to be parsed into a <code>Document</code>
-	 * @return the newly created <code>Document</code>
+	 * 
+	 * @return the newly created <code>Document</code> or null if the parse fails.
 	 */
 	public static Document parse(String contents) {
-		return impl.parse(contents);
+		return parse(contents, null);
 	}
 
-	// Update on 2020-05-10, does not work with XPath.
-	public static Document parseReadOnly(String contents) {
-		return impl.parseReadOnly(contents);
+	/**
+	 * This method parses a new document from the supplied string.
+	 * 
+	 * @param contents         the String to be parsed into a <code>Document</code>
+	 * @param exceptionhandler handler used if the parse fails.
+	 * 
+	 * @return the newly created <code>Document</code> or null if the parse fails.
+	 */
+	public static Document parse(String contents, @Nullable Consumer<Exception> exceptionhandler) {
+		try {
+			return impl.parse(contents);
+		} catch (Exception e) {
+			if (exceptionhandler != null)
+				exceptionhandler.accept(e);
+
+			return null;
+		}
 	}
 
 	/**
@@ -104,9 +119,6 @@ public class XmlParser {
 		}
 	}
 
-	/**
-	 * Not instantiable.
-	 */
 	private XmlParser() {
 	}
 }

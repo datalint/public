@@ -261,16 +261,8 @@ public abstract class XmlParserImpl {
 		return (Document) NodeImpl.build(createDocumentImpl());
 	}
 
-	public final Document parse(String contents) {
-		try {
-			return (Document) NodeImpl.build(parseImpl(contents));
-		} catch (JavaScriptException e) {
-			throw new DOMParseException(contents, e);
-		}
-	}
-
-	public final Document parseReadOnly(String contents) {
-		return parse(contents);
+	public final Document parse(String contents) throws Exception {
+		return (Document) NodeImpl.build(parseImpl(contents));
 	}
 
 	public boolean supportsCDATASection() {

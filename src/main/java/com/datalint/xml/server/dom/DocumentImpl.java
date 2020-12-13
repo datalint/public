@@ -1,13 +1,15 @@
 package com.datalint.xml.server.dom;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.w3c.dom.*;
 
 public class DocumentImpl extends NodeImpl implements Document {
 	public static final String KEY_id = "id";
 
-	private Element element;
+	private ElementImpl element;
 
 	public DocumentImpl() {
 		super(null);
@@ -28,13 +30,28 @@ public class DocumentImpl extends NodeImpl implements Document {
 		DocumentImpl document = new DocumentImpl();
 
 		if (deep && element != null)
-			document.element = (Element) element.cloneNode(true);
+			document.element = (ElementImpl) element.cloneNode(true);
 
 		return document;
 	}
 
 	@Override
 	public Element getDocumentElement() {
+		return element;
+	}
+
+	@Override
+	public NodeList getChildNodes() {
+		return new NodeListImpl(element == null ? Collections.emptyList() : Collections.singletonList(element));
+	}
+
+	@Override
+	public Node getFirstChild() {
+		return element;
+	}
+
+	@Override
+	public Node getLastChild() {
 		return element;
 	}
 
@@ -88,7 +105,19 @@ public class DocumentImpl extends NodeImpl implements Document {
 
 	@Override
 	public NodeList getElementsByTagName(String tagname) {
-		return element == null ? new NodeListImpl(Collections.emptyList()) : element.getElementsByTagName(tagname);
+		List<Node> list;
+
+		if (element == null)
+			list = Collections.emptyList();
+		else {
+			list = new ArrayList<>();
+
+			if (tagname.equals(WILDCARD) || element.getNodeName().equals(tagname))
+				list.add(element);
+		}
+
+		return element == null ? new NodeListImpl(Collections.emptyList())
+				: element.getElementsByTagName(list, tagname);
 	}
 
 	@Override
@@ -98,14 +127,14 @@ public class DocumentImpl extends NodeImpl implements Document {
 
 	@Override
 	public Node insertBefore(Node newChild, Node refChild) {
-		element = (Element) newChild;
+		element = (ElementImpl) newChild;
 
 		return newChild;
 	}
 
 	@Override
 	public Node replaceChild(Node newChild, Node oldChild) {
-		element = (Element) newChild;
+		element = (ElementImpl) newChild;
 
 		return oldChild;
 	}
@@ -117,7 +146,7 @@ public class DocumentImpl extends NodeImpl implements Document {
 
 	@Override
 	public Node appendChild(Node newChild) {
-		element = (Element) newChild;
+		element = (ElementImpl) newChild;
 
 		return newChild;
 	}
@@ -230,5 +259,10 @@ public class DocumentImpl extends NodeImpl implements Document {
 	@Override
 	public Node renameNode(Node n, String namespaceURI, String qualifiedName) {
 		throw iCreateUoException("renameNode");
+	}
+
+	@Override
+	public String toString() {
+		return element == null ? EMPTY : element.toString();
 	}
 }

@@ -12,6 +12,10 @@ public abstract class ParentNode extends NodeImpl {
 		super(owner);
 	}
 
+	public int getChildIndex(Node child) {
+		return children == null ? -1 : children.indexOf(child);
+	}
+
 	@Override
 	public Node insertBefore(Node newChild, Node refChild) {
 		if (children == null)
@@ -71,5 +75,37 @@ public abstract class ParentNode extends NodeImpl {
 	@Override
 	public boolean hasChildNodes() {
 		return children != null;
+	}
+
+	@Override
+	public Node getFirstChild() {
+		return children == null ? null : children.get(0);
+	}
+
+	@Override
+	public Node getLastChild() {
+		return children == null ? null : children.get(children.size() - 1);
+	}
+
+	public Node getPreviousSibling(Node refChild) {
+		if (children != null) {
+			int index = children.indexOf(refChild);
+
+			if (index > 0)
+				return children.get(index - 1);
+		}
+
+		return null;
+	}
+
+	public Node getNextSibling(Node refChild) {
+		if (children != null) {
+			int index = children.indexOf(refChild);
+
+			if (index >= 0 && index < children.size() - 1)
+				return children.get(index + 1);
+		}
+
+		return null;
 	}
 }

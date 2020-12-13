@@ -16,6 +16,7 @@ public interface ICommon {
 	char _EQUALS = '=';
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
+	char _QUOTE = '"';
 	char _SLASH = '/';
 	char _SPACE = ' ';
 	char _UNDERSCORE = '_';
@@ -23,9 +24,13 @@ public interface ICommon {
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	String AT = "@";
+	String COUNT_ALL = "count(*)";
 	String DOT = ".";
 	String EMPTY = "";
+	String LAST_F = "last()";
+	String POSITION_F = "position()";
 	String SPACE = " ";
+	String TEXT_F = "text()";
 	String WILDCARD = "*";
 
 	default int iParseInt(String source) {
@@ -61,6 +66,10 @@ public interface ICommon {
 
 	default String iEscapeAttr(String attribute) {
 		return XmlEscapers.xmlAttributeEscaper().escape(attribute);
+	}
+
+	default String iEscapeContent(String content) {
+		return XmlEscapers.xmlContentEscaper().escape(content);
 	}
 
 	default UnsupportedOperationException iCreateUoException(String operatonName) {

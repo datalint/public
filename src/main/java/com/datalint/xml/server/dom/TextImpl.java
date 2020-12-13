@@ -65,4 +65,9 @@ public class TextImpl extends CharacterDataImpl implements Text {
 	public Text replaceWholeText(String content) {
 		throw iCreateUoException("replaceWholeText");
 	}
+
+	@Override
+	public String toString() {
+		return iEscapeContent(getNodeValue());
+	}
 }

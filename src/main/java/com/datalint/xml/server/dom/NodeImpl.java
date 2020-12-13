@@ -1,14 +1,17 @@
 package com.datalint.xml.server.dom;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
 
 import com.datalint.xml.shared.ICommon;
+import com.datalint.xml.shared.XmlUtil;
 
 public abstract class NodeImpl implements Node, ICommon {
 	protected Node owner;
@@ -137,6 +140,48 @@ public abstract class NodeImpl implements Node, ICommon {
 	}
 
 	@Override
+	public String getLocalName() {
+		return getNodeName();
+	}
+
+	@Override
+	public boolean isSameNode(Node other) {
+		return equals(other);
+	}
+
+	@Override
+	public short compareDocumentPosition(Node other) {
+		List<Element> ancestors = XmlUtil.getAncestors(this);
+		List<Element> otherAncestors = XmlUtil.getAncestors(other);
+
+		for (Element ancestor : ancestors) {
+			if (otherAncestors.contains(ancestor)) {
+				ElementImpl ancestorImpl = (ElementImpl) ancestor;
+
+				int compare = Integer.compare(ancestorImpl.getChildIndex(this), ancestorImpl.getChildIndex(other));
+				if (compare < 0)
+					return DOCUMENT_POSITION_PRECEDING;
+				else if (compare > 0)
+					return DOCUMENT_POSITION_FOLLOWING;
+				else
+					return 0;
+			}
+		}
+
+		return DOCUMENT_POSITION_DISCONNECTED;
+	}
+
+	protected Node getAncestor(Node node) {
+		Node parent = node.getParentNode();
+
+		while (parent != null) {
+			node = node.getParentNode();
+		}
+
+		return null;
+	}
+
+	@Override
 	public boolean isSupported(String feature, String version) {
 		throw iCreateUoException("isSupported");
 	}
@@ -147,18 +192,8 @@ public abstract class NodeImpl implements Node, ICommon {
 	}
 
 	@Override
-	public String getLocalName() {
-		throw iCreateUoException("getLocalName");
-	}
-
-	@Override
 	public String getBaseURI() {
 		throw iCreateUoException("getBaseURI");
-	}
-
-	@Override
-	public short compareDocumentPosition(Node other) {
-		throw iCreateUoException("compareDocumentPosition");
 	}
 
 	@Override
@@ -169,11 +204,6 @@ public abstract class NodeImpl implements Node, ICommon {
 	@Override
 	public void setTextContent(String textContent) {
 		throw iCreateUoException("textContent");
-	}
-
-	@Override
-	public boolean isSameNode(Node other) {
-		throw iCreateUoException("isSameNode");
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public String getAttribute(String name) {
-		return attrs == null ? null : attrs.get(name);
+		return attrs == null ? EMPTY : iNonNull(attrs.get(name));
 	}
 
 	@Override
@@ -75,13 +75,15 @@ public class ElementImpl extends ParentNode implements Element {
 		return attrs != null && attrs.size() > 0;
 	}
 
-	@Override
-	public NodeList getElementsByTagName(String name) {
-		List<Node> holder = new ArrayList<>();
-
-		appendElements(holder, name.equals("*") ? tagName -> true : tagName -> tagName.equals(name));
+	public NodeList getElementsByTagName(List<Node> holder, String name) {
+		appendElements(holder, name.equals(WILDCARD) ? tagName -> true : tagName -> tagName.equals(name));
 
 		return new NodeListImpl(holder);
+	}
+
+	@Override
+	public NodeList getElementsByTagName(String name) {
+		return getElementsByTagName(new ArrayList<>(), name);
 	}
 
 	private void appendElements(List<Node> holder, Predicate<String> predicate) {
@@ -90,11 +92,10 @@ public class ElementImpl extends ParentNode implements Element {
 
 		for (Node child : children) {
 			if (child instanceof ElementImpl) {
-				if (predicate.test(child.getNodeName())) {
+				if (predicate.test(child.getNodeName()))
 					holder.add(child);
 
-					((ElementImpl) child).appendElements(holder, predicate);
-				}
+				((ElementImpl) child).appendElements(holder, predicate);
 			}
 		}
 	}
@@ -135,38 +136,6 @@ public class ElementImpl extends ParentNode implements Element {
 	@Override
 	public NodeList getChildNodes() {
 		return new NodeListImpl(children == null ? Collections.emptyList() : children);
-	}
-
-	@Override
-	public Node getFirstChild() {
-		return children == null ? null : children.get(0);
-	}
-
-	@Override
-	public Node getLastChild() {
-		return children == null ? null : children.get(children.size() - 1);
-	}
-
-	public Node getPreviousSibling(Node refChild) {
-		if (children != null) {
-			int index = children.indexOf(refChild);
-
-			if (index > 0)
-				return children.get(index - 1);
-		}
-
-		return null;
-	}
-
-	public Node getNextSibling(Node refChild) {
-		if (children != null) {
-			int index = children.indexOf(refChild);
-
-			if (index >= 0 && index < children.size() - 2)
-				return children.get(index + 1);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -237,5 +206,29 @@ public class ElementImpl extends ParentNode implements Element {
 	@Override
 	public void setIdAttributeNode(Attr idAttr, boolean isId) {
 		throw iCreateUoException("setIdAttributeNode");
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sB = new StringBuilder();
+
+		sB.append(_LESS_THAN).append(getNodeName());
+
+		if (attrs != null)
+			for (Entry<String, String> entry : attrs.entrySet())
+				sB.append(_SPACE).append(AttrImpl.toString(entry.getKey(), entry.getValue()));
+
+		if (children == null)
+			sB.append(_SLASH).append(_GREATER_THAN);
+		else {
+			sB.append(_GREATER_THAN);
+
+			for (Node child : children)
+				sB.append(child);
+
+			sB.append(_LESS_THAN).append(_SLASH).append(getNodeName()).append(_GREATER_THAN);
+		}
+
+		return sB.toString();
 	}
 }

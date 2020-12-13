@@ -135,26 +135,14 @@ public class XPathImpl implements ICommon {
 		return 0;
 	}
 
-	/*
-	 * Update on 2015-04-19. Element context is not thread safe, synchronization is
-	 * required on the owner document. However, a simple multi thread test does not
-	 * confirm the need.
-	 */
 	private Object evaluate(Element context, String xPath, QName qName) {
 		try {
-			Object lock = context.getOwnerDocument();
+			XPathExpression xPathExpression = XPATH_EXPRESSION_POOL.borrowObject(xPath);
 
-			if (lock == null)
-				lock = context;
-
-			synchronized (lock) {
-				XPathExpression xPathExpression = XPATH_EXPRESSION_POOL.borrowObject(xPath);
-
-				try {
-					return xPathExpression.evaluate(context, qName);
-				} finally {
-					XPATH_EXPRESSION_POOL.returnObject(xPath, xPathExpression);
-				}
+			try {
+				return xPathExpression.evaluate(context, qName);
+			} finally {
+				XPATH_EXPRESSION_POOL.returnObject(xPath, xPathExpression);
 			}
 		} catch (Exception e) {
 			return null;

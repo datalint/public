@@ -21,12 +21,26 @@ public class XmlUtil implements ICommon {
 
 	private static XmlUtil instance = new XmlUtil();
 
+	public static String escapeAttr(String attribute) {
+		return instance.iEscapeAttr(attribute);
+	}
+
 	public static String getNonNullAttribute(Element element, String name) {
 		return getAttribute(element, name, EMPTY);
 	}
 
 	public static String getAttribute(Element element, String name, String substitution) {
 		return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
+	}
+
+	public static List<Element> getAncestors(Node descendant) {
+		List<Element> ancestors = new ArrayList<>();
+
+		while ((descendant = descendant.getParentNode()) instanceof Element) {
+			ancestors.add((Element) descendant);
+		}
+
+		return ancestors;
 	}
 
 	public static List<Element> getAncestors(Element descendant, Element ancestor) {
@@ -124,7 +138,7 @@ public class XmlUtil implements ICommon {
 	}
 
 	public static boolean copyTextIfUnequal(Element element, String text) {
-		Node textNode = XPath.evaluateNode(element, "text()");
+		Node textNode = XPath.evaluateNode(element, TEXT_F);
 
 		if (textNode == null) {
 			if (text != null && text.length() > 0) {

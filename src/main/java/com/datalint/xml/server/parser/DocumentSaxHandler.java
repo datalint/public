@@ -11,7 +11,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class DocumentSaxHandler extends DefaultHandler {
 	protected final Document document;
 	protected final Deque<Element> dequeElement = new ArrayDeque<>();
-	protected final StringBuilder text = new StringBuilder();
+	protected final StringBuilder textBuilder = new StringBuilder();
 
 	protected Element rootElement;
 
@@ -29,11 +29,7 @@ public class DocumentSaxHandler extends DefaultHandler {
 
 		Element last = dequeElement.peekLast();
 
-		if (text.length() > 0) {
-			last.appendChild(document.createTextNode(text.toString()));
-
-			text.setLength(0);
-		}
+		appendTextNode(last);
 
 		if (last == null)
 			rootElement = element;
@@ -51,17 +47,22 @@ public class DocumentSaxHandler extends DefaultHandler {
 	protected Element endElement() {
 		Element last = dequeElement.pollLast();
 
-		if (text.length() > 0) {
-			last.appendChild(document.createTextNode(text.toString()));
-			text.setLength(0);
-		}
+		appendTextNode(last);
 
 		return last;
 	}
 
+	protected void appendTextNode(Element last) {
+		if (textBuilder.length() > 0) {
+			last.appendChild(document.createTextNode(textBuilder.toString()));
+
+			textBuilder.setLength(0);
+		}
+	}
+
 	@Override
 	public void characters(char[] ch, int start, int length) {
-		text.append(ch, start, length);
+		textBuilder.append(ch, start, length);
 	}
 
 	public Element getRootElement() {

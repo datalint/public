@@ -5,9 +5,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.TypeInfo;
 
+import com.datalint.xml.shared.XmlUtil;
+
 public class AttrImpl extends NodeImpl implements Attr {
 	private final String name;
 	private String value;
+
+	public static String toString(String name, String value) {
+		return new StringBuilder(name).append(_EQUALS).append(_QUOTE).append(XmlUtil.escapeAttr(value)).append(_QUOTE)
+				.toString();
+	}
 
 	public AttrImpl(Node owner, String name, String value) {
 		super(owner);
@@ -74,5 +81,10 @@ public class AttrImpl extends NodeImpl implements Attr {
 	@Override
 	public boolean isId() {
 		throw iCreateUoException("isId");
+	}
+
+	@Override
+	public String toString() {
+		return toString(getNodeName(), getNodeValue());
 	}
 }

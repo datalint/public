@@ -22,4 +22,16 @@ public class DocumentFragmentImpl extends ParentNode implements DocumentFragment
 	public Node cloneNode(boolean deep) {
 		return new DocumentFragmentImpl(getOwnerDocument());
 	}
+
+	@Override
+	public String toString() {
+		if (children == null)
+			return EMPTY;
+
+		StringBuilder sB = new StringBuilder();
+		for (Node child : children)
+			sB.append(child);
+
+		return sB.toString();
+	}
 }
