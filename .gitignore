@@ -4,7 +4,8 @@
 target/
 gwt-unitCache/
 
-war/WEB-INF/*/
+META-INF/
+**/WEB-INF/**/
 
-war/xml/
+xml/war/xml/
 

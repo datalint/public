@@ -51,6 +51,8 @@
 		</any>
 	</replace-with>
 
+	<entry-point class="com.datalint.xml.client.Xml" />
+
 	<source path='client' />
 	<source path='shared' />
 	<super-source path="super" />

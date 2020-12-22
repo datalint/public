@@ -4,9 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.datalint</groupId>
-	<artifactId>xml</artifactId>
+	<artifactId>xml-parent</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
+	<modules>
+		<module>xml</module>
+	</modules>
 
 	<name>DataLint Xml Parent</name>
 	<url>https://www.datalint.com</url>
@@ -65,7 +68,6 @@
 	</dependencies>
 
 	<build>
-		<outputDirectory>docs/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -83,37 +85,15 @@
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>3.1.1</version>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
 					<release>11</release>
+					<excludes>
+						<exclude>**/super/</exclude>
+					</excludes>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.2</version>
-				<configuration>
-					<excludeScope>provided</excludeScope>
-					<outputDirectory>${project.build.outputDirectory}/../lib</outputDirectory>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<!-- This configuration is needed for a bug in plugin -->
-					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>site</phase>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
