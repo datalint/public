@@ -2,11 +2,10 @@
 !.gitignore
 
 target/
-
-# gwt caches and compiled units #
-docs/gwt_bree/
 gwt-unitCache/
 
-#gwt junit compilation files
-www-test/
+war/WEB-INF/
+!war/WEB-INF/web.xml
+
+war/xml/
 

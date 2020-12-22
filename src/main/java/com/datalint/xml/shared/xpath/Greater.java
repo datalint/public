@@ -9,6 +9,6 @@ public class Greater extends Join {
 
 	@Override
 	protected StringBuilder operator(StringBuilder target) {
-		return target.append('>');
+		return target.append(_GREATER_THAN);
 	}
 }

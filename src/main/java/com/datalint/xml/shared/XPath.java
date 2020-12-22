@@ -10,6 +10,7 @@ import java.util.Set;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 
 import com.datalint.xml.shared.common.CollectionMode;
 import com.datalint.xml.shared.common.TriConsumer;
@@ -106,6 +107,21 @@ public class XPath implements ICommon {
 
 	public static Set<String> evaluateAttrValues(Document document, String xPathAttr) {
 		return evaluateAttrValues(document.getDocumentElement(), xPathAttr);
+	}
+
+	public static List<String> evaluateListTextValues(Element element, String xPathText) {
+		List<Text> textNodes = evaluateNodes(element, xPathText);
+
+		List<String> textValues = new ArrayList<>();
+		for (Text textNode : textNodes) {
+			textValues.add(textNode.getNodeValue());
+		}
+
+		return textValues;
+	}
+
+	public static List<String> evaluateListTextValues(Document document, String xPathText) {
+		return evaluateListTextValues(document.getDocumentElement(), xPathText);
 	}
 
 	public static Set<String> evaluateTextValues(Element element, String xPathText, CollectionMode mode) {

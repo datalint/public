@@ -9,7 +9,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.datalint.xml.server.parser.DocumentSerializer;
 import com.datalint.xml.shared.ICommon;
 import com.datalint.xml.shared.XPath;
 import com.datalint.xml.shared.common.CollectionMode;
@@ -38,15 +37,7 @@ public class XmlUtilImpl implements ICommon {
 	}
 
 	public String toString(Node node) {
-		if (node != null) {
-			try {
-				return DocumentSerializer.serialize(node);
-			} catch (Exception e) {
-				// Ignore
-			}
-		}
-
-		return "null";
+		return String.valueOf(node);
 	}
 
 	public boolean equals(Node nodeOne, Node nodeTwo) {

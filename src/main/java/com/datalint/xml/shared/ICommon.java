@@ -16,9 +16,11 @@ public interface ICommon {
 	char _EQUALS = '=';
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
+	char _LINE_FEED = '\n';
 	char _QUOTE = '"';
 	char _SLASH = '/';
 	char _SPACE = ' ';
+	char _TAB = '\t';
 	char _UNDERSCORE = '_';
 
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";

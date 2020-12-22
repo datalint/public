@@ -157,6 +157,29 @@ public class DocumentImpl extends NodeImpl implements Document {
 	}
 
 	@Override
+	public String getXmlEncoding() {
+		return null;
+	}
+
+	@Override
+	public boolean getXmlStandalone() {
+		return false;
+	}
+
+	@Override
+	public String getXmlVersion() {
+		return null;
+	}
+
+	@Override
+	public void setXmlStandalone(boolean xmlStandalone) {
+	}
+
+	@Override
+	public void setXmlVersion(String xmlVersion) {
+	}
+
+	@Override
 	public DocumentType getDoctype() {
 		throw iCreateUoException("getDoctype");
 	}
@@ -194,31 +217,6 @@ public class DocumentImpl extends NodeImpl implements Document {
 	@Override
 	public String getInputEncoding() {
 		throw iCreateUoException("getInputEncoding");
-	}
-
-	@Override
-	public String getXmlEncoding() {
-		throw iCreateUoException("getXmlEncoding");
-	}
-
-	@Override
-	public boolean getXmlStandalone() {
-		throw iCreateUoException("getXmlStandalone");
-	}
-
-	@Override
-	public void setXmlStandalone(boolean xmlStandalone) {
-		throw iCreateUoException("setXmlStandalone");
-	}
-
-	@Override
-	public String getXmlVersion() {
-		throw iCreateUoException("getXmlVersion");
-	}
-
-	@Override
-	public void setXmlVersion(String xmlVersion) {
-		throw iCreateUoException("setXmlVersion");
 	}
 
 	@Override
