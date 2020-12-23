@@ -1,8 +1,6 @@
 .*
 !.gitignore
 
-*.iml
-
 target/
 gwt-unitCache/
 
@@ -10,3 +8,7 @@ META-INF/
 WEB-INF/
 
 war/xml/
+
+*.iml
+bin/
+
