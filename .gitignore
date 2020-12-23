@@ -1,11 +1,12 @@
 .*
 !.gitignore
 
+*.iml
+
 target/
 gwt-unitCache/
 
 META-INF/
-**/WEB-INF/**/
+WEB-INF/
 
-xml/war/xml/
-
+war/xml/
