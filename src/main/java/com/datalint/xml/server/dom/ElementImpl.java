@@ -19,12 +19,56 @@ import org.w3c.dom.TypeInfo;
 public class ElementImpl extends ParentNode implements Element {
 	private final String tagName;
 
-	private Map<String, String> attrs;
+	private Map<String, String> attributes;
+	private int attributesRevision;
+
+	private int childNodesRevision;
 
 	public ElementImpl(Node owner, String tagName) {
 		super(owner);
 
 		this.tagName = tagName;
+	}
+
+	public int getAttributesRevision() {
+		return attributesRevision;
+	}
+
+	public Map<String, String> getAttributesImpl() {
+		return attributes == null ? Collections.emptyMap() : attributes;
+	}
+
+	@Override
+	public int getChildNodesRevision() {
+		return childNodesRevision;
+	}
+
+	@Override
+	public void onChildNodesChanged() {
+		Node parent = getParentNode();
+
+		while (parent instanceof NodeImpl) {
+			((NodeImpl) parent).onChildNodesChanged();
+
+			parent = parent.getParentNode();
+		}
+
+		childNodesRevision++;
+	}
+
+	@Override
+	public void appendElementsByTagName(List<Node> holder, Predicate<String> predicate) {
+		if (children == null)
+			return;
+
+		for (Node child : children) {
+			if (child instanceof ElementImpl) {
+				if (predicate.test(child.getNodeName()))
+					holder.add(child);
+
+				((ElementImpl) child).appendElementsByTagName(holder, predicate);
+			}
+		}
 	}
 
 	@Override
@@ -44,23 +88,28 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public String getAttribute(String name) {
-		return attrs == null ? EMPTY : iNonNull(attrs.get(name));
+		return attributes == null ? EMPTY : iNonNull(attributes.get(name));
 	}
 
 	@Override
 	public void setAttribute(String name, String value) {
-		assert value != null : value;
+		if (attributes == null)
+			attributes = new HashMap<>();
 
-		if (attrs == null)
-			attrs = new HashMap<>();
+		value = iNonNull(value);
 
-		attrs.put(name, value);
+		if (!value.equals(attributes.put(name, value)))
+			attributesRevision++;
 	}
 
 	@Override
 	public void removeAttribute(String name) {
-		if (attrs != null && attrs.remove(name) != null && attrs.isEmpty())
-			attrs = null;
+		if (attributes != null && attributes.remove(name) != null) {
+			if (attributes.isEmpty())
+				attributes = null;
+
+			attributesRevision++;
+		}
 	}
 
 	@Override
@@ -72,48 +121,28 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public boolean hasAttributes() {
-		return attrs != null && attrs.size() > 0;
-	}
-
-	public NodeList getElementsByTagName(List<Node> holder, String name) {
-		appendElements(holder, name.equals(WILDCARD) ? tagName -> true : tagName -> tagName.equals(name));
-
-		return new NodeListImpl(holder);
+		return attributes != null;
 	}
 
 	@Override
-	public NodeList getElementsByTagName(String name) {
-		return getElementsByTagName(new ArrayList<>(), name);
-	}
-
-	private void appendElements(List<Node> holder, Predicate<String> predicate) {
-		if (children == null)
-			return;
-
-		for (Node child : children) {
-			if (child instanceof ElementImpl) {
-				if (predicate.test(child.getNodeName()))
-					holder.add(child);
-
-				((ElementImpl) child).appendElements(holder, predicate);
-			}
-		}
+	public NodeList getElementsByTagName(String tagName) {
+		return new NodeListImpl(this, tagName);
 	}
 
 	@Override
 	public boolean hasAttribute(String name) {
-		return attrs != null && attrs.containsKey(name);
+		return attributes != null && attributes.containsKey(name);
 	}
 
 	@Override
 	public Node cloneNode(boolean deep) {
 		ElementImpl clone = new ElementImpl(getOwnerDocument(), tagName);
 
-		if (attrs != null) {
-			clone.attrs = new HashMap<>(attrs.size());
+		if (attributes != null) {
+			clone.attributes = new HashMap<>(attributes.size());
 
-			for (Entry<String, String> entry : attrs.entrySet()) {
-				clone.attrs.put(entry.getKey(), entry.getValue());
+			for (Entry<String, String> entry : attributes.entrySet()) {
+				clone.attributes.put(entry.getKey(), entry.getValue());
 			}
 		}
 
@@ -135,12 +164,36 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public NodeList getChildNodes() {
-		return new NodeListImpl(children == null ? Collections.emptyList() : children);
+		return new NodeListImpl(this);
 	}
 
 	@Override
 	public NamedNodeMap getAttributes() {
-		return new NamedNodeMapImpl(getOwnerDocument(), attrs == null ? Collections.emptyMap() : attrs);
+		return new NamedNodeMapImpl(this);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sB = new StringBuilder();
+
+		sB.append(_LESS_THAN).append(getNodeName());
+
+		if (attributes != null)
+			for (Entry<String, String> entry : attributes.entrySet())
+				sB.append(_SPACE).append(AttrImpl.toString(entry.getKey(), entry.getValue()));
+
+		if (children == null)
+			sB.append(_SLASH).append(_GREATER_THAN);
+		else {
+			sB.append(_GREATER_THAN);
+
+			for (Node child : children)
+				sB.append(child);
+
+			sB.append(_LESS_THAN).append(_SLASH).append(getNodeName()).append(_GREATER_THAN);
+		}
+
+		return sB.toString();
 	}
 
 	@Override
@@ -206,29 +259,5 @@ public class ElementImpl extends ParentNode implements Element {
 	@Override
 	public void setIdAttributeNode(Attr idAttr, boolean isId) {
 		throw iCreateUoException("setIdAttributeNode");
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sB = new StringBuilder();
-
-		sB.append(_LESS_THAN).append(getNodeName());
-
-		if (attrs != null)
-			for (Entry<String, String> entry : attrs.entrySet())
-				sB.append(_SPACE).append(AttrImpl.toString(entry.getKey(), entry.getValue()));
-
-		if (children == null)
-			sB.append(_SLASH).append(_GREATER_THAN);
-		else {
-			sB.append(_GREATER_THAN);
-
-			for (Node child : children)
-				sB.append(child);
-
-			sB.append(_LESS_THAN).append(_SLASH).append(getNodeName()).append(_GREATER_THAN);
-		}
-
-		return sB.toString();
 	}
 }

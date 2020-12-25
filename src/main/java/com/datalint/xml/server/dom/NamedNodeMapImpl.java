@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -12,39 +13,52 @@ import org.w3c.dom.Node;
 import com.datalint.xml.shared.ICommon;
 
 public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
-	private final Node owner;
-	private final Map<String, String> attrs;
+	private final ElementImpl owner;
 
-	private List<Node> nodes;
+	private int cacheRevision;
+	private List<Node> cache;
 
-	public NamedNodeMapImpl(Node owner, Map<String, String> attrs) {
+	public NamedNodeMapImpl(ElementImpl owner) {
 		this.owner = owner;
-		this.attrs = attrs;
+	}
+
+	protected Map<String, String> getAttributes() {
+		return owner.getAttributesImpl();
+	}
+
+	protected Attr createAttributeNode(String name, String value) {
+		return new AttrImpl(owner.getOwnerDocument(), name, value);
 	}
 
 	@Override
 	public Node item(int index) {
-		if (nodes == null) {
-			nodes = new ArrayList<>(attrs.size());
+		int attributesRevision = owner.getAttributesRevision();
 
-			for (Entry<String, String> entry : attrs.entrySet()) {
-				nodes.add(new AttrImpl(owner, entry.getKey(), entry.getValue()));
+		if (cacheRevision != attributesRevision || cache == null) {
+			cacheRevision = attributesRevision;
+
+			Map<String, String> attributes = getAttributes();
+
+			cache = new ArrayList<>(attributes.size());
+
+			for (Entry<String, String> entry : attributes.entrySet()) {
+				cache.add(createAttributeNode(entry.getKey(), entry.getValue()));
 			}
 		}
 
-		return nodes.get(index);
+		return cache.get(index);
 	}
 
 	@Override
 	public int getLength() {
-		return attrs.size();
+		return getAttributes().size();
 	}
 
 	@Override
 	public Node getNamedItem(String name) {
-		String value = attrs.get(name);
+		String value = getAttributes().get(name);
 
-		return value == null ? null : new AttrImpl(owner, name, value);
+		return value == null ? null : createAttributeNode(name, value);
 	}
 
 	@Override

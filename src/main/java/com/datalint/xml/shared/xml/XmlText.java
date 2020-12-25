@@ -1,13 +1,12 @@
 package com.datalint.xml.shared.xml;
 
 import com.datalint.xml.shared.IXmlExpression;
-import com.google.common.xml.XmlEscapers;
 
 public class XmlText implements IXmlExpression {
 	private final String escapedText;
 
 	public XmlText(String text) {
-		escapedText = XmlEscapers.xmlContentEscaper().escape(text);
+		escapedText = iEscapeContent(text);
 	}
 
 	@Override

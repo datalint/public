@@ -2,6 +2,7 @@ package com.datalint.xml.server.dom;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,6 +21,20 @@ public abstract class NodeImpl implements Node, ICommon {
 		this.owner = owner;
 	}
 
+	public int getChildNodesRevision() {
+		return 0;
+	}
+
+	public List<Node> getChildNodesImpl() {
+		return Collections.emptyList();
+	}
+
+	public void onChildNodesChanged() {
+	}
+
+	public void appendElementsByTagName(List<Node> holder, Predicate<String> predicate) {
+	}
+
 	@Override
 	public String getNodeValue() {
 		return null;
@@ -36,7 +51,7 @@ public abstract class NodeImpl implements Node, ICommon {
 
 	@Override
 	public NodeList getChildNodes() {
-		return new NodeListImpl(Collections.emptyList());
+		return NodeListImpl.empty();
 	}
 
 	@Override

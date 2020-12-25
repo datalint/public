@@ -9,7 +9,7 @@ import com.datalint.xml.shared.XmlUtil;
 
 public class AttrImpl extends NodeImpl implements Attr {
 	private final String name;
-	private String value;
+	private final String value;
 
 	public static String toString(String name, String value) {
 		return new StringBuilder(name).append(_EQUALS).append(_QUOTE).append(XmlUtil.escapeAttr(value)).append(_QUOTE)
@@ -39,11 +39,6 @@ public class AttrImpl extends NodeImpl implements Attr {
 	}
 
 	@Override
-	public void setValue(String value) {
-		setNodeValue(value);
-	}
-
-	@Override
 	public short getNodeType() {
 		return ATTRIBUTE_NODE;
 	}
@@ -59,13 +54,23 @@ public class AttrImpl extends NodeImpl implements Attr {
 	}
 
 	@Override
-	public void setNodeValue(String nodeValue) {
-		value = nodeValue;
+	public Node cloneNode(boolean deep) {
+		return new AttrImpl(getOwnerDocument(), name, value);
 	}
 
 	@Override
-	public Node cloneNode(boolean deep) {
-		return new AttrImpl(getOwnerDocument(), name, value);
+	public String toString() {
+		return toString(getNodeName(), getNodeValue());
+	}
+
+	@Override
+	public void setValue(String value) {
+		throw iCreateUoException("setValue");
+	}
+
+	@Override
+	public void setNodeValue(String nodeValue) {
+		throw iCreateUoException("setNodeValue");
 	}
 
 	@Override
@@ -81,10 +86,5 @@ public class AttrImpl extends NodeImpl implements Attr {
 	@Override
 	public boolean isId() {
 		throw iCreateUoException("isId");
-	}
-
-	@Override
-	public String toString() {
-		return toString(getNodeName(), getNodeValue());
 	}
 }

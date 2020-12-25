@@ -1,7 +1,6 @@
 package com.datalint.xml.shared.xml;
 
 import com.datalint.xml.shared.IXmlExpression;
-import com.google.common.xml.XmlEscapers;
 
 public class XmlAttribute implements IXmlExpression {
 	private final String name;
@@ -9,7 +8,7 @@ public class XmlAttribute implements IXmlExpression {
 
 	public XmlAttribute(String name, String value) {
 		this.name = name;
-		this.escapedValue = XmlEscapers.xmlAttributeEscaper().escape(value);
+		this.escapedValue = iEscapeAttr(value);
 	}
 
 	@Override
