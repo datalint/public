@@ -9,6 +9,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>..</module>
+		<module>../demo</module>
 	</modules>
 
 	<name>Xml Parent</name>

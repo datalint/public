@@ -13,11 +13,6 @@
 	<packaging>gwt-lib</packaging>
 
 	<name>Xml</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt.version>2.9.0</gwt.version>
-		<saxon.version>10.3</saxon.version>
-	</properties>
 
 	<build>
 		<plugins>

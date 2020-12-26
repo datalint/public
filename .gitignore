@@ -7,8 +7,7 @@ gwt-unitCache/
 META-INF/
 WEB-INF/
 
-war/xml/
+**/war/demo/
 
 *.iml
-bin/
 
