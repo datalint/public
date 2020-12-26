@@ -71,6 +71,8 @@ public class XmlEscapers {
    *
    * <p>This escaper does not treat surrogate pairs specially and does not perform Unicode
    * validation on its input.
+   *
+   * @return An context escaper.
    */
   public static Escaper xmlContentEscaper() {
     return XML_CONTENT_ESCAPER;
@@ -95,6 +97,8 @@ public class XmlEscapers {
    *
    * <p>This escaper does not treat surrogate pairs specially and does not perform Unicode
    * validation on its input.
+   *
+   * @return An attribute escaper.
    */
   public static Escaper xmlAttributeEscaper() {
     return XML_ATTRIBUTE_ESCAPER;
