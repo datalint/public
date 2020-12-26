@@ -22,12 +22,20 @@ public abstract class ParentNode extends NodeImpl {
 		return children == null ? Collections.emptyList() : children;
 	}
 
+	protected void preAppendChild(Node child) {
+		if (child.getParentNode() != null)
+			child.getParentNode().removeChild(child);
+
+		children.remove(child);
+	}
+
 	@Override
 	public Node insertBefore(Node newChild, Node refChild) {
 		if (refChild == null)
 			return appendChild(newChild);
 
-		children.remove(newChild);
+		preAppendChild(newChild);
+
 		children.add(children.indexOf(refChild), newChild);
 
 		setOwner(newChild, this);
@@ -39,7 +47,7 @@ public abstract class ParentNode extends NodeImpl {
 
 	@Override
 	public Node replaceChild(Node newChild, Node oldChild) {
-		children.remove(newChild);
+		preAppendChild(newChild);
 
 		children.set(children.indexOf(oldChild), newChild);
 
@@ -69,8 +77,8 @@ public abstract class ParentNode extends NodeImpl {
 	public Node appendChild(Node newChild) {
 		if (children == null)
 			children = new ArrayList<>();
-		else
-			children.remove(newChild);
+
+		preAppendChild(newChild);
 
 		children.add(newChild);
 		setOwner(newChild, this);

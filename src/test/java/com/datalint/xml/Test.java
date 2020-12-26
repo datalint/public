@@ -20,7 +20,7 @@ public class Test {
 				.parse(new InputSource(new StringReader(xml)));
 		Document newDocument = XmlParser.parse(xml);
 
-		System.out.println(DocumentSerializer.serializeSilent(oldDocument).length());
-		System.out.println(newDocument.toString().length());
+		System.out.println(DocumentSerializer.serializeSilent(oldDocument));
+		System.out.println(newDocument.toString());
 	}
 }

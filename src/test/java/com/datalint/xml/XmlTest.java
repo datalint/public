@@ -13,6 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import com.datalint.xml.server.parser.DocumentSerializer;
 import com.datalint.xml.shared.XPath;
 import com.datalint.xml.shared.XmlParser;
 import com.datalint.xml.shared.XmlUtil;
@@ -26,6 +27,10 @@ public class XmlTest {
 				.parse(new InputSource(new StringReader(xml)));
 		oldDocument.normalizeDocument();
 		Document newDocument = XmlParser.parse(xml);
+
+		assertEquals(DocumentSerializer.serialize(oldDocument).length(),
+				DocumentSerializer.serialize(newDocument).length());
+		assertEquals(DocumentSerializer.serialize(oldDocument).length(), newDocument.toString().length());
 
 		assertEquals(6, oldDocument.getElementsByTagName("*").getLength());
 		assertEquals(5, oldDocument.getDocumentElement().getElementsByTagName("*").getLength());

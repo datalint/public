@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root id="root">
-	<one id="one 1" name="One 1">
-		<two id="two 1" name="Two 1">1</two>
+	<one id="one 1" name="One'&apos; &lt;&#x9;&#xA;&#xD;&#xA;&quot;>1">
+		<two id="two 1" name="Two 1">'"1</two>
 		<two id="two 2" />
 		<two id="two 3" name="Two 3">3</two>
 	</one>
