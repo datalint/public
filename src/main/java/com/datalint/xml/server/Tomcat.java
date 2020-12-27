@@ -11,18 +11,27 @@ import java.nio.file.Path;
 
 public class Tomcat {
 	public static void main(String[] args) throws IOException, InterruptedException {
+		String pathTomcat;
+		String pathDocBase;
+
 		if (args.length != 2) {
 			System.out.println("Please provide exactly two argument: ");
 			System.out.println("The first one is tomcat home directory. For example: /home/user/apache-tomcat-9.0.30");
 			System.out.println("The second one is the project web target directory. For example: /home/user/project/target/project-1.0-snapshot");
 
-			System.exit(-1);
-		} else {
-			System.out.println("Tomcat home: " + args[0]);
-			System.out.println("Context docBase: " + args[1]);
+			return;
 		}
 
-		Path tomcat = Path.of(args[0]);
+		pathTomcat = args[0];
+		pathDocBase = args[1];
+
+		if (pathDocBase.charAt(0) != '/')
+			pathDocBase = Path.of(pathDocBase).toAbsolutePath().toString();
+
+		System.out.println("Tomcat home: " + pathTomcat);
+		System.out.println("Context docBase: " + pathDocBase);
+
+		Path tomcat = Path.of(pathTomcat);
 
 		Path server = tomcat.resolve("conf/server.xml");
 
@@ -43,11 +52,11 @@ public class Tomcat {
 			localhost.appendChild(context);
 		}
 
-		context.setAttribute("docBase", args[1]);
+		context.setAttribute("docBase", pathDocBase);
 
 		Files.writeString(server, serverDocument.toString());
 
-		ProcessBuilder processBuilder = new ProcessBuilder(args[0] + "/bin/catalina.sh", "jpda", "run");
+		ProcessBuilder processBuilder = new ProcessBuilder(pathTomcat + "/bin/catalina.sh", "jpda", "run");
 		ProcessHandle.current().info().command().ifPresent(
 				cmd -> processBuilder.environment().putIfAbsent("JAVA_HOME", Path.of(cmd).getParent().getParent().toString())
 		);

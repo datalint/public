@@ -5,9 +5,6 @@ target/
 gwt-unitCache/
 
 META-INF/
-WEB-INF/
-
-**/war/demo/
 
 *.iml
 
