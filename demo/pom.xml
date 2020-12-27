@@ -47,6 +47,14 @@
 				<configuration>
 					<packagingExcludes>**/client/</packagingExcludes>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
