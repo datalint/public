@@ -81,13 +81,23 @@
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.2.0</version>
-				<configuration>
-					<resources>
-						<resource>
-							<directory>../target/classes</directory>
-						</resource>
-					</resources>
-				</configuration>
+				<executions>
+					<execution>
+						<id>copy-parent</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../target/classes</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
