@@ -22,6 +22,7 @@
 				<version>1.0.0</version>
 				<extensions>true</extensions>
 				<configuration>
+					<skipModule>true</skipModule>
 					<moduleName>com.datalint.xml.Xml</moduleName>
 				</configuration>
 			</plugin>

@@ -66,6 +66,7 @@
 				<version>1.0.0</version>
 				<extensions>true</extensions>
 				<configuration>
+					<skipModule>true</skipModule>
 					<moduleName>com.datalint.xml.Demo</moduleName>
 				</configuration>
 				<executions>
@@ -92,7 +93,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.3.1</version>
 				<configuration>
-					<packagingExcludes>**/client/</packagingExcludes>
+					<packagingExcludes>**/client/,**/super/</packagingExcludes>
 				</configuration>
 				<executions>
 					<execution>

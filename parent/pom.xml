@@ -100,7 +100,6 @@
 				<configuration>
 					<release>11</release>
 					<useIncrementalCompilation>false</useIncrementalCompilation>
-					<excludes>**/client/</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
