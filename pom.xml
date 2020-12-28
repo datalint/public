@@ -31,7 +31,6 @@
 				<configuration>
 					<!-- This configuration is needed for a bug in plugin -->
 					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-					<excludePackageNames>*.super.*</excludePackageNames>
 				</configuration>
 				<executions>
 					<execution>
