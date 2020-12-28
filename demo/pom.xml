@@ -14,16 +14,26 @@
 
 	<name>Xml Demo</name>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.datalint.xml</groupId>
-			<artifactId>xml</artifactId>
-			<version>1.0</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>../src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>net.ltgt.gwt.maven</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
