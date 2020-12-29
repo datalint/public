@@ -1,32 +1,28 @@
 package com.datalint.xml.shared.impl;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.namespace.QName;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
-
+import com.datalint.xml.server.common.BaseKeyedPooledObjectFactory;
+import com.datalint.xml.shared.ICommon;
+import com.datalint.xml.shared.common.CollectionMode;
+import com.datalint.xml.shared.common.TriConsumer;
+import net.sf.saxon.xpath.XPathFactoryImpl;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.datalint.xml.server.common.BaseKeyedPooledObjectFactory;
-import com.datalint.xml.shared.ICommon;
-import com.datalint.xml.shared.common.CollectionMode;
-import com.datalint.xml.shared.common.TriConsumer;
-
-import net.sf.saxon.xpath.XPathFactoryImpl;
+import javax.xml.namespace.QName;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class XPathImpl implements ICommon {
-	private static XPathImpl impl = new XPathImpl();
-
 	private static final GenericKeyedObjectPool<String, XPathExpression> XPATH_EXPRESSION_POOL = new GenericKeyedObjectPool<>(
 			new XPathExpressionFactory());
+	private static XPathImpl impl = new XPathImpl();
 
 	private XPathImpl() {
 	}
@@ -88,7 +84,7 @@ public class XPathImpl implements ICommon {
 	}
 
 	public <T> Map<String, T> evaluateElementsMap(Element element, String xPath, String attributeName,
-			CollectionMode mode, TriConsumer<Map<String, T>, String, Element> consumer) {
+												  CollectionMode mode, TriConsumer<Map<String, T>, String, Element> consumer) {
 		NodeList nodeList = evaluateNodeList(element, xPath);
 
 		int length = nodeList.getLength();

@@ -1,10 +1,10 @@
 package com.datalint.xml.server.dom;
 
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.w3c.dom.Node;
 
 public abstract class ParentNode extends NodeImpl {
 	protected List<Node> children;

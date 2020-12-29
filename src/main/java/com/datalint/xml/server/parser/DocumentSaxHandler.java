@@ -1,12 +1,12 @@
 package com.datalint.xml.server.parser;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class DocumentSaxHandler extends DefaultHandler {
 	protected final Document document;

@@ -1,12 +1,8 @@
 package com.datalint.xml.server.parser;
 
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import com.datalint.xml.server.XQuery;
+import com.datalint.xml.server.common.BasePooledObjectFactory;
+import net.sf.saxon.dom.DocumentBuilderImpl;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
@@ -15,10 +11,11 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.datalint.xml.server.XQuery;
-import com.datalint.xml.server.common.BasePooledObjectFactory;
-
-import net.sf.saxon.dom.DocumentBuilderImpl;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.StringReader;
 
 public class DocumentParser {
 	private static DocumentBuilder documentBuilderReadOnly;

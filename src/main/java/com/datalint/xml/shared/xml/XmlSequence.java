@@ -1,8 +1,8 @@
 package com.datalint.xml.shared.xml;
 
-import java.util.List;
-
 import com.datalint.xml.shared.IXmlExpression;
+
+import java.util.List;
 
 public class XmlSequence implements IXmlExpression {
 	private final List<XmlElement> xmlElements;

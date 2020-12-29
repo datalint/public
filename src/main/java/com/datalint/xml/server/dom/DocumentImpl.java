@@ -1,10 +1,10 @@
 package com.datalint.xml.server.dom;
 
+import org.w3c.dom.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-
-import org.w3c.dom.*;
 
 public class DocumentImpl extends NodeImpl implements Document {
 	public static final String KEY_id = "id";
@@ -191,12 +191,12 @@ public class DocumentImpl extends NodeImpl implements Document {
 	}
 
 	@Override
-	public String getXmlVersion() {
-		return null;
+	public void setXmlStandalone(boolean xmlStandalone) {
 	}
 
 	@Override
-	public void setXmlStandalone(boolean xmlStandalone) {
+	public String getXmlVersion() {
+		return null;
 	}
 
 	@Override

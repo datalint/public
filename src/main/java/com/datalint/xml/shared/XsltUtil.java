@@ -1,16 +1,18 @@
 package com.datalint.xml.shared;
 
-import java.util.HashMap;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.datalint.xml.shared.xslt.AbstractSetting;
 import com.datalint.xml.shared.xslt.MinMaxSetting;
 import com.datalint.xml.shared.xslt.SortSetting;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import java.util.HashMap;
 
 public class XsltUtil {
 	private static HashMap<AbstractSetting, Xslt> cachedMap = new HashMap<AbstractSetting, Xslt>();
+
+	private XsltUtil() {
+	}
 
 	private static Xslt getXSLT(AbstractSetting setting) {
 		Xslt xslt = cachedMap.get(setting);
@@ -44,8 +46,5 @@ public class XsltUtil {
 
 	public static String getMinMax(Element element, MinMaxSetting setting) {
 		return getXSLT(setting).transformToString(element);
-	}
-
-	private XsltUtil() {
 	}
 }

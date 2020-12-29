@@ -1,5 +1,21 @@
 package com.datalint.xml.server;
 
+import com.datalint.xml.server.common.BasePooledObjectFactory;
+import com.google.common.io.CharStreams;
+import com.google.common.io.Closeables;
+import com.saxonica.xqj.SaxonXQDataSource;
+import net.sf.saxon.Configuration;
+import net.sf.saxon.dom.DocumentBuilderImpl;
+import net.sf.saxon.lib.StandardModuleURIResolver;
+import net.sf.saxon.trans.XPathException;
+import org.apache.commons.pool2.ObjectPool;
+import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.w3c.dom.Node;
+
+import javax.xml.namespace.QName;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.xquery.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -10,33 +26,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.xml.namespace.QName;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.xquery.XQConnection;
-import javax.xml.xquery.XQConstants;
-import javax.xml.xquery.XQDataSource;
-import javax.xml.xquery.XQException;
-import javax.xml.xquery.XQPreparedExpression;
-import javax.xml.xquery.XQResultSequence;
-
-import org.apache.commons.pool2.ObjectPool;
-import org.apache.commons.pool2.PooledObject;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.w3c.dom.Node;
-
-import com.datalint.xml.server.common.BasePooledObjectFactory;
-import com.google.common.io.CharStreams;
-import com.google.common.io.Closeables;
-import com.saxonica.xqj.SaxonXQDataSource;
-
-import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.DocumentBuilderImpl;
-import net.sf.saxon.lib.StandardModuleURIResolver;
-import net.sf.saxon.trans.XPathException;
-
 public class XQuery {
 	private static final Map<URL, ObjectPool<XQPreparedExpression>> INSTANCE_MAP = new ConcurrentHashMap<>();
 	private static final Map<String, ObjectPool<XQPreparedExpression>> INSTANCE_QUERY_MAP = new ConcurrentHashMap<>();
+
+	private XQuery() {
+	}
 
 	public static void setConfiguration(DocumentBuilderImpl documentBuilderImpl) {
 		documentBuilderImpl.setConfiguration(XQPreparedExpressionFactory.getConfiguration());
@@ -105,15 +100,27 @@ public class XQuery {
 		return objectPool;
 	}
 
-	private XQuery() {
-	}
-
 	private static class XQPreparedExpressionFactory extends BasePooledObjectFactory<XQPreparedExpression> {
 		private static final XQDataSource XQ_DATA_SOURCE = new SaxonXQDataSource();
 
 		private static final XQConnection CONNECTION = createConnection();
 
 		private final String query;
+
+		private XQPreparedExpressionFactory(String query) {
+			this.query = query;
+		}
+
+		private XQPreparedExpressionFactory(URL queryURL) throws IOException {
+			Reader reader = new InputStreamReader(queryURL.openStream());
+
+			try {
+				query = CharStreams.toString(reader);
+			} finally {
+				Closeables.closeQuietly(reader);
+			}
+
+		}
 
 		private static XQConnection createConnection() {
 			getConfiguration().setModuleURIResolver(new StandardModuleURIResolver() {
@@ -147,21 +154,6 @@ public class XQuery {
 
 		private static Configuration getConfiguration() {
 			return ((SaxonXQDataSource) XQ_DATA_SOURCE).getConfiguration();
-		}
-
-		private XQPreparedExpressionFactory(String query) {
-			this.query = query;
-		}
-
-		private XQPreparedExpressionFactory(URL queryURL) throws IOException {
-			Reader reader = new InputStreamReader(queryURL.openStream());
-
-			try {
-				query = CharStreams.toString(reader);
-			} finally {
-				Closeables.closeQuietly(reader);
-			}
-
 		}
 
 		@Override

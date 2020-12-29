@@ -1,20 +1,14 @@
 package com.datalint.xml.shared;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.datalint.xml.shared.common.CollectionMode;
+import com.datalint.xml.shared.common.TriConsumer;
+import com.datalint.xml.shared.impl.XPathImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import com.datalint.xml.shared.common.CollectionMode;
-import com.datalint.xml.shared.common.TriConsumer;
-import com.datalint.xml.shared.impl.XPathImpl;
+import java.util.*;
 
 public class XPath implements ICommon {
 	private static XPathImpl impl = XPathImpl.getInstance();
@@ -173,12 +167,12 @@ public class XPath implements ICommon {
 	}
 
 	public static Map<String, Element> evaluateElementsMap(Element element, String xPath, String attributeName,
-			CollectionMode mode) {
+														   CollectionMode mode) {
 		return impl.evaluateElementsMap(element, xPath, attributeName, mode, Lazy.elementsMapConsumer);
 	}
 
 	public static Map<String, Element> evaluateElementsMap(Document document, String xPath, String attributeName,
-			CollectionMode mode) {
+														   CollectionMode mode) {
 		return evaluateElementsMap(document.getDocumentElement(), xPath, attributeName, mode);
 	}
 
@@ -191,22 +185,22 @@ public class XPath implements ICommon {
 	}
 
 	public static Map<String, List<Element>> evaluateListElementsMap(Element element, String xPath,
-			String attributeName, CollectionMode mode) {
+																	 String attributeName, CollectionMode mode) {
 		return impl.evaluateElementsMap(element, xPath, attributeName, mode, Lazy.listElementsMapConsumer);
 	}
 
 	public static Map<String, List<Element>> evaluateListElementsMap(Document document, String xPath,
-			String attributeName, CollectionMode mode) {
+																	 String attributeName, CollectionMode mode) {
 		return evaluateListElementsMap(document.getDocumentElement(), xPath, attributeName, mode);
 	}
 
 	public static Map<String, List<Element>> evaluateListElementsMap(Element element, String xPath,
-			String attributeName) {
+																	 String attributeName) {
 		return evaluateListElementsMap(element, xPath, attributeName, CollectionMode.unordered);
 	}
 
 	public static Map<String, List<Element>> evaluateListElementsMap(Document document, String xPath,
-			String attributeName) {
+																	 String attributeName) {
 		return evaluateListElementsMap(document.getDocumentElement(), xPath, attributeName);
 	}
 
@@ -239,7 +233,7 @@ public class XPath implements ICommon {
 				.put(key, item);
 
 		private static TriConsumer<Map<String, List<Element>>, String, Element> listElementsMapConsumer = (map, key,
-				item) -> {
+																										   item) -> {
 			List<Element> value = map.get(key);
 
 			if (value == null) {

@@ -1,17 +1,7 @@
 package com.datalint.xml.server.parser;
 
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
+import com.datalint.xml.server.common.BasePooledObjectFactory;
+import com.datalint.xml.shared.ICommon;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
@@ -20,8 +10,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import com.datalint.xml.server.common.BasePooledObjectFactory;
-import com.datalint.xml.shared.ICommon;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
 public class DocumentSerializer implements ICommon {
 	private static DocumentSerializer instance = new DocumentSerializer();
@@ -120,12 +118,11 @@ public class DocumentSerializer implements ICommon {
 
 	private static class PooledTransformerFactory extends BasePooledObjectFactory<Transformer> {
 		private static final Properties TRANSFORMER_PROPERTIES = new Properties();
+		private static ObjectPool<Transformer> instance = new GenericObjectPool<>(new PooledTransformerFactory());
 
 		static {
 			TRANSFORMER_PROPERTIES.setProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		}
-
-		private static ObjectPool<Transformer> instance = new GenericObjectPool<>(new PooledTransformerFactory());
 
 		@Override
 		public Transformer create() throws Exception {

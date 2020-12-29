@@ -1,22 +1,20 @@
 package com.datalint.xml;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.datalint.xml.server.parser.DocumentSerializer;
+import com.datalint.xml.shared.XPath;
+import com.datalint.xml.shared.XmlParser;
+import com.datalint.xml.shared.XmlUtil;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
-import com.datalint.xml.server.parser.DocumentSerializer;
-import com.datalint.xml.shared.XPath;
-import com.datalint.xml.shared.XmlParser;
-import com.datalint.xml.shared.XmlUtil;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
 
 public class XmlTest {
 	@Test

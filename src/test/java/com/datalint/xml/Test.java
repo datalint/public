@@ -1,16 +1,14 @@
 package com.datalint.xml;
 
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.datalint.xml.server.parser.DocumentSerializer;
+import com.datalint.xml.shared.XmlParser;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import com.datalint.xml.server.parser.DocumentSerializer;
-import com.datalint.xml.shared.XmlParser;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Test {
 	public static void main(String[] args) throws Exception {

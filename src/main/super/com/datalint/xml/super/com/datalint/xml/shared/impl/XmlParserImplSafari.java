@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -43,7 +43,7 @@ public class XmlParserImplSafari extends XmlParserImplStandard {
 
 	@Override
 	protected native JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
-			boolean deep) /*-{
+													 boolean deep) /*-{
 		// Works around a Safari2 issue where importing a node will steal attributes
 		// from the original.
 		if (@com.datalint.xml.shared.impl.XmlParserImplSafari::isSafari2LevelWebKit()()) {
@@ -62,7 +62,7 @@ public class XmlParserImplSafari extends XmlParserImplStandard {
 	 * </parsererror></body></html> is all you get from Safari. Hope that nobody
 	 * wants to send one of those error reports over the wire to be parsed by
 	 * safari...
-	 * 
+	 *
 	 * @param contents contents
 	 * @return parsed JavaScript object
 	 * @see com.datalint.xml.shared.impl.XmlParserImpl#parseImpl(java.lang.String)

@@ -1,11 +1,10 @@
 package com.datalint.xml.shared;
 
+import com.datalint.xml.shared.impl.XsltImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import com.datalint.xml.shared.impl.XsltImpl;
 
 public class Xslt {
 	private XsltImpl impl = XsltImpl.createInstance();

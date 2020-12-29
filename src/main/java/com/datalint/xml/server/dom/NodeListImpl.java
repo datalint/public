@@ -1,14 +1,13 @@
 package com.datalint.xml.server.dom;
 
+import com.datalint.xml.shared.ICommon;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.datalint.xml.shared.ICommon;
 
 public class NodeListImpl implements NodeList, ICommon {
 	private final static NodeListImpl EMPTY = new NodeListImpl();
@@ -19,10 +18,6 @@ public class NodeListImpl implements NodeList, ICommon {
 
 	private int cacheRevision;
 	private List<Node> cache;
-
-	public static NodeListImpl empty() {
-		return EMPTY;
-	}
 
 	public NodeListImpl(NodeImpl owner, String tagName) {
 		this.owner = owner;
@@ -35,6 +30,10 @@ public class NodeListImpl implements NodeList, ICommon {
 
 	private NodeListImpl() {
 		this(null);
+	}
+
+	public static NodeListImpl empty() {
+		return EMPTY;
 	}
 
 	protected List<Node> getNodes() {

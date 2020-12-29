@@ -9,15 +9,6 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.i18n.client.Messages;
 
 class XPathImplIE extends XPathImpl {
-	interface XPathImplIEMessages extends Messages {
-		static final XPathImplIEMessages INSTANCE = GWT.create(XPathImplIEMessages.class);
-
-		@DefaultMessage("<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
-				+ "<xsl:output method=\"text\"/>"
-				+ "<xsl:template match=\"*\"><xsl:value-of select=\"{0}\"/></xsl:template></xsl:stylesheet>")
-		String xsl(String xPath);
-	}
-
 	@Override
 	protected native JavaScriptObject evaluateNodesImpl(JavaScriptObject element, String xPath) /*-{
 		return element.selectNodes(xPath);
@@ -63,4 +54,13 @@ class XPathImplIE extends XPathImpl {
 
 		return 0;
 	}-*/;
+
+	interface XPathImplIEMessages extends Messages {
+		static final XPathImplIEMessages INSTANCE = GWT.create(XPathImplIEMessages.class);
+
+		@DefaultMessage("<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
+				+ "<xsl:output method=\"text\"/>"
+				+ "<xsl:template match=\"*\"><xsl:value-of select=\"{0}\"/></xsl:template></xsl:stylesheet>")
+		String xsl(String xPath);
+	}
 }

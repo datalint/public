@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -27,6 +27,12 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public abstract class XmlParserImpl {
 	private static XmlParserImpl impl = GWT.create(XmlParserImpl.class);
+
+	/**
+	 * Not globally instantable.
+	 */
+	XmlParserImpl() {
+	}
 
 	public static XmlParserImpl getInstance() {
 		return impl;
@@ -61,7 +67,7 @@ public abstract class XmlParserImpl {
 	}-*/;
 
 	static native JavaScriptObject createProcessingInstruction(JavaScriptObject jsObject, String target,
-			String data) /*-{
+															   String data) /*-{
 		return jsObject.createProcessingInstruction(target, data);
 	}-*/;
 
@@ -187,7 +193,7 @@ public abstract class XmlParserImpl {
 	}
 
 	static native JavaScriptObject insertBefore(JavaScriptObject jsObject, JavaScriptObject newChildJs,
-			JavaScriptObject refChildJs) /*-{
+												JavaScriptObject refChildJs) /*-{
 		return jsObject.insertBefore(newChildJs, refChildJs);
 	}-*/;
 
@@ -219,7 +225,7 @@ public abstract class XmlParserImpl {
 	}-*/;
 
 	static native JavaScriptObject replaceChild(JavaScriptObject jsObject, JavaScriptObject newChildJs,
-			JavaScriptObject oldChildJs) /*-{
+												JavaScriptObject oldChildJs) /*-{
 		return jsObject.replaceChild(newChildJs, oldChildJs);
 	}-*/;
 
@@ -251,12 +257,6 @@ public abstract class XmlParserImpl {
 		return o.substringData(offset, count);
 	}-*/;
 
-	/**
-	 * Not globally instantable.
-	 */
-	XmlParserImpl() {
-	}
-
 	public final Document createDocument() {
 		return (Document) NodeImpl.build(createDocumentImpl());
 	}
@@ -278,7 +278,7 @@ public abstract class XmlParserImpl {
 	protected abstract String getPrefixImpl(JavaScriptObject jsObject);
 
 	protected abstract JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
-			boolean deep);
+													   boolean deep);
 
 	protected abstract JavaScriptObject parseImpl(String contents);
 

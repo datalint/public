@@ -18,11 +18,11 @@ import com.google.gwt.core.client.JavaScriptObject;
 public class XmlUtilImpl {
 	private static XmlUtilImpl impl = GWT.create(XmlUtilImpl.class);
 
-	public static XmlUtilImpl getInstance() {
-		return impl;
+	XmlUtilImpl() {
 	}
 
-	XmlUtilImpl() {
+	public static XmlUtilImpl getInstance() {
+		return impl;
 	}
 
 	public int getHashCode(Element element) {
@@ -44,7 +44,7 @@ public class XmlUtilImpl {
 	}
 
 	public void updateElementViaInnerHTML(Element updateElement, Element referenceElement,
-			com.google.gwt.dom.client.Element currentElement) {
+										  com.google.gwt.dom.client.Element currentElement) {
 		if (childNodesChanged(updateElement, referenceElement)) {
 			String updateElementString = updateElement.toString();
 
@@ -86,7 +86,7 @@ public class XmlUtilImpl {
 		while (updateChild != null) {
 			if (!(updateChild.getNodeName().equals(referenceChild.getNodeName())
 					&& String.valueOf(updateChild.getNodeValue()).trim()
-							.equals(String.valueOf(referenceChild.getNodeValue()).trim()))) {
+					.equals(String.valueOf(referenceChild.getNodeValue()).trim()))) {
 				return true;
 			} else if (updateChild.getNodeType() == Node.ELEMENT_NODE
 					&& attributesChanged((Element) updateChild, (Element) referenceChild)) {
@@ -120,7 +120,7 @@ public class XmlUtilImpl {
 	}
 
 	public void updateElement(Element updateElement, Element referenceElement,
-			com.google.gwt.dom.client.Element currentElement) {
+							  com.google.gwt.dom.client.Element currentElement) {
 		List<Element> updateElements = XPath.evaluateNodes(updateElement, ".//*");
 		List<Element> referenceElements = XPath.evaluateNodes(referenceElement, ".//*");
 
@@ -154,12 +154,12 @@ public class XmlUtilImpl {
 	}
 
 	private void normalUpdate(Element updateElement, Element referenceElement,
-			com.google.gwt.dom.client.Element currentElement) {
+							  com.google.gwt.dom.client.Element currentElement) {
 		// TODO Normal Update Required
 	}
 
 	private void updateAttributes(Element updateElement, Element referenceElement,
-			com.google.gwt.dom.client.Element currentElement) {
+								  com.google.gwt.dom.client.Element currentElement) {
 		NamedNodeMap updateAttributes = updateElement.getAttributes();
 		for (int i = 0; i < updateAttributes.getLength(); i++) {
 			Node updateNode = updateAttributes.item(i);

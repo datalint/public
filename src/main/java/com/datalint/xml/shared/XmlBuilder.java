@@ -1,12 +1,15 @@
 package com.datalint.xml.shared;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.datalint.xml.shared.xml.XmlAttribute;
 import com.datalint.xml.shared.xml.XmlElement;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class XmlBuilder {
+	private XmlBuilder() {
+	}
+
 	public static XmlElement createXmlElement(String tagName, List<String> attributes) {
 		return new XmlElement(tagName, createAttrExpressions(attributes));
 	}
@@ -23,8 +26,5 @@ public class XmlBuilder {
 		}
 
 		return expressions;
-	}
-
-	private XmlBuilder() {
 	}
 }

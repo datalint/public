@@ -1,16 +1,15 @@
 package com.datalint.xml.server.dom;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.datalint.xml.shared.ICommon;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.datalint.xml.shared.ICommon;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
 	private final ElementImpl owner;

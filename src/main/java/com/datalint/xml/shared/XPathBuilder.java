@@ -1,16 +1,18 @@
 package com.datalint.xml.shared;
 
-import java.util.Collection;
-import java.util.function.Function;
+import com.datalint.xml.shared.xpath.*;
 
 import javax.annotation.Nullable;
-
-import com.datalint.xml.shared.xpath.*;
+import java.util.Collection;
+import java.util.function.Function;
 
 public class XPathBuilder implements ICommon {
 	public static final IXPathExpression LAST = new Lit(LAST_F);
 	public static final IXPathExpression POSITION = new Lit(POSITION_F);
 	public static final IXPathExpression TEXT = new Lit(TEXT_F);
+
+	private XPathBuilder() {
+	}
 
 	public static IXPathExpression all(IXPathExpression... expressions) {
 		return join(WILDCARD, expressions);
@@ -57,7 +59,7 @@ public class XPathBuilder implements ICommon {
 	}
 
 	public static IXPathExpression[] createExpressions(Function<String, IXPathExpression> function,
-			String[] arguments) {
+													   String[] arguments) {
 		IXPathExpression[] expressions = new IXPathExpression[arguments.length];
 
 		for (int i = 0; i < expressions.length; i++) {
@@ -72,7 +74,7 @@ public class XPathBuilder implements ICommon {
 	}
 
 	public static <T> IXPathExpression createParenthesesAnd(Collection<T> arguments,
-			Function<T, IXPathExpression> creator) {
+															Function<T, IXPathExpression> creator) {
 		int size = arguments.size();
 
 		if (size == 0)
@@ -259,8 +261,5 @@ public class XPathBuilder implements ICommon {
 
 	public static String unions(String first, String... others) {
 		return unions(first, createLitExpressions(others));
-	}
-
-	private XPathBuilder() {
 	}
 }

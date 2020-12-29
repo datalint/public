@@ -1,20 +1,10 @@
 package com.datalint.xml.server.dom;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.w3c.dom.*;
+
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.TypeInfo;
 
 public class ElementImpl extends ParentNode implements Element {
 	private final String tagName;

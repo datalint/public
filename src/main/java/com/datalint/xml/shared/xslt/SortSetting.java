@@ -13,7 +13,7 @@ public class SortSetting extends AbstractSetting {
 	}
 
 	public SortSetting(String xPathParent, String xPath, String xPathChild, String nameSpace, boolean isNumber,
-			boolean isMax) {
+					   boolean isMax) {
 		super(xPath, xPathChild, nameSpace, isNumber, isMax);
 
 		this.xPathParent = xPathParent;

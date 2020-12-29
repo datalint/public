@@ -1,25 +1,21 @@
 package com.datalint.xml.shared;
 
+import com.datalint.xml.shared.impl.XmlUtilImpl;
+import org.w3c.dom.*;
+
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
-import com.datalint.xml.shared.impl.XmlUtilImpl;
-
 public class XmlUtil implements ICommon {
 	private static final String ROOT_WRAPPER = "root";
 
 	private static XmlUtil instance = new XmlUtil();
+
+	private XmlUtil() {
+	}
 
 	public static String escapeAttr(String attribute) {
 		return instance.iEscapeAttr(attribute);
@@ -195,7 +191,7 @@ public class XmlUtil implements ICommon {
 	/**
 	 * Remove the referenceNode and all its previous sibling nodes from their
 	 * parent.
-	 * 
+	 *
 	 * @param referenceNode The referenceNode until which itself and the previous
 	 *                      sibling nodes be removed from their parent.
 	 */
@@ -206,7 +202,7 @@ public class XmlUtil implements ICommon {
 	/**
 	 * Remove the referenceNode and all its previous sibling nodes from their
 	 * parent.
-	 * 
+	 *
 	 * @param referenceNode      The referenceNode until which itself and the
 	 *                           previous sibling nodes be removed from their
 	 *                           parent.
@@ -231,7 +227,7 @@ public class XmlUtil implements ICommon {
 
 	/**
 	 * Remove the referenceNode and all its next sibling nodes from their parent.
-	 * 
+	 *
 	 * @param referenceNode The referenceNode from which itself and the next sibling
 	 *                      nodes be removed from their parent.
 	 */
@@ -251,7 +247,7 @@ public class XmlUtil implements ICommon {
 	 * Concatenate all the nodes between referenceNodeFrom (exclusive) and
 	 * referenceNodeTo (exclusive). If the referenceNodeFrom is same the
 	 * referenceNodeTo, the result will be empty.
-	 * 
+	 *
 	 * @param referenceNodeFrom The referenceNode from which itself and the next
 	 *                          sibling nodes be concatenated, until
 	 *                          referenceNodeTo.
@@ -506,8 +502,5 @@ public class XmlUtil implements ICommon {
 
 	public static StringBuilder createElement(String tagName, Object... childAndOrAttibutes) {
 		return appendElement(new StringBuilder(), tagName, childAndOrAttibutes);
-	}
-
-	private XmlUtil() {
 	}
 }

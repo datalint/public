@@ -1,18 +1,12 @@
 package com.datalint.xml.server.dom;
 
+import com.datalint.xml.shared.ICommon;
+import com.datalint.xml.shared.XmlUtil;
+import org.w3c.dom.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.UserDataHandler;
-
-import com.datalint.xml.shared.ICommon;
-import com.datalint.xml.shared.XmlUtil;
 
 public abstract class NodeImpl implements Node, ICommon {
 	protected Node owner;
@@ -150,6 +144,11 @@ public abstract class NodeImpl implements Node, ICommon {
 	}
 
 	@Override
+	public void setPrefix(String prefix) {
+		throw iCreateUoException("setPrefix");
+	}
+
+	@Override
 	public boolean hasAttributes() {
 		return false;
 	}
@@ -199,11 +198,6 @@ public abstract class NodeImpl implements Node, ICommon {
 	@Override
 	public boolean isSupported(String feature, String version) {
 		throw iCreateUoException("isSupported");
-	}
-
-	@Override
-	public void setPrefix(String prefix) {
-		throw iCreateUoException("setPrefix");
 	}
 
 	@Override

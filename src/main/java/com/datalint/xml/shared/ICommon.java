@@ -1,15 +1,13 @@
 package com.datalint.xml.shared;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.google.common.xml.XmlEscapers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.google.common.xml.XmlEscapers;
+import javax.annotation.Nullable;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ICommon {
 	char _APOSTROPHE = '\'';

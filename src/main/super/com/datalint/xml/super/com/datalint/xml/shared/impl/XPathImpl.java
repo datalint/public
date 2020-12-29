@@ -82,7 +82,7 @@ public abstract class XPathImpl {
 	}
 
 	public <T> Map<String, T> evaluateElementsMap(Element element, String xPath, String attributeName,
-			CollectionMode mode, TriConsumer<Map<String, T>, String, Element> consumer) {
+												  CollectionMode mode, TriConsumer<Map<String, T>, String, Element> consumer) {
 		JsArray<JavaScriptObject> jsArray = evaluateNodesImpl(element, xPath);
 
 		Map<String, T> elementsMap = mode.createMap(jsArray.length());

@@ -13,6 +13,9 @@ public class XPathUtil {
 
 	private static String cacheCurrentAllChildren;
 
+	private XPathUtil() {
+	}
+
 	public static String ancestor(String tagName) {
 		return operatorAxis(ancestor, tagName);
 	}
@@ -126,7 +129,7 @@ public class XPathUtil {
 	}
 
 	public static String xPathHasAttributeValue(String xPath, String attributeName,
-			Collection<String> attributeValues) {
+												Collection<String> attributeValues) {
 		StringBuilder sB = createPredicate(attributeName, attributeValues);
 
 		return sB.length() == 0 ? xPath : predicate(xPath, sB.toString());
@@ -143,7 +146,7 @@ public class XPathUtil {
 	}
 
 	public static String xPathNotAttributeValue(String xPath, String attributeName,
-			Collection<String> attributeValues) {
+												Collection<String> attributeValues) {
 		StringBuilder sB = createPredicate(attributeName, attributeValues);
 
 		return sB.length() == 0 ? xPath : predicate(xPath, not(sB.toString()));
@@ -370,7 +373,7 @@ public class XPathUtil {
 	}
 
 	public static StringBuilder function(StringBuilder target, Function function,
-			Consumer<StringBuilder> sourceAppender) {
+										 Consumer<StringBuilder> sourceAppender) {
 		function.open(target);
 
 		sourceAppender.accept(target);
@@ -424,9 +427,6 @@ public class XPathUtil {
 		}
 
 		return sB.toString();
-	}
-
-	private XPathUtil() {
 	}
 
 	public enum Function {

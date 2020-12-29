@@ -1,26 +1,25 @@
 package com.datalint.xml.shared.impl;
 
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
-
+import com.datalint.xml.shared.ICommon;
+import com.datalint.xml.shared.XPath;
+import com.datalint.xml.shared.common.CollectionMode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.datalint.xml.shared.ICommon;
-import com.datalint.xml.shared.XPath;
-import com.datalint.xml.shared.common.CollectionMode;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 
 public class XmlUtilImpl implements ICommon {
 	private static XmlUtilImpl impl = new XmlUtilImpl();
 
-	public static XmlUtilImpl getInstance() {
-		return impl;
+	private XmlUtilImpl() {
 	}
 
-	private XmlUtilImpl() {
+	public static XmlUtilImpl getInstance() {
+		return impl;
 	}
 
 	public Object getJsObject(Node node) {
@@ -28,7 +27,7 @@ public class XmlUtilImpl implements ICommon {
 	}
 
 	public void updateElementViaInnerHTML(Element updateElement, Element referenceElement,
-			Object currentElementObject) {
+										  Object currentElementObject) {
 		throw iCreateUoException("updateElementViaInnerHTML (server side)");
 	}
 

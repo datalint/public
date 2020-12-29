@@ -1,9 +1,8 @@
 package com.datalint.xml.shared.impl;
 
-import org.w3c.dom.Document;
-
 import com.datalint.xml.server.dom.DocumentImpl;
 import com.datalint.xml.server.parser.DocumentParser;
+import org.w3c.dom.Document;
 
 public class XmlParserImpl {
 	private static XmlParserImpl impl = new XmlParserImpl();
