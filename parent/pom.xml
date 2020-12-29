@@ -13,9 +13,19 @@
 	</modules>
 
 	<name>Xml Parent</name>
-	<url>https://www.datalint.com</url>
+	<url>https://www.datalint.com/xml</url>
 	<properties>
+		<project.phase.javadoc>none</project.phase.javadoc>
+		<project.phase.war.exploded>none</project.phase.war.exploded>
+		<project.phase.gwt.compile>none</project.phase.gwt.compile>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<project.gwt.module>gwt.xml.Xml</project.gwt.module>
+		<project.gwt.codeserver.phase>none</project.gwt.codeserver.phase>
+		<project.gwt.codeserverArgs>-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory}
+		</project.gwt.codeserverArgs>
+
 		<gwt.version>2.9.0</gwt.version>
 		<saxon.version>10.3</saxon.version>
 	</properties>
@@ -68,11 +78,56 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>test-start-codeserver</id>
+			<properties>
+				<project.gwt.codeserver.phase>test</project.gwt.codeserver.phase>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>net.ltgt.gwt.maven</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<skipModule>true</skipModule>
+					<moduleName>${project.gwt.module}</moduleName>
+					<classpathScope>compile</classpathScope>
+					<codeserverArgs>${project.gwt.codeserverArgs}</codeserverArgs>
+					<launcherDir>${project.build.directory}/${project.build.finalName}</launcherDir>
+				</configuration>
+				<executions>
+					<execution>
+						<id>codeserver</id>
+						<phase>${project.gwt.codeserver.phase}</phase>
+						<goals>
+							<goal>codeserver</goal>
+						</goals>
+					</execution>
+					<execution>
+						<phase>${project.phase.gwt.compile}</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.2.0</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>11</release>
+					<useIncrementalCompilation>false</useIncrementalCompilation>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -87,20 +142,43 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.9.1</version>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<packagingExcludes>**/client/,**/super/</packagingExcludes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>${project.phase.war.exploded}</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<!-- This configuration is needed for a bug in plugin -->
+					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>${project.phase.javadoc}</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>3.1.1</version>
 			</plugin>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<release>11</release>
-					<useIncrementalCompilation>false</useIncrementalCompilation>
-				</configuration>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.9.1</version>
 			</plugin>
 		</plugins>
 	</build>

@@ -13,35 +13,7 @@
 	<packaging>gwt-lib</packaging>
 
 	<name>Xml</name>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>net.ltgt.gwt.maven</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>1.0.0</version>
-				<extensions>true</extensions>
-				<configuration>
-					<skipModule>true</skipModule>
-					<moduleName>gwt.xml.Xml</moduleName>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<!-- This configuration is needed for a bug in plugin -->
-					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+	<properties>
+		<project.phase.javadoc>install</project.phase.javadoc>
+	</properties>
 </project>
