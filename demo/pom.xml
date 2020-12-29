@@ -18,8 +18,7 @@
 		<project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
 
 		<project.gwt.module>gwt.xml.Demo</project.gwt.module>
-		<project.gwt.codeserverArgs>-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory},-src,../../src/main/java
-		</project.gwt.codeserverArgs>
+		<project.gwt.codeserver.extra.src>,-src,../../src/main/java</project.gwt.codeserver.extra.src>
 	</properties>
 
 	<dependencies>

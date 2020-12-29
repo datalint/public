@@ -23,8 +23,7 @@
 
 		<project.gwt.module>gwt.xml.Xml</project.gwt.module>
 		<project.gwt.codeserver.phase>none</project.gwt.codeserver.phase>
-		<project.gwt.codeserverArgs>-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory}
-		</project.gwt.codeserverArgs>
+		<project.gwt.codeserver.extra.src/>
 
 		<gwt.version>2.9.0</gwt.version>
 		<saxon.version>10.3</saxon.version>
@@ -98,7 +97,9 @@
 					<skipModule>true</skipModule>
 					<moduleName>${project.gwt.module}</moduleName>
 					<classpathScope>compile</classpathScope>
-					<codeserverArgs>${project.gwt.codeserverArgs}</codeserverArgs>
+					<codeserverArgs>
+						-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory}${project.gwt.codeserver.extra.src}
+					</codeserverArgs>
 					<launcherDir>${project.build.directory}/${project.build.finalName}</launcherDir>
 				</configuration>
 				<executions>
