@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.datalint.xml</groupId>
+		<groupId>gwt.xml</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0</version>
 		<relativePath>../parent</relativePath>
@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.datalint.xml</groupId>
+			<groupId>gwt.xml</groupId>
 			<artifactId>xml</artifactId>
 			<version>1.0</version>
 			<scope>provided</scope>
@@ -67,7 +67,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<skipModule>true</skipModule>
-					<moduleName>com.datalint.xml.Demo</moduleName>
+					<moduleName>gwt.xml.Demo</moduleName>
 				</configuration>
 				<executions>
 					<execution>

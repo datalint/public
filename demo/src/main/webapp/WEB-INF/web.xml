@@ -4,7 +4,7 @@
 		 version="4.0">
 	<servlet>
 		<servlet-name>testServlet</servlet-name>
-		<servlet-class>com.datalint.xml.server.TestServlet</servlet-class>
+		<servlet-class>gwt.xml.server.TestServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
