@@ -10,7 +10,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Test {
+public class TrySomething {
 	public static void main(String[] args) throws Exception {
 		String xml = Files.readString(Paths.get("src/test/resources/test.xml"));
 
