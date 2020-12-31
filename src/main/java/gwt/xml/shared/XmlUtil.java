@@ -4,10 +4,7 @@ import gwt.xml.shared.impl.XmlUtilImpl;
 import org.w3c.dom.*;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class XmlUtil implements ICommon {
 	private static final String ROOT_WRAPPER = "root";
@@ -333,17 +330,6 @@ public class XmlUtil implements ICommon {
 		return XmlUtilImpl.getInstance().toString(node);
 	}
 
-	public static Node cloneNode(Node source, boolean deep) {
-		Object lock = source.getOwnerDocument();
-
-		if (lock == null)
-			lock = source;
-
-		synchronized (lock) {
-			return source.cloneNode(deep);
-		}
-	}
-
 	public static void copyChildren(Node src, Node target) {
 		assert src != null && target != null;
 
@@ -369,7 +355,7 @@ public class XmlUtil implements ICommon {
 
 	public static void copyAttributes(Element src, Element dest, boolean remove) {
 		NamedNodeMap destAttrs = dest.getAttributes();
-		HashMap<String, String> destAttrsMap = new HashMap<String, String>(destAttrs.getLength());
+		Map<String, String> destAttrsMap = new HashMap<>(destAttrs.getLength());
 		for (int i = 0; i < destAttrs.getLength(); i++) {
 			Node attr = destAttrs.item(i);
 			destAttrsMap.put(attr.getNodeName(), attr.getNodeValue());
@@ -446,8 +432,8 @@ public class XmlUtil implements ICommon {
 	public static void moveChildren(Element source, Element target, String xPath) {
 		List<Node> sourceChildren = XPath.evaluateNodes(source, xPath);
 
-		for (int i = 0; i < sourceChildren.size(); i++) {
-			target.appendChild(sourceChildren.get(i));
+		for (Node sourceChild : sourceChildren) {
+			target.appendChild(sourceChild);
 		}
 	}
 
@@ -479,23 +465,23 @@ public class XmlUtil implements ICommon {
 		return sB.append("</").append(tagName).append('>');
 	}
 
-	public static StringBuilder appendElement(StringBuilder sB, String tagName, Object... childAndOrAttibutes) {
+	public static StringBuilder appendElement(StringBuilder sB, String tagName, Object... childAndOrAttributes) {
 		sB.append('<').append(tagName);
 
-		boolean isEven = instance.iIsEven(childAndOrAttibutes.length);
+		boolean isEven = instance.iIsEven(childAndOrAttributes.length);
 
-		for (int i = isEven ? 0 : 1; i < childAndOrAttibutes.length; i++) {
-			if (childAndOrAttibutes[++i] == Boolean.FALSE)
+		for (int i = isEven ? 0 : 1; i < childAndOrAttributes.length; i++) {
+			if (childAndOrAttributes[++i] == Boolean.FALSE)
 				continue;
 
-			sB.append(' ').append(childAndOrAttibutes[i - 1]).append("=\"")
-					.append(instance.iEscapeAttr(childAndOrAttibutes[i].toString())).append('"');
+			sB.append(' ').append(childAndOrAttributes[i - 1]).append("=\"")
+					.append(instance.iEscapeAttr(childAndOrAttributes[i].toString())).append('"');
 		}
 
 		sB.append('>');
 
-		if (!isEven && ((CharSequence) childAndOrAttibutes[0]).length() > 0)
-			sB.append((CharSequence) childAndOrAttibutes[0]);
+		if (!isEven && ((CharSequence) childAndOrAttributes[0]).length() > 0)
+			sB.append((CharSequence) childAndOrAttributes[0]);
 
 		return appendEndTag(sB, tagName);
 	}

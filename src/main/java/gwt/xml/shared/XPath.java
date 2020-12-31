@@ -14,7 +14,7 @@ public class XPath implements ICommon {
 	private static final XPathImpl impl = XPathImpl.getInstance();
 
 	public static Comparator<Element> createComparator(String xPath) {
-		return (o1, o2) -> XPath.evaluateString(o1, xPath).compareTo(XPath.evaluateString(o2, xPath));
+		return Comparator.comparing(o -> XPath.evaluateString(o, xPath));
 	}
 
 	public static Comparator<Element> createDescendingComparator(String xPath) {
@@ -229,20 +229,9 @@ public class XPath implements ICommon {
 	}
 
 	private static class Lazy {
-		private static final TriConsumer<Map<String, Element>, String, Element> elementsMapConsumer = (map, key, item) -> map
-				.put(key, item);
+		private static final TriConsumer<Map<String, Element>, String, Element> elementsMapConsumer = Map::put;
 
-		private static final TriConsumer<Map<String, List<Element>>, String, Element> listElementsMapConsumer = (map, key,
-																												 item) -> {
-			List<Element> value = map.get(key);
-
-			if (value == null) {
-				value = new ArrayList<>();
-
-				map.put(key, value);
-			}
-
-			value.add(item);
-		};
+		private static final TriConsumer<Map<String, List<Element>>, String, Element> listElementsMapConsumer =
+				(map, key, item) -> map.computeIfAbsent(key, k -> new ArrayList<>()).add(item);
 	}
 }

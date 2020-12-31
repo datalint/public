@@ -18,11 +18,11 @@
 		<project.phase.javadoc>none</project.phase.javadoc>
 		<project.phase.war.exploded>none</project.phase.war.exploded>
 		<project.phase.gwt.compile>none</project.phase.gwt.compile>
+		<project.phase.gwt.codeserver.profile>none</project.phase.gwt.codeserver.profile>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<project.gwt.module>gwt.xml.Xml</project.gwt.module>
-		<project.gwt.codeserver.phase>none</project.gwt.codeserver.phase>
 		<project.gwt.codeserver.extra.src/>
 
 		<gwt.version>2.9.0</gwt.version>
@@ -81,7 +81,7 @@
 		<profile>
 			<id>test-start-codeserver</id>
 			<properties>
-				<project.gwt.codeserver.phase>test</project.gwt.codeserver.phase>
+				<project.phase.gwt.codeserver.profile>test</project.phase.gwt.codeserver.profile>
 			</properties>
 		</profile>
 	</profiles>
@@ -101,11 +101,12 @@
 						-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory}${project.gwt.codeserver.extra.src}
 					</codeserverArgs>
 					<launcherDir>${project.build.directory}/${project.build.finalName}</launcherDir>
+					<sourceLevel>11</sourceLevel>
 				</configuration>
 				<executions>
 					<execution>
 						<id>codeserver</id>
-						<phase>${project.gwt.codeserver.phase}</phase>
+						<phase>${project.phase.gwt.codeserver.profile}</phase>
 						<goals>
 							<goal>codeserver</goal>
 						</goals>

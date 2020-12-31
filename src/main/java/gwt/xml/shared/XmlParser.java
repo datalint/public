@@ -57,15 +57,15 @@ public class XmlParser {
 	 * This method parses a new document from the supplied string.
 	 *
 	 * @param contents         the String to be parsed into a <code>Document</code>
-	 * @param exceptionhandler handler used if the parse fails.
+	 * @param exceptionHandler handler used if the parse fails.
 	 * @return the newly created <code>Document</code> or null if the parse fails.
 	 */
-	public static Document parse(String contents, @Nullable Consumer<Exception> exceptionhandler) {
+	public static Document parse(String contents, @Nullable Consumer<Exception> exceptionHandler) {
 		try {
 			return impl.parse(contents);
 		} catch (Exception e) {
-			if (exceptionhandler != null)
-				exceptionhandler.accept(e);
+			if (exceptionHandler != null)
+				exceptionHandler.accept(e);
 
 			return null;
 		}
@@ -75,7 +75,7 @@ public class XmlParser {
 	 * This method removes all <code>Text</code> nodes which are made up of only
 	 * white space.
 	 *
-	 * @param n the node which is to have all of its whitespace descendents removed.
+	 * @param n the node which is to have all of its whitespace descendants removed.
 	 */
 	public static void removeWhitespace(Node n) {
 		removeWhitespaceInner(n, null);
@@ -105,7 +105,7 @@ public class XmlParser {
 		}
 		if (n.hasChildNodes()) {
 			int length = n.getChildNodes().getLength();
-			List<Node> toBeProcessed = new ArrayList<Node>();
+			List<Node> toBeProcessed = new ArrayList<>();
 			// We collect all the nodes to iterate as the child nodes will
 			// change upon removal
 			for (int i = 0; i < length; i++) {
