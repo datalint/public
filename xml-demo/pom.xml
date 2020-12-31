@@ -4,26 +4,25 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gwt.xml</groupId>
+		<groupId>com.datalint.gwt</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0</version>
-		<relativePath>../parent</relativePath>
 	</parent>
-	<artifactId>demo</artifactId>
+	<artifactId>xml-demo</artifactId>
 	<packaging>war</packaging>
 
-	<name>Xml Demo</name>
+	<name>Gwt Xml Demo</name>
 	<properties>
 		<project.phase.war.exploded>compile</project.phase.war.exploded>
 		<project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
 
 		<project.gwt.module>gwt.xml.Demo</project.gwt.module>
-		<project.gwt.codeserver.extra.src>,-src,../../src/main/java</project.gwt.codeserver.extra.src>
+		<project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>gwt.xml</groupId>
+			<groupId>com.datalint.gwt</groupId>
 			<artifactId>xml</artifactId>
 			<version>1.0</version>
 			<scope>provided</scope>
