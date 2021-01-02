@@ -145,7 +145,7 @@ public abstract class NodeImpl implements Node, ICommon {
 
 	@Override
 	public void setPrefix(String prefix) {
-		throw iCreateUoException("setPrefix");
+		throw createUoException("setPrefix");
 	}
 
 	@Override
@@ -197,57 +197,57 @@ public abstract class NodeImpl implements Node, ICommon {
 
 	@Override
 	public boolean isSupported(String feature, String version) {
-		throw iCreateUoException("isSupported");
+		throw createUoException("isSupported");
 	}
 
 	@Override
 	public String getBaseURI() {
-		throw iCreateUoException("getBaseURI");
+		throw createUoException("getBaseURI");
 	}
 
 	@Override
 	public String getTextContent() {
-		throw iCreateUoException("getTextContent");
+		throw createUoException("getTextContent");
 	}
 
 	@Override
 	public void setTextContent(String textContent) {
-		throw iCreateUoException("textContent");
+		throw createUoException("textContent");
 	}
 
 	@Override
 	public String lookupPrefix(String namespaceURI) {
-		throw iCreateUoException("namespaceURI");
+		throw createUoException("namespaceURI");
 	}
 
 	@Override
 	public boolean isDefaultNamespace(String namespaceURI) {
-		throw iCreateUoException("isDefaultNamespace");
+		throw createUoException("isDefaultNamespace");
 	}
 
 	@Override
 	public String lookupNamespaceURI(String prefix) {
-		throw iCreateUoException("lookupNamespaceURI");
+		throw createUoException("lookupNamespaceURI");
 	}
 
 	@Override
 	public boolean isEqualNode(Node arg) {
-		throw iCreateUoException("isEqualNode");
+		throw createUoException("isEqualNode");
 	}
 
 	@Override
 	public Object getFeature(String feature, String version) {
-		throw iCreateUoException("getFeature");
+		throw createUoException("getFeature");
 	}
 
 	@Override
 	public Object setUserData(String key, Object data, UserDataHandler handler) {
-		throw iCreateUoException("setUserData");
+		throw createUoException("setUserData");
 	}
 
 	@Override
 	public Object getUserData(String key) {
-		throw iCreateUoException("getUserData");
+		throw createUoException("getUserData");
 	}
 
 	@Override

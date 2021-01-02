@@ -23,12 +23,12 @@ public class XmlUtilImpl implements ICommon {
 	}
 
 	public Object getJsObject(Node node) {
-		throw iCreateUoException("getJsObject (server side)");
+		throw createUoException("getJsObject (server side)");
 	}
 
 	public void updateElementViaInnerHTML(Element updateElement, Element referenceElement,
 										  Object currentElementObject) {
-		throw iCreateUoException("updateElementViaInnerHTML (server side)");
+		throw createUoException("updateElementViaInnerHTML (server side)");
 	}
 
 	public int getHashCode(Element element) {

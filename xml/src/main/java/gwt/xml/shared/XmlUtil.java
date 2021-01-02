@@ -14,8 +14,8 @@ public class XmlUtil implements ICommon {
 	private XmlUtil() {
 	}
 
-	public static String escapeAttr(String attribute) {
-		return instance.iEscapeAttr(attribute);
+	public static String escapeAttrStatic(String attribute) {
+		return instance.escapeAttr(attribute);
 	}
 
 	public static String getNonNullAttribute(Element element, String name) {
@@ -82,7 +82,7 @@ public class XmlUtil implements ICommon {
 	}
 
 	public static String getItem(Element item, @Nullable String locale) {
-		if (!instance.iIsEmpty(locale)) {
+		if (!instance.isEmpty(locale)) {
 			if (item.hasAttribute(locale))
 				return item.getAttribute(locale);
 
@@ -112,7 +112,7 @@ public class XmlUtil implements ICommon {
 	public static int getIntValue(Element element, String attributeName, int defaultValue) {
 		String attributeValue = element.getAttribute(attributeName);
 
-		if (instance.iIsEmpty(attributeValue))
+		if (instance.isEmpty(attributeValue))
 			return defaultValue;
 
 		return Integer.parseInt(attributeValue);
@@ -163,7 +163,7 @@ public class XmlUtil implements ICommon {
 	}
 
 	public static <T extends Node> List<T> parseAsList(String source) {
-		return instance.iIsEmpty(source) ? Collections.emptyList()
+		return instance.isEmpty(source) ? Collections.emptyList()
 				: XPath.evaluateNodes(parseWithRootParent(source), "*");
 	}
 
@@ -448,13 +448,13 @@ public class XmlUtil implements ICommon {
 	public static StringBuilder appendBeginTag(StringBuilder sB, String tagName, Object... attibutes) {
 		sB.append('<').append(tagName);
 
-		assert instance.iIsEven(attibutes.length);
+		assert instance.isEven(attibutes.length);
 
 		for (int i = 0; i < attibutes.length; i++) {
 			if (attibutes[++i] == Boolean.FALSE || attibutes[i] == null)
 				continue;
 
-			sB.append(' ').append(attibutes[i - 1]).append("=\"").append(instance.iEscapeAttr(attibutes[i].toString()))
+			sB.append(' ').append(attibutes[i - 1]).append("=\"").append(instance.escapeAttr(attibutes[i].toString()))
 					.append('"');
 		}
 
@@ -468,14 +468,14 @@ public class XmlUtil implements ICommon {
 	public static StringBuilder appendElement(StringBuilder sB, String tagName, Object... childAndOrAttributes) {
 		sB.append('<').append(tagName);
 
-		boolean isEven = instance.iIsEven(childAndOrAttributes.length);
+		boolean isEven = instance.isEven(childAndOrAttributes.length);
 
 		for (int i = isEven ? 0 : 1; i < childAndOrAttributes.length; i++) {
 			if (childAndOrAttributes[++i] == Boolean.FALSE)
 				continue;
 
 			sB.append(' ').append(childAndOrAttributes[i - 1]).append("=\"")
-					.append(instance.iEscapeAttr(childAndOrAttributes[i].toString())).append('"');
+					.append(instance.escapeAttr(childAndOrAttributes[i].toString())).append('"');
 		}
 
 		sB.append('>');

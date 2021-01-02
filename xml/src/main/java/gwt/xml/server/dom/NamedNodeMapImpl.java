@@ -62,26 +62,26 @@ public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
 
 	@Override
 	public Node setNamedItem(Node arg) throws DOMException {
-		throw iCreateUoException("setNamedItem");
+		throw createUoException("setNamedItem");
 	}
 
 	@Override
 	public Node removeNamedItem(String name) throws DOMException {
-		throw iCreateUoException("removeNamedItem");
+		throw createUoException("removeNamedItem");
 	}
 
 	@Override
 	public Node getNamedItemNS(String namespaceURI, String localName) throws DOMException {
-		throw iCreateUoException("getNamedItemNS");
+		throw createUoException("getNamedItemNS");
 	}
 
 	@Override
 	public Node setNamedItemNS(Node arg) throws DOMException {
-		throw iCreateUoException("setNamedItemNS");
+		throw createUoException("setNamedItemNS");
 	}
 
 	@Override
 	public Node removeNamedItemNS(String namespaceURI, String localName) throws DOMException {
-		throw iCreateUoException("removeNamedItemNS");
+		throw createUoException("removeNamedItemNS");
 	}
 }

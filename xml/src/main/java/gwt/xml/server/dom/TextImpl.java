@@ -53,21 +53,21 @@ public class TextImpl extends CharacterDataImpl implements Text {
 
 	@Override
 	public boolean isElementContentWhitespace() {
-		throw iCreateUoException("isElementContentWhitespace");
+		throw createUoException("isElementContentWhitespace");
 	}
 
 	@Override
 	public String getWholeText() {
-		throw iCreateUoException("getWholeText");
+		throw createUoException("getWholeText");
 	}
 
 	@Override
 	public Text replaceWholeText(String content) {
-		throw iCreateUoException("replaceWholeText");
+		throw createUoException("replaceWholeText");
 	}
 
 	@Override
 	public String toString() {
-		return iEscapeContent(getNodeValue());
+		return escapeContent(getNodeValue());
 	}
 }

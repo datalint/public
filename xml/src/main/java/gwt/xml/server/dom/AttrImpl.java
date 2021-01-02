@@ -18,7 +18,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 	}
 
 	public static String toString(String name, String value) {
-		return new StringBuilder(name).append(_EQUALS).append(_QUOTE).append(XmlUtil.escapeAttr(value)).append(_QUOTE)
+		return new StringBuilder(name).append(_EQUALS).append(_QUOTE).append(XmlUtil.escapeAttrStatic(value)).append(_QUOTE)
 				.toString();
 	}
 
@@ -39,7 +39,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public void setValue(String value) {
-		throw iCreateUoException("setValue");
+		throw createUoException("setValue");
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public void setNodeValue(String nodeValue) {
-		throw iCreateUoException("setNodeValue");
+		throw createUoException("setNodeValue");
 	}
 
 	@Override
@@ -74,16 +74,16 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public Element getOwnerElement() {
-		throw iCreateUoException("getOwnerElement");
+		throw createUoException("getOwnerElement");
 	}
 
 	@Override
 	public TypeInfo getSchemaTypeInfo() {
-		throw iCreateUoException("getSchemaTypeInfo");
+		throw createUoException("getSchemaTypeInfo");
 	}
 
 	@Override
 	public boolean isId() {
-		throw iCreateUoException("isId");
+		throw createUoException("isId");
 	}
 }

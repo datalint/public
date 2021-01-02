@@ -78,7 +78,7 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public String getAttribute(String name) {
-		return attributes == null ? EMPTY : iNonNull(attributes.get(name));
+		return attributes == null ? EMPTY : nonNull(attributes.get(name));
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class ElementImpl extends ParentNode implements Element {
 		if (attributes == null)
 			attributes = new HashMap<>();
 
-		value = iNonNull(value);
+		value = nonNull(value);
 
 		if (!value.equals(attributes.put(name, value)))
 			attributesRevision++;
@@ -188,66 +188,66 @@ public class ElementImpl extends ParentNode implements Element {
 
 	@Override
 	public Attr setAttributeNode(Attr newAttr) {
-		throw iCreateUoException("setAttributeNode");
+		throw createUoException("setAttributeNode");
 	}
 
 	@Override
 	public Attr removeAttributeNode(Attr oldAttr) {
-		throw iCreateUoException("removeAttributeNode");
+		throw createUoException("removeAttributeNode");
 	}
 
 	@Override
 	public String getAttributeNS(String namespaceURI, String localName) {
-		throw iCreateUoException("getAttributeNS");
+		throw createUoException("getAttributeNS");
 	}
 
 	@Override
 	public void setAttributeNS(String namespaceURI, String qualifiedName, String value) {
-		throw iCreateUoException("setAttributeNS");
+		throw createUoException("setAttributeNS");
 	}
 
 	@Override
 	public void removeAttributeNS(String namespaceURI, String localName) {
-		throw iCreateUoException("removeAttributeNS");
+		throw createUoException("removeAttributeNS");
 	}
 
 	@Override
 	public Attr getAttributeNodeNS(String namespaceURI, String localName) {
-		throw iCreateUoException("getAttributeNodeNS");
+		throw createUoException("getAttributeNodeNS");
 	}
 
 	@Override
 	public Attr setAttributeNodeNS(Attr newAttr) {
-		throw iCreateUoException("setAttributeNodeNS");
+		throw createUoException("setAttributeNodeNS");
 	}
 
 	@Override
 	public NodeList getElementsByTagNameNS(String namespaceURI, String localName) {
-		throw iCreateUoException("getElementsByTagNameNS");
+		throw createUoException("getElementsByTagNameNS");
 	}
 
 	@Override
 	public boolean hasAttributeNS(String namespaceURI, String localName) {
-		throw iCreateUoException("hasAttributeNS");
+		throw createUoException("hasAttributeNS");
 	}
 
 	@Override
 	public TypeInfo getSchemaTypeInfo() {
-		throw iCreateUoException("getSchemaTypeInfo");
+		throw createUoException("getSchemaTypeInfo");
 	}
 
 	@Override
 	public void setIdAttribute(String name, boolean isId) {
-		throw iCreateUoException("setIdAttribute");
+		throw createUoException("setIdAttribute");
 	}
 
 	@Override
 	public void setIdAttributeNS(String namespaceURI, String localName, boolean isId) {
-		throw iCreateUoException("setIdAttributeNS");
+		throw createUoException("setIdAttributeNS");
 	}
 
 	@Override
 	public void setIdAttributeNode(Attr idAttr, boolean isId) {
-		throw iCreateUoException("setIdAttributeNode");
+		throw createUoException("setIdAttributeNode");
 	}
 }

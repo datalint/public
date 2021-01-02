@@ -44,11 +44,11 @@ public class DocumentSerializer implements ICommon {
 	}
 
 	public static List<String> serialize(NodeList nodeList) throws Exception {
-		return serialize(instance.iAsList(nodeList));
+		return serialize(instance.asList(nodeList));
 	}
 
 	public static List<String> serializeSilent(NodeList nodeList) {
-		return serializeSilent(instance.iAsList(nodeList));
+		return serializeSilent(instance.asList(nodeList));
 	}
 
 	public static void serialize(Iterable<Node> nodes, Collection<String> result) throws Exception {
@@ -70,11 +70,11 @@ public class DocumentSerializer implements ICommon {
 	}
 
 	public static void serialize(NodeList nodeList, Collection<String> result) throws Exception {
-		serialize(instance.iAsList(nodeList), result);
+		serialize(instance.asList(nodeList), result);
 	}
 
 	public static void serializeSilent(NodeList nodeList, Collection<String> result) {
-		serializeSilent(instance.iAsList(nodeList), result);
+		serializeSilent(instance.asList(nodeList), result);
 	}
 
 	public static String serialize(Node node) throws Exception {

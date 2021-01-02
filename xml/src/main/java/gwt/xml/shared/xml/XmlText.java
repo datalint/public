@@ -6,7 +6,7 @@ public class XmlText implements IXmlExpression {
 	private final String escapedText;
 
 	public XmlText(String text) {
-		escapedText = iEscapeContent(text);
+		escapedText = escapeContent(text);
 	}
 
 	@Override

@@ -205,82 +205,82 @@ public class DocumentImpl extends NodeImpl implements Document {
 
 	@Override
 	public DocumentType getDoctype() {
-		throw iCreateUoException("getDoctype");
+		throw createUoException("getDoctype");
 	}
 
 	@Override
 	public DOMImplementation getImplementation() {
-		throw iCreateUoException("getImplementation");
+		throw createUoException("getImplementation");
 	}
 
 	@Override
 	public Attr createAttribute(String name) {
-		throw iCreateUoException("createAttribute");
+		throw createUoException("createAttribute");
 	}
 
 	@Override
 	public EntityReference createEntityReference(String name) {
-		throw iCreateUoException("createEntityReference");
+		throw createUoException("createEntityReference");
 	}
 
 	@Override
 	public Element createElementNS(String namespaceURI, String qualifiedName) {
-		throw iCreateUoException("createElementNS");
+		throw createUoException("createElementNS");
 	}
 
 	@Override
 	public Attr createAttributeNS(String namespaceURI, String qualifiedName) {
-		throw iCreateUoException("createAttributeNS");
+		throw createUoException("createAttributeNS");
 	}
 
 	@Override
 	public NodeList getElementsByTagNameNS(String namespaceURI, String localName) {
-		throw iCreateUoException("getElementsByTagNameNS");
+		throw createUoException("getElementsByTagNameNS");
 	}
 
 	@Override
 	public String getInputEncoding() {
-		throw iCreateUoException("getInputEncoding");
+		throw createUoException("getInputEncoding");
 	}
 
 	@Override
 	public boolean getStrictErrorChecking() {
-		throw iCreateUoException("getStrictErrorChecking");
+		throw createUoException("getStrictErrorChecking");
 	}
 
 	@Override
 	public void setStrictErrorChecking(boolean strictErrorChecking) {
-		throw iCreateUoException("setStrictErrorChecking");
+		throw createUoException("setStrictErrorChecking");
 	}
 
 	@Override
 	public String getDocumentURI() {
-		throw iCreateUoException("getDocumentURI");
+		throw createUoException("getDocumentURI");
 	}
 
 	@Override
 	public void setDocumentURI(String documentURI) {
-		throw iCreateUoException("setDocumentURI");
+		throw createUoException("setDocumentURI");
 	}
 
 	@Override
 	public Node adoptNode(Node source) {
-		throw iCreateUoException("adoptNode");
+		throw createUoException("adoptNode");
 	}
 
 	@Override
 	public DOMConfiguration getDomConfig() {
-		throw iCreateUoException("getDomConfig");
+		throw createUoException("getDomConfig");
 	}
 
 	@Override
 	public void normalizeDocument() {
-		throw iCreateUoException("normalizeDocument");
+		throw createUoException("normalizeDocument");
 	}
 
 	@Override
 	public Node renameNode(Node n, String namespaceURI, String qualifiedName) {
-		throw iCreateUoException("renameNode");
+		throw createUoException("renameNode");
 	}
 
 	@Override

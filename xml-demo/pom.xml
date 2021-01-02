@@ -44,7 +44,7 @@
 							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
 							<resources>
 								<resource>
-									<directory>../target/classes</directory>
+									<directory>../xml/target/classes</directory>
 								</resource>
 							</resources>
 						</configuration>

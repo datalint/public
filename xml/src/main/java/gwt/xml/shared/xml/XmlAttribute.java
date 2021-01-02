@@ -8,7 +8,7 @@ public class XmlAttribute implements IXmlExpression {
 
 	public XmlAttribute(String name, String value) {
 		this.name = name;
-		this.escapedValue = iEscapeAttr(value);
+		this.escapedValue = escapeAttr(value);
 	}
 
 	@Override

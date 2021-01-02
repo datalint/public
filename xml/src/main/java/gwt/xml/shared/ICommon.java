@@ -33,12 +33,12 @@ public interface ICommon {
 	String TEXT_F = "text()";
 	String WILDCARD = "*";
 
-	default int iParseInt(String source) {
-		return iParseInt(source, 0);
+	default int parseInt(String source) {
+		return parseInt(source, 0);
 	}
 
-	default int iParseInt(String source, int defaultValue) {
-		if (!iIsEmpty(source))
+	default int parseInt(String source, int defaultValue) {
+		if (!isEmpty(source))
 			try {
 				return Integer.parseInt(source);
 			} catch (NumberFormatException e) {
@@ -48,35 +48,50 @@ public interface ICommon {
 		return defaultValue;
 	}
 
-	default boolean iIsEven(int x) {
+	default long parseLong(String source) {
+		return parseLong(source, 0L);
+	}
+
+	default long parseLong(String source, long defaultValue) {
+		if (!isEmpty(source))
+			try {
+				return Long.parseLong(source);
+			} catch (NumberFormatException e) {
+				// Ignore
+			}
+
+		return defaultValue;
+	}
+
+	default boolean isEven(int x) {
 		return (x & 1) == 0;
 	}
 
-	default boolean iIsEmpty(@Nullable String source) {
+	default boolean isEmpty(@Nullable String source) {
 		return source == null || source.isEmpty();
 	}
 
-	default String iNonNull(@Nullable String source) {
-		return iNonNull(source, EMPTY);
+	default String nonNull(@Nullable String source) {
+		return nonNull(source, EMPTY);
 	}
 
-	default String iNonNull(@Nullable String source, String substitution) {
+	default String nonNull(@Nullable String source, String substitution) {
 		return source == null ? substitution : source;
 	}
 
-	default String iEscapeAttr(String attribute) {
+	default String escapeAttr(String attribute) {
 		return XmlEscapers.xmlAttributeEscaper().escape(attribute);
 	}
 
-	default String iEscapeContent(String content) {
+	default String escapeContent(String content) {
 		return XmlEscapers.xmlContentEscaper().escape(content);
 	}
 
-	default UnsupportedOperationException iCreateUoException(String operatonName) {
-		return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operatonName);
+	default UnsupportedOperationException createUoException(String operationName) {
+		return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operationName);
 	}
 
-	default List<Node> iAsList(NodeList nodeList) {
+	default List<Node> asList(NodeList nodeList) {
 		return new NodeListWrapper(nodeList);
 	}
 
