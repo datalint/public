@@ -38,7 +38,7 @@ class ElementImpl extends NodeImpl implements Element, ICommon {
 	 * XmlParserImpl.
 	 */
 	public String getAttribute(String tagName) {
-		return iNonNull(XmlParserImpl.getAttribute(this.getJsObject(), tagName));
+		return nonNull(XmlParserImpl.getAttribute(this.getJsObject(), tagName));
 	}
 
 	/**
