@@ -48,21 +48,6 @@ public interface ICommon {
 		return defaultValue;
 	}
 
-	default long parseLong(String source) {
-		return parseLong(source, 0L);
-	}
-
-	default long parseLong(String source, long defaultValue) {
-		if (!isEmpty(source))
-			try {
-				return Long.parseLong(source);
-			} catch (NumberFormatException e) {
-				// Ignore
-			}
-
-		return defaultValue;
-	}
-
 	default boolean isEven(int x) {
 		return (x & 1) == 0;
 	}
