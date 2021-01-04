@@ -4,7 +4,7 @@
 <module rename-to='demo'>
 	<inherits name='gwt.xml.Xml'/>
 
-	<entry-point class='gwt.xml.client.Demo'/>
+	<entry-point class='gwt.xml.client.XmlDemo'/>
 
 	<source path='client'/>
 	<source path='shared'/>

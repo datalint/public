@@ -16,7 +16,7 @@
 		<project.phase.war.exploded>compile</project.phase.war.exploded>
 		<project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
 
-		<project.gwt.module>gwt.xml.Demo</project.gwt.module>
+		<project.gwt.module>gwt.xml.XmlDemo</project.gwt.module>
 		<project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
 	</properties>
 

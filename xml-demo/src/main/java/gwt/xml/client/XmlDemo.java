@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
 
-public class Demo implements EntryPoint {
+public class XmlDemo implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		Dummy dummy = new Dummy();
