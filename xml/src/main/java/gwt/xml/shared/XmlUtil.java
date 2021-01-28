@@ -276,6 +276,14 @@ public class XmlUtil implements ICommon {
 		return sB.toString();
 	}
 
+	public static Element appendElement(Document document, String tagName) {
+		return appendElement(document.getDocumentElement(), tagName);
+	}
+
+	public static Element appendElement(Element parent, String tagName) {
+		return (Element) parent.appendChild(parent.getOwnerDocument().createElement(tagName));
+	}
+
 	public static Element createElementOnRequest(Element parent, String tagName) {
 		return createElementOnRequest(parent, tagName, tagName);
 	}
