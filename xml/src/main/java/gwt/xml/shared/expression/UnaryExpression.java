@@ -1,11 +1,9 @@
-package gwt.xml.shared.xpath;
+package gwt.xml.shared.expression;
 
-import gwt.xml.shared.IXPathExpression;
+public class UnaryExpression implements IExpression {
+	protected final IExpression expression;
 
-public class UnaryExpression implements IXPathExpression {
-	protected final IXPathExpression expression;
-
-	public UnaryExpression(IXPathExpression expression) {
+	public UnaryExpression(IExpression expression) {
 		this.expression = expression;
 	}
 

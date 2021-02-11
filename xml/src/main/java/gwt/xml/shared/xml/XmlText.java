@@ -1,8 +1,8 @@
 package gwt.xml.shared.xml;
 
-import gwt.xml.shared.IXmlExpression;
+import gwt.xml.shared.expression.IExpression;
 
-public class XmlText implements IXmlExpression {
+public class XmlText implements IExpression {
 	private final String escapedText;
 
 	public XmlText(String text) {

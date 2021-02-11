@@ -1,9 +1,10 @@
 package gwt.xml.shared.xpath;
 
-import gwt.xml.shared.IXPathExpression;
+import gwt.xml.shared.expression.IExpression;
+import gwt.xml.shared.expression.UnaryExpression;
 
 public class Name extends UnaryExpression {
-	public Name(IXPathExpression expression) {
+	public Name(IExpression expression) {
 		super(expression);
 	}
 

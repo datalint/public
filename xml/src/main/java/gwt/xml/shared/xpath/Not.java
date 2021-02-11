@@ -1,9 +1,10 @@
 package gwt.xml.shared.xpath;
 
-import gwt.xml.shared.IXPathExpression;
+import gwt.xml.shared.expression.IExpression;
+import gwt.xml.shared.expression.UnaryExpression;
 
 public class Not extends UnaryExpression {
-	public Not(IXPathExpression expression) {
+	public Not(IExpression expression) {
 		super(expression);
 	}
 

@@ -1,5 +1,6 @@
 package gwt.xml.shared;
 
+import gwt.xml.shared.expression.*;
 import gwt.xml.shared.xpath.*;
 
 import javax.annotation.Nullable;
@@ -7,26 +8,26 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public class XPathBuilder implements ICommon {
-	public static final IXPathExpression LAST = new Lit(LAST_F);
-	public static final IXPathExpression POSITION = new Lit(POSITION_F);
-	public static final IXPathExpression TEXT = new Lit(TEXT_F);
+	public static final IExpression LAST = new Lit(LAST_F);
+	public static final IExpression POSITION = new Lit(POSITION_F);
+	public static final IExpression TEXT = new Lit(TEXT_F);
 
 	private XPathBuilder() {
 	}
 
-	public static IXPathExpression all(IXPathExpression... expressions) {
+	public static IExpression all(IExpression... expressions) {
 		return join(WILDCARD, expressions);
 	}
 
-	public static IXPathExpression and(IXPathExpression first, IXPathExpression... expressions) {
-		return new And(first, expressions);
+	public static IExpression and(IExpression first, IExpression... expressions) {
+		return Operator.and(first, expressions);
 	}
 
-	public static IXPathExpression attr(String value) {
+	public static IExpression attr(String value) {
 		return new Lit(AT + value);
 	}
 
-	public static IXPathExpression attributeNotStartsWith(String attribute, String query) {
+	public static IExpression attributeNotStartsWith(String attribute, String query) {
 		return and(attr(attribute), not(startsWith(attr(attribute), quote(query))));
 	}
 
@@ -34,19 +35,19 @@ public class XPathBuilder implements ICommon {
 		return join(xPath, predicate(attributeNotStartsWith(attribute, query))).build();
 	}
 
-	public static IXPathExpression attributeStartsWith(String attribute, String query) {
+	public static IExpression attributeStartsWith(String attribute, String query) {
 		return startsWith(attr(attribute), quote(query));
 	}
 
-	public static IXPathExpression concat(IXPathExpression first, IXPathExpression... expressions) {
+	public static IExpression concat(IExpression first, IExpression... expressions) {
 		return new Concat(first, expressions);
 	}
 
-	public static IXPathExpression contains(IXPathExpression first, IXPathExpression second) {
+	public static IExpression contains(IExpression first, IExpression second) {
 		return new Contains(first, second);
 	}
 
-	public static IXPathExpression count(IXPathExpression expression) {
+	public static IExpression count(IExpression expression) {
 		return new Count(expression);
 	}
 
@@ -54,13 +55,13 @@ public class XPathBuilder implements ICommon {
 		return count(lit(xPath)).build();
 	}
 
-	public static IXPathExpression[] createAttrExpressions(String[] arguments) {
-		return createExpressions(argument -> attr(argument), arguments);
+	public static IExpression[] createAttrExpressions(String[] arguments) {
+		return createExpressions(XPathBuilder::attr, arguments);
 	}
 
-	public static IXPathExpression[] createExpressions(Function<String, IXPathExpression> function,
-													   String[] arguments) {
-		IXPathExpression[] expressions = new IXPathExpression[arguments.length];
+	public static IExpression[] createExpressions(Function<String, IExpression> function,
+												  String[] arguments) {
+		IExpression[] expressions = new IExpression[arguments.length];
 
 		for (int i = 0; i < expressions.length; i++) {
 			expressions[i] = function.apply(arguments[i]);
@@ -69,12 +70,12 @@ public class XPathBuilder implements ICommon {
 		return expressions;
 	}
 
-	public static IXPathExpression[] createLitExpressions(String[] arguments) {
-		return createExpressions(argument -> lit(argument), arguments);
+	public static IExpression[] createLitExpressions(String[] arguments) {
+		return createExpressions(XPathBuilder::lit, arguments);
 	}
 
-	public static <T> IXPathExpression createParenthesesAnd(Collection<T> arguments,
-															Function<T, IXPathExpression> creator) {
+	public static <T> IExpression createParenthesesAnd(Collection<T> arguments,
+													   Function<T, IExpression> creator) {
 		int size = arguments.size();
 
 		if (size == 0)
@@ -82,12 +83,12 @@ public class XPathBuilder implements ICommon {
 		else if (size == 1)
 			return creator.apply(arguments.iterator().next());
 
-		IXPathExpression first = null;
-		IXPathExpression[] expressions = new IXPathExpression[size - 1];
+		IExpression first = null;
+		IExpression[] expressions = new IExpression[size - 1];
 
 		int index = 0;
 		for (T argument : arguments) {
-			IXPathExpression expression = creator.apply(argument);
+			IExpression expression = creator.apply(argument);
 
 			if (first == null)
 				first = parentheses(expression);
@@ -98,11 +99,11 @@ public class XPathBuilder implements ICommon {
 		return and(first, expressions);
 	}
 
-	public static IXPathExpression descendants(IXPathExpression first, IXPathExpression... expressions) {
+	public static IExpression descendants(IExpression first, IExpression... expressions) {
 		return new Descendants(first, expressions);
 	}
 
-	public static IXPathExpression descendants(String first, IXPathExpression... expressions) {
+	public static IExpression descendants(String first, IExpression... expressions) {
 		return descendants(lit(first), expressions);
 	}
 
@@ -111,36 +112,36 @@ public class XPathBuilder implements ICommon {
 				.build();
 	}
 
-	public static IXPathExpression equal(IXPathExpression first, IXPathExpression second) {
-		return new Equal(first, second);
+	public static IExpression equal(IExpression first, IExpression second) {
+		return Operator.equal(first, second);
 	}
 
-	public static IXPathExpression equalAttribute(String name, String value) {
+	public static IExpression equalAttribute(String name, String value) {
 		return equal(attr(name), quote(value));
 	}
 
-	public static IXPathExpression equalChild(String childTagName, String value) {
+	public static IExpression equalChild(String childTagName, String value) {
 		return equal(lit(childTagName), quote(value));
 	}
 
-	public static IXPathExpression equalTagName(String tagName) {
+	public static IExpression equalTagName(String tagName) {
 		return equal(name(null), quote(tagName));
 	}
 
-	public static IXPathExpression[] equalTagNames(String... tagNames) {
-		return createExpressions(tagName -> equalTagName(tagName), tagNames);
+	public static IExpression[] equalTagNames(String... tagNames) {
+		return createExpressions(XPathBuilder::equalTagName, tagNames);
 	}
 
-	public static IXPathExpression greater(int second) {
+	public static IExpression greater(int second) {
 		return greater(POSITION, second);
 	}
 
-	public static IXPathExpression greater(IXPathExpression first, int second) {
+	public static IExpression greater(IExpression first, int second) {
 		return greater(first, lit(second));
 	}
 
-	public static IXPathExpression greater(IXPathExpression first, IXPathExpression second) {
-		return new Greater(first, second);
+	public static IExpression greater(IExpression first, IExpression second) {
+		return Operator.greater(first, second);
 	}
 
 	public static String hasAttributeNames(String firstAttributeName, String... attributeNames) {
@@ -151,63 +152,59 @@ public class XPathBuilder implements ICommon {
 		return join(lit(xPath), predicate(or(attr(firstAttributeName), createAttrExpressions(attributeNames)))).build();
 	}
 
-	public static IXPathExpression join(IXPathExpression first, IXPathExpression... expressions) {
+	public static IExpression join(IExpression first, IExpression... expressions) {
 		return new Join(first, expressions);
 	}
 
-	public static IXPathExpression join(String first, IXPathExpression... expressions) {
+	public static IExpression join(String first, IExpression... expressions) {
 		return join(lit(first), expressions);
 	}
 
-	public static IXPathExpression less(int second) {
+	public static IExpression less(int second) {
 		return less(POSITION, second);
 	}
 
-	public static IXPathExpression less(IXPathExpression first, int second) {
+	public static IExpression less(IExpression first, int second) {
 		return less(first, lit(second));
 	}
 
-	public static IXPathExpression less(IXPathExpression first, IXPathExpression second) {
-		return new Less(first, second);
+	public static IExpression less(IExpression first, IExpression second) {
+		return Operator.less(first, second);
 	}
 
-	public static IXPathExpression lit(int value) {
-		return lit(String.valueOf(value));
-	}
-
-	public static IXPathExpression lit(String value) {
+	public static IExpression lit(Object value) {
 		return new Lit(value);
 	}
 
-	public static IXPathExpression lowerCase(IXPathExpression expression) {
+	public static IExpression lowerCase(IExpression expression) {
 		return translate(expression, quote(ALPHABET_UPPERCASE), quote(ALPHABET_LOWERCASE));
 	}
 
-	public static IXPathExpression minus(int second) {
-		return new Minus(LAST, lit(second));
+	public static IExpression minus(int second) {
+		return Operator.minus(LAST, lit(second));
 	}
 
-	public static IXPathExpression minus(IXPathExpression first, int second) {
-		return new Minus(first, lit(second));
+	public static IExpression minus(IExpression first, int second) {
+		return Operator.minus(first, lit(second));
 	}
 
-	public static IXPathExpression minus(IXPathExpression first, IXPathExpression second) {
-		return new Minus(first, second);
+	public static IExpression minus(IExpression first, IExpression second) {
+		return Operator.minus(first, second);
 	}
 
-	public static IXPathExpression name(@Nullable IXPathExpression expression) {
+	public static IExpression name(@Nullable IExpression expression) {
 		return new Name(expression);
 	}
 
-	public static IXPathExpression not(IXPathExpression expression) {
+	public static IExpression not(IExpression expression) {
 		return new Not(expression);
 	}
 
-	public static IXPathExpression or(IXPathExpression first, IXPathExpression... expressions) {
-		return new Or(first, expressions);
+	public static IExpression or(IExpression first, IExpression... expressions) {
+		return Operator.or(first, expressions);
 	}
 
-	public static IXPathExpression parentheses(IXPathExpression expression) {
+	public static IExpression parentheses(IExpression expression) {
 		return new UnaryExpression(expression);
 	}
 
@@ -215,47 +212,47 @@ public class XPathBuilder implements ICommon {
 		return join(parentheses(lit(xPath)), predicate(lit(predicate))).build();
 	}
 
-	public static IXPathExpression path(IXPathExpression first, IXPathExpression... expressions) {
+	public static IExpression path(IExpression first, IExpression... expressions) {
 		return new Path(first, expressions);
 	}
 
-	public static IXPathExpression path(String first, IXPathExpression... expressions) {
+	public static IExpression path(String first, IExpression... expressions) {
 		return path(lit(first), expressions);
 	}
 
-	public static String pathes(String first, String... others) {
+	public static String paths(String first, String... others) {
 		return path(first, createLitExpressions(others)).build();
 	}
 
-	public static IXPathExpression predicate(IXPathExpression expression) {
+	public static IExpression predicate(IExpression expression) {
 		return new Predicate(expression);
 	}
 
-	public static IXPathExpression quote(String value) {
+	public static IExpression quote(String value) {
 		return new Lit(XPathUtil.quote(value));
 	}
 
-	public static IXPathExpression self() {
-		return parentheses(lit("."));
+	public static IExpression self() {
+		return parentheses(lit(DOT));
 	}
 
-	public static IXPathExpression startsWith(IXPathExpression first, IXPathExpression second) {
+	public static IExpression startsWith(IExpression first, IExpression second) {
 		return new StartsWith(first, second);
 	}
 
-	public static IXPathExpression translate(IXPathExpression first, IXPathExpression second, IXPathExpression third) {
+	public static IExpression translate(IExpression first, IExpression second, IExpression third) {
 		return new Translate(first, second, third);
 	}
 
-	public static IXPathExpression union(IXPathExpression first, IXPathExpression... expressions) {
+	public static IExpression union(IExpression first, IExpression... expressions) {
 		return new Union(first, expressions);
 	}
 
-	public static IXPathExpression union(String first, IXPathExpression... expressions) {
+	public static IExpression union(String first, IExpression... expressions) {
 		return union(lit(first), expressions);
 	}
 
-	public static String unions(String first, IXPathExpression... others) {
+	public static String unions(String first, IExpression... others) {
 		return union(first, others).build();
 	}
 

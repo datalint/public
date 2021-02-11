@@ -1,6 +1,8 @@
-package gwt.xml.shared;
+package gwt.xml.shared.expression;
 
-public interface IXmlExpression extends ICommon {
+import gwt.xml.shared.ICommon;
+
+public interface IExpression extends ICommon {
 	StringBuilder append(StringBuilder target);
 
 	default boolean isEmpty() {

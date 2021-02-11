@@ -1,9 +1,10 @@
 package gwt.xml.shared.xpath;
 
-import gwt.xml.shared.IXPathExpression;
+import gwt.xml.shared.expression.ArityExpression;
+import gwt.xml.shared.expression.IExpression;
 
 public class StartsWith extends ArityExpression {
-	public StartsWith(IXPathExpression first, IXPathExpression second) {
+	public StartsWith(IExpression first, IExpression second) {
 		super(first, second);
 	}
 

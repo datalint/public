@@ -15,6 +15,7 @@ public interface ICommon {
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
 	char _LINE_FEED = '\n';
+	char _PERCENT = '%';
 	char _QUOTE = '"';
 	char _SLASH = '/';
 	char _SPACE = ' ';
@@ -23,15 +24,23 @@ public interface ICommon {
 
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	String AND_WITH_SPACE = " and ";
 	String AT = "@";
 	String COUNT_ALL = "count(*)";
 	String DOT = ".";
 	String EMPTY = "";
 	String LAST_F = "last()";
+	String MINUS_WITH_SPACE = " - ";
+	String OR_WITH_SPACE = " or ";
+	String PLUS_WITH_SPACE = " + ";
 	String POSITION_F = "position()";
 	String SPACE = " ";
 	String TEXT_F = "text()";
 	String WILDCARD = "*";
+
+	default String simpleName(Class<?> clazz) {
+		return clazz.getSimpleName();
+	}
 
 	default int parseInt(String source) {
 		return parseInt(source, 0);

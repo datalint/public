@@ -131,7 +131,7 @@ public class XmlEscapers {
 	 *
 	 * <p>This escaper does not escape non-ASCII characters to their numeric character references
 	 * (NCR). However, horizontal tab {@code '\t'}, line feed {@code '\n'} and carriage return {@code
-	 * '\r'} are escaped to a corresponding NCR {@code "&#x9;"}, {@code "&#xA;"}, and {@code "&#xD;"}
+	 * '\r'} are escaped to a corresponding NCR {@code "&#x9;"}, {@code "&#10;"}, and {@code "&#xD;"}
 	 * respectively. Any other non-ASCII characters appearing in the input will be preserved in the
 	 * output.
 	 *

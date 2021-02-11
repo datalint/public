@@ -1,12 +1,12 @@
 package gwt.xml.shared.xml;
 
-import gwt.xml.shared.IXmlExpression;
+import gwt.xml.shared.expression.IExpression;
 
-public class XmlElement implements IXmlExpression {
+public class XmlElement implements IExpression {
 	private final String tagName;
 
-	private IXmlExpression child;
-	private IXmlExpression[] attributes;
+	private IExpression child;
+	private IExpression[] attributes;
 
 	public XmlElement(String tagName) {
 		this.tagName = tagName;
@@ -18,17 +18,17 @@ public class XmlElement implements IXmlExpression {
 		setChild(new XmlText(text));
 	}
 
-	public XmlElement(String tagName, IXmlExpression... attributes) {
+	public XmlElement(String tagName, IExpression... attributes) {
 		this.tagName = tagName;
 
 		this.attributes = attributes;
 	}
 
-	public void setChild(IXmlExpression child) {
+	public void setChild(IExpression child) {
 		this.child = child;
 	}
 
-	public XmlElement withChild(IXmlExpression child) {
+	public XmlElement withChild(IExpression child) {
 		setChild(child);
 
 		return this;
@@ -39,7 +39,7 @@ public class XmlElement implements IXmlExpression {
 		target.append(_LESS_THAN).append(tagName);
 
 		if (attributes != null) {
-			for (IXmlExpression attribute : attributes) {
+			for (IExpression attribute : attributes) {
 				attribute.append(target);
 			}
 		}

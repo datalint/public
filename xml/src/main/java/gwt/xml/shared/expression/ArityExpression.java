@@ -1,11 +1,9 @@
-package gwt.xml.shared.xpath;
-
-import gwt.xml.shared.IXPathExpression;
+package gwt.xml.shared.expression;
 
 public class ArityExpression extends UnaryExpression {
-	protected final IXPathExpression[] expressions;
+	protected final IExpression[] expressions;
 
-	protected ArityExpression(IXPathExpression expression, IXPathExpression... expressions) {
+	protected ArityExpression(IExpression expression, IExpression... expressions) {
 		super(expression);
 
 		this.expressions = expressions;
@@ -15,7 +13,7 @@ public class ArityExpression extends UnaryExpression {
 	public StringBuilder append(StringBuilder target) {
 		expression.append(open(target));
 
-		for (IXPathExpression expression : expressions) {
+		for (IExpression expression : expressions) {
 			expression.append(between(target));
 		}
 

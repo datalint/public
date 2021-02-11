@@ -1,9 +1,10 @@
 package gwt.xml.shared.xpath;
 
-import gwt.xml.shared.IXPathExpression;
+import gwt.xml.shared.expression.ArityExpression;
+import gwt.xml.shared.expression.IExpression;
 
 public class Contains extends ArityExpression {
-	public Contains(IXPathExpression first, IXPathExpression second) {
+	public Contains(IExpression first, IExpression second) {
 		super(first, second);
 	}
 

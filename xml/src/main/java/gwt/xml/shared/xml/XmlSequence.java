@@ -1,10 +1,10 @@
 package gwt.xml.shared.xml;
 
-import gwt.xml.shared.IXmlExpression;
+import gwt.xml.shared.expression.IExpression;
 
 import java.util.List;
 
-public class XmlSequence implements IXmlExpression {
+public class XmlSequence implements IExpression {
 	private final List<XmlElement> xmlElements;
 
 	public XmlSequence(List<XmlElement> xmlElements) {

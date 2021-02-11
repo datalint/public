@@ -1,9 +1,10 @@
 package gwt.xml.shared.xpath;
 
-import gwt.xml.shared.IXPathExpression;
+import gwt.xml.shared.expression.IExpression;
+import gwt.xml.shared.expression.Join;
 
 public class Union extends Join {
-	public Union(IXPathExpression first, IXPathExpression[] expressions) {
+	public Union(IExpression first, IExpression[] expressions) {
 		super(first, expressions);
 	}
 
