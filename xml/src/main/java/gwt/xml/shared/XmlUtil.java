@@ -18,14 +18,6 @@ public class XmlUtil implements ICommon {
 		return instance.escapeAttr(attribute);
 	}
 
-	public static String getNonNullAttribute(Element element, String name) {
-		return getAttribute(element, name, EMPTY);
-	}
-
-	public static String getAttribute(Element element, String name, String substitution) {
-		return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
-	}
-
 	public static List<Element> getAncestors(Node descendant) {
 		List<Element> ancestors = new ArrayList<>();
 

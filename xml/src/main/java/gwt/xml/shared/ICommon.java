@@ -1,6 +1,7 @@
 package gwt.xml.shared;
 
 import com.google.common.xml.XmlEscapers;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -27,6 +28,7 @@ public interface ICommon {
 	String AND_WITH_SPACE = " and ";
 	String AT = "@";
 	String COUNT_ALL = "count(*)";
+	String DOLLAR = "$";
 	String DOT = ".";
 	String EMPTY = "";
 	String LAST_F = "last()";
@@ -36,7 +38,16 @@ public interface ICommon {
 	String POSITION_F = "position()";
 	String SPACE = " ";
 	String TEXT_F = "text()";
+	String UNDERSCORE = "_";
 	String WILDCARD = "*";
+
+	default String nonNullAttribute(Element element, String name) {
+		return attribute(element, name, EMPTY);
+	}
+
+	default String attribute(Element element, String name, String substitution) {
+		return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
+	}
 
 	default String simpleName(Class<?> clazz) {
 		return clazz.getSimpleName();
