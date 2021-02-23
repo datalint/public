@@ -6,34 +6,34 @@ public enum CollectionMode {
 	unordered {
 		@Override
 		public <K, V> Map<K, V> createMap(int capacity) {
-			return new HashMap<K, V>(capacity);
+			return new HashMap<>(capacity);
 		}
 
 		@Override
 		public <T> Set<T> createSet(int capacity) {
-			return new HashSet<T>(capacity);
+			return new HashSet<>(capacity);
 		}
 	},
 	insertOrdered {
 		@Override
 		public <K, V> Map<K, V> createMap(int capacity) {
-			return new LinkedHashMap<K, V>(capacity);
+			return new LinkedHashMap<>(capacity);
 		}
 
 		@Override
 		public <T> Set<T> createSet(int capacity) {
-			return new LinkedHashSet<T>(capacity);
+			return new LinkedHashSet<>(capacity);
 		}
 	},
 	naturalOrdered {
 		@Override
 		public <K, V> Map<K, V> createMap(int capacity) {
-			return new TreeMap<K, V>();
+			return new TreeMap<>();
 		}
 
 		@Override
 		public <T> Set<T> createSet(int capacity) {
-			return new TreeSet<T>();
+			return new TreeSet<>();
 		}
 	};
 
