@@ -50,14 +50,16 @@ public class Tomcat {
 		connector.setAttribute("port", port);
 
 		Element localhost = XPath.evaluateNode(serverDocument, "Service/Engine/Host[@name='localhost']");
-		Element context = XPath.evaluateNode(localhost, "Context[@path='/']");
+		Element context = XPath.evaluateNode(localhost, "Context[@path='/' or @path='']");
 
 		if (context == null) {
 			context = serverDocument.createElement("Context");
-			context.setAttribute("path", "/");
+			context.setAttribute("path", "");
 			context.setAttribute("reloadable", Boolean.TRUE.toString());
 
 			localhost.appendChild(context);
+		} else if (context.getAttribute("path").equals("/")) {
+			context.setAttribute("path", "");
 		}
 
 		context.setAttribute("docBase", pathDocBase);
