@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface ICommon {
 	char _APOSTROPHE = '\'';
+	char _AT = '@';
 	char _EQUALS = '=';
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
@@ -22,6 +23,7 @@ public interface ICommon {
 	char _SPACE = ' ';
 	char _TAB = '\t';
 	char _UNDERSCORE = '_';
+	char _x = 'x';
 
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -40,6 +42,14 @@ public interface ICommon {
 	String TEXT_F = "text()";
 	String UNDERSCORE = "_";
 	String WILDCARD = "*";
+
+	default int getAttributeInt(Element element, String name) {
+		return parseInt(element.getAttribute(name));
+	}
+
+	default Integer getAttributeInteger(Element element, String name) {
+		return parseInteger(element.getAttribute(name));
+	}
 
 	default String nonNullAttribute(Element element, String name) {
 		return attribute(element, name, EMPTY);
@@ -66,6 +76,18 @@ public interface ICommon {
 			}
 
 		return defaultValue;
+	}
+
+	default Integer parseInteger(String source) {
+		if (!isEmpty(source)) {
+			try {
+				return Integer.valueOf(source);
+			} catch (NumberFormatException e) {
+				// Ignore;
+			}
+		}
+
+		return null;
 	}
 
 	default boolean isEven(int x) {
