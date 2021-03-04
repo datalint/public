@@ -109,7 +109,7 @@
 								<arg>-feature</arg>
 								<arg>-target:${maven.compiler.release}</arg>
 							</args>
-							<sendJavaToScalac>true</sendJavaToScalac>
+							<sendJavaToScalac>false</sendJavaToScalac>
 						</configuration>
 					</execution>
 				</executions>
@@ -155,12 +155,6 @@
 				<configuration>
 					<useIncrementalCompilation>false</useIncrementalCompilation>
 				</configuration>
-				<executions>
-					<execution>
-						<id>default-compile</id>
-						<phase>none</phase>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>

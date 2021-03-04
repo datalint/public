@@ -35,6 +35,7 @@ public interface ICommon {
 	String EMPTY = "";
 	String LAST_F = "last()";
 	String MINUS_WITH_SPACE = " - ";
+	String ONE = "1";
 	String OR_WITH_SPACE = " or ";
 	String PLUS_WITH_SPACE = " + ";
 	String POSITION_F = "position()";
@@ -42,6 +43,7 @@ public interface ICommon {
 	String TEXT_F = "text()";
 	String UNDERSCORE = "_";
 	String WILDCARD = "*";
+	String ZERO = "0";
 
 	default int getAttributeInt(Element element, String name) {
 		return parseInt(element.getAttribute(name));
