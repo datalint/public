@@ -18,8 +18,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 	}
 
 	public static String toString(String name, String value) {
-		return new StringBuilder(name).append(_EQUALS).append(_QUOTE).append(XmlUtil.escapeAttrStatic(value)).append(_QUOTE)
-				.toString();
+		return name + _EQUALS + _QUOTE + XmlUtil.escapeAttrStatic(value) + _QUOTE;
 	}
 
 	@Override

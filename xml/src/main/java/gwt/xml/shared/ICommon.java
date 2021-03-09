@@ -96,8 +96,8 @@ public interface ICommon {
 		return (x & 1) == 0;
 	}
 
-	default boolean isEmpty(@Nullable String source) {
-		return source == null || source.isEmpty();
+	default boolean isEmpty(@Nullable Object source) {
+		return source == null || source.toString().isEmpty();
 	}
 
 	default String nonNull(@Nullable String source) {

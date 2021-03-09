@@ -99,18 +99,18 @@
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
 				<version>4.4.1</version>
+				<configuration>
+					<args>
+						<arg>-feature</arg>
+						<arg>-target:${maven.compiler.release}</arg>
+					</args>
+					<sendJavaToScalac>false</sendJavaToScalac>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-						<configuration>
-							<args>
-								<arg>-feature</arg>
-								<arg>-target:${maven.compiler.release}</arg>
-							</args>
-							<sendJavaToScalac>false</sendJavaToScalac>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
