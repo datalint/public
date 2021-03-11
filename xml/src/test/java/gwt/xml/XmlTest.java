@@ -27,6 +27,8 @@ public class XmlTest {
 		oldDocument.normalizeDocument();
 		Document newDocument = XmlParser.parse(xml);
 
+		assertEquals(newDocument.toString(), XmlUtil.serializeToString(newDocument));
+
 		Assert.assertEquals(DocumentSerializer.serialize(oldDocument).length(),
 				DocumentSerializer.serialize(newDocument).length());
 		assertEquals(DocumentSerializer.serialize(oldDocument).length(), newDocument.toString().length());

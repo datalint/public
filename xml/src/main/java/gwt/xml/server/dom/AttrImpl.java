@@ -1,6 +1,5 @@
 package gwt.xml.server.dom;
 
-import gwt.xml.shared.XmlUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,10 +14,6 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 		this.name = name;
 		this.value = value;
-	}
-
-	public static String toString(String name, String value) {
-		return name + _EQUALS + _QUOTE + XmlUtil.escapeAttrStatic(value) + _QUOTE;
 	}
 
 	@Override
@@ -64,11 +59,6 @@ public class AttrImpl extends NodeImpl implements Attr {
 	@Override
 	public Node cloneNode(boolean deep) {
 		return new AttrImpl(getOwnerDocument(), name, value);
-	}
-
-	@Override
-	public String toString() {
-		return toString(getNodeName(), getNodeValue());
 	}
 
 	@Override

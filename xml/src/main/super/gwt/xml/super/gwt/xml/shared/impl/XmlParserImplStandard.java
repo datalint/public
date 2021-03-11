@@ -16,13 +16,24 @@
 package gwt.xml.shared.impl;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import gwt.xml.shared.XmlUtil;
 
 /**
  * This class implements the methods for standard browsers that use the
  * DOMParser model of XML parsing.
  */
 class XmlParserImplStandard extends XmlParserImpl {
+	private static boolean supportNativeSerializer = supportNativeSerializer();
+
 	protected final JavaScriptObject domParser = createDOMParser();
+
+	private static native boolean supportNativeSerializer() /*-{
+		var a = document.implementation.createDocument("", "", null).createElement("a");
+		a.setAttribute("b", "\t\n\r");
+
+		var result = new XMLSerializer().serializeToString(a).toLowerCase();
+		return result.includes("&#9;&#10;&#13;") || result.includes("&#x9;&#xa;&#xd;") || result.includes("&#9;&#xa;&#xd;");
+	}-*/;
 
 	protected static native JavaScriptObject createDOMParser() /*-{
 		return new DOMParser();
@@ -76,7 +87,14 @@ class XmlParserImplStandard extends XmlParserImpl {
 	}
 
 	@Override
-	protected native String toStringImpl(NodeImpl node) /*-{
+	protected String toStringImpl(NodeImpl node) {
+		if (supportNativeSerializer)
+			return toStringImplNative(node);
+
+		return XmlUtil.serializeToString(node);
+	}
+
+	protected native String toStringImplNative(NodeImpl node) /*-{
 		var jsNode = node.@gwt.xml.shared.impl.DOMItem::getJsObject()();
 		return new XMLSerializer().serializeToString(jsNode);
 	}-*/;

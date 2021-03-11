@@ -1,5 +1,6 @@
 package gwt.xml.server.dom;
 
+import gwt.xml.shared.XmlUtil;
 import org.w3c.dom.*;
 
 import java.util.*;
@@ -170,7 +171,7 @@ public class ElementImpl extends ParentNode implements Element {
 
 		if (attributes != null)
 			for (Entry<String, String> entry : attributes.entrySet())
-				sB.append(_SPACE).append(AttrImpl.toString(entry.getKey(), entry.getValue()));
+				sB.append(_SPACE).append(XmlUtil.serializeToString(entry.getKey(), entry.getValue()));
 
 		if (children == null)
 			sB.append(_SLASH).append(_GREATER_THAN);

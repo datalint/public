@@ -330,6 +330,52 @@ public class XmlUtil implements ICommon {
 		return XmlUtilImpl.getInstance().toString(node);
 	}
 
+	public static String serializeToString(String name, String value) {
+		return name + _EQUALS + _QUOTE + escapeAttrStatic(value) + _QUOTE;
+	}
+
+	public static String serializeToString(Node node) {
+		return instance.serializeToStringImpl(node);
+	}
+
+	private String serializeToStringImpl(Node node) {
+		if (node == null)
+			return EMPTY;
+
+		if (node instanceof Document)
+			return serializeToStringImpl(((Document) node).getDocumentElement());
+		else if (node instanceof Text)
+			return escapeContent(node.getNodeValue());
+		else if (node instanceof Element) {
+			StringBuilder sB = new StringBuilder();
+
+			sB.append(_LESS_THAN).append(node.getNodeName());
+
+			NamedNodeMap attributes = node.getAttributes();
+			for (int i = 0; i < attributes.getLength(); i++) {
+				Node item = attributes.item(i);
+				sB.append(_SPACE).append(serializeToString(item.getNodeName(), item.getNodeValue()));
+			}
+
+			NodeList childNodes = node.getChildNodes();
+			int length = childNodes.getLength();
+			if (length == 0)
+				sB.append(_SLASH).append(_GREATER_THAN);
+			else {
+				sB.append(_GREATER_THAN);
+
+				for (int i = 0; i < length; i++)
+					sB.append(serializeToStringImpl(childNodes.item(i)));
+
+				sB.append(_LESS_THAN).append(_SLASH).append(node.getNodeName()).append(_GREATER_THAN);
+			}
+
+			return sB.toString();
+		}
+
+		return '[' + node.getNodeName() + ": " + node.getNodeValue() + ']';
+	}
+
 	public static void copyChildren(Node src, Node target) {
 		assert src != null && target != null;
 
@@ -445,16 +491,16 @@ public class XmlUtil implements ICommon {
 		return appendEndTag(new StringBuilder(tagName.length() + 3), tagName).toString();
 	}
 
-	public static StringBuilder appendBeginTag(StringBuilder sB, String tagName, Object... attibutes) {
+	public static StringBuilder appendBeginTag(StringBuilder sB, String tagName, Object... attributes) {
 		sB.append('<').append(tagName);
 
-		assert instance.isEven(attibutes.length);
+		assert instance.isEven(attributes.length);
 
-		for (int i = 0; i < attibutes.length; i++) {
-			if (attibutes[++i] == Boolean.FALSE || attibutes[i] == null)
+		for (int i = 0; i < attributes.length; i++) {
+			if (attributes[++i] == Boolean.FALSE || attributes[i] == null)
 				continue;
 
-			sB.append(' ').append(attibutes[i - 1]).append("=\"").append(instance.escapeAttr(attibutes[i].toString()))
+			sB.append(' ').append(attributes[i - 1]).append("=\"").append(instance.escapeAttr(attributes[i].toString()))
 					.append('"');
 		}
 
