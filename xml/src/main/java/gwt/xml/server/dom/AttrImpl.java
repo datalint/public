@@ -7,7 +7,7 @@ import org.w3c.dom.TypeInfo;
 
 public class AttrImpl extends NodeImpl implements Attr {
 	private final String name;
-	private final String value;
+	private String value;
 
 	public AttrImpl(Node owner, String name, String value) {
 		super(owner);
@@ -33,7 +33,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public void setValue(String value) {
-		throw createUoException("setValue");
+		setNodeValue(value);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class AttrImpl extends NodeImpl implements Attr {
 
 	@Override
 	public void setNodeValue(String nodeValue) {
-		throw createUoException("setNodeValue");
+		value = nodeValue;
 	}
 
 	@Override
