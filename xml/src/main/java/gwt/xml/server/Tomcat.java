@@ -14,9 +14,10 @@ public class Tomcat {
 		String pathTomcat;
 		String pathDocBase;
 		String port = "8080";
+		String appBase = "webapps";
 
 		if (args.length < 2) {
-			System.out.println("Please provide exactly two argument: ");
+			System.out.println("Please provide at least two arguments: ");
 			System.out.println("The first one is tomcat home directory. For example: /home/user/apache-tomcat-9.0.30");
 			System.out.println("The second one is the project web target directory. For example: /home/user/project/target/project-1.0-snapshot");
 
@@ -32,9 +33,13 @@ public class Tomcat {
 		if (args.length > 2)
 			port = args[2];
 
+		if (args.length > 3)
+			appBase = args[3];
+
 		System.out.println("Tomcat home: " + pathTomcat);
 		System.out.println("Context docBase: " + pathDocBase);
 		System.out.println("Host port: " + port);
+		System.out.println("Host appBase: " + appBase);
 
 		Path tomcat = Path.of(pathTomcat);
 
@@ -50,6 +55,8 @@ public class Tomcat {
 		connector.setAttribute("port", port);
 
 		Element localhost = XPath.evaluateNode(serverDocument, "Service/Engine/Host[@name='localhost']");
+		localhost.setAttribute("appBase", appBase);
+
 		Element context = XPath.evaluateNode(localhost, "Context[@path='/' or @path='']");
 
 		if (context == null) {

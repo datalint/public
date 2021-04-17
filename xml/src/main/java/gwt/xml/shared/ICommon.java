@@ -17,13 +17,11 @@ public interface ICommon {
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
 	char _LINE_FEED = '\n';
-	char _PERCENT = '%';
 	char _QUOTE = '"';
 	char _SLASH = '/';
 	char _SPACE = ' ';
 	char _TAB = '\t';
 	char _UNDERSCORE = '_';
-	char _x = 'x';
 
 	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
