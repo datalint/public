@@ -49,17 +49,17 @@ public class XmlUtil implements ICommon {
 		if (childHTML != null)
 			size++;
 
-		Object[] childAndOrAttibutes = new String[size];
+		Object[] childAndOrAttributes = new String[size];
 
 		if (size > 1) {
-			childAndOrAttibutes[size - 2] = "class";
-			childAndOrAttibutes[size - 1] = className;
+			childAndOrAttributes[size - 2] = "class";
+			childAndOrAttributes[size - 1] = className;
 		}
 
 		if (childHTML != null)
-			childAndOrAttibutes[0] = childHTML;
+			childAndOrAttributes[0] = childHTML;
 
-		return createElement(tagName, childAndOrAttibutes).toString();
+		return createElement(tagName, childAndOrAttributes).toString();
 	}
 
 	public static String createXML(String tagName, String text) {
@@ -532,7 +532,7 @@ public class XmlUtil implements ICommon {
 		return appendEndTag(sB, tagName);
 	}
 
-	public static StringBuilder createElement(String tagName, Object... childAndOrAttibutes) {
-		return appendElement(new StringBuilder(), tagName, childAndOrAttibutes);
+	public static StringBuilder createElement(String tagName, Object... childAndOrAttributes) {
+		return appendElement(new StringBuilder(), tagName, childAndOrAttributes);
 	}
 }
