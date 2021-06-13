@@ -5,6 +5,10 @@ public class Operator {
 		return new And(first, expressions);
 	}
 
+	public static IExpression comma(IExpression first, IExpression... expressions) {
+		return new Comma(first, expressions);
+	}
+
 	public static IExpression equal(IExpression first, IExpression second) {
 		return new Equal(first, second);
 	}
@@ -40,6 +44,17 @@ public class Operator {
 		@Override
 		protected StringBuilder operator(StringBuilder target) {
 			return target.append(AND_WITH_SPACE);
+		}
+	}
+
+	private static class Comma extends Join {
+		private Comma(IExpression first, IExpression... expressions) {
+			super(first, expressions);
+		}
+
+		@Override
+		protected StringBuilder operator(StringBuilder target) {
+			return target.append(_COMMA);
 		}
 	}
 

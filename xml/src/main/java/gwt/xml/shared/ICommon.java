@@ -13,6 +13,7 @@ import java.util.List;
 public interface ICommon {
 	char _APOSTROPHE = '\'';
 	char _AT = '@';
+	char _COMMA = ',';
 	char _EQUALS = '=';
 	char _GREATER_THAN = '>';
 	char _LESS_THAN = '<';
