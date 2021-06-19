@@ -15,6 +15,15 @@ public class XPathBuilder implements ICommon {
 	private XPathBuilder() {
 	}
 
+	public static IExpression hasAttributeValues(String name, String value, String... values) {
+		IExpression equal = equalAttribute(name, value);
+
+		if (values.length == 0)
+			return predicate(equal);
+
+		return predicate(or(equal, createExpressions(_value -> equalAttribute(name, _value), values)));
+	}
+
 	public static IExpression all(IExpression... expressions) {
 		return join(WILDCARD, expressions);
 	}
@@ -158,6 +167,10 @@ public class XPathBuilder implements ICommon {
 
 	public static IExpression join(String first, IExpression... expressions) {
 		return join(lit(first), expressions);
+	}
+
+	public static IExpression xPathPredicate(String xPath, Object predicate) {
+		return join(lit(xPath), predicate(lit(predicate)));
 	}
 
 	public static IExpression less(int second) {
