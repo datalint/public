@@ -5,6 +5,9 @@ import gwt.xml.shared.xpath.*;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 public class XPathBuilder implements ICommon {
@@ -15,7 +18,37 @@ public class XPathBuilder implements ICommon {
 	private XPathBuilder() {
 	}
 
-	public static IExpression hasAttributeValues(String name, String value, String... values) {
+	private static IExpression hasAttribute(Map<String, String> attributes, BinaryOperator<IExpression> operator) {
+		return attributes.entrySet().stream().map(XPathBuilder::equalAttribute).reduce(operator).orElseThrow();
+	}
+
+	public static IExpression hasAttribute(Map<String, String> attributes) {
+		return hasAttribute(attributes, Operator::and);
+	}
+
+	private static Map<String, String> createAttributesMap(String... attributes) {
+		Map<String, String> map = new HashMap<>(attributes.length >> 1);
+
+		for (int i = 0; i < attributes.length; i++) {
+			map.put(attributes[i++], attributes[i]);
+		}
+
+		return map;
+	}
+
+	public static IExpression hasAttributes(String... attributes) {
+		return hasAttribute(createAttributesMap(attributes));
+	}
+
+	public static IExpression hasAnyAttributes(Map<String, String> attributes) {
+		return hasAttribute(attributes, Operator::or);
+	}
+
+	public static IExpression hasAnyAttributes(String... attributes) {
+		return hasAnyAttributes(createAttributesMap(attributes));
+	}
+
+	public static IExpression hasAnyAttributeValues(String name, String value, String... values) {
 		IExpression equal = equalAttribute(name, value);
 
 		if (values.length == 0)
@@ -123,6 +156,10 @@ public class XPathBuilder implements ICommon {
 
 	public static IExpression equal(IExpression first, IExpression second) {
 		return Operator.equal(first, second);
+	}
+
+	public static IExpression equalAttribute(Map.Entry<String, String> entry) {
+		return equalAttribute(entry.getKey(), entry.getValue());
 	}
 
 	public static IExpression equalAttribute(String name, String value) {
