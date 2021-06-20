@@ -7,19 +7,23 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class XPathBuilder implements ICommon {
 	public static final IExpression LAST = new Lit(LAST_F);
 	public static final IExpression POSITION = new Lit(POSITION_F);
 	public static final IExpression TEXT = new Lit(TEXT_F);
 
+	private static final Supplier<RuntimeException> noValuePresent = () -> new NoSuchElementException("No value present");
+
 	private XPathBuilder() {
 	}
 
 	private static IExpression hasAttribute(Map<String, String> attributes, BinaryOperator<IExpression> operator) {
-		return attributes.entrySet().stream().map(XPathBuilder::equalAttribute).reduce(operator).orElseThrow();
+		return attributes.entrySet().stream().map(XPathBuilder::equalAttribute).reduce(operator).orElseThrow(noValuePresent);
 	}
 
 	public static IExpression hasAttribute(Map<String, String> attributes) {
