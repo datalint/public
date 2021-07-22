@@ -4,10 +4,7 @@ import gwt.xml.shared.expression.*;
 import gwt.xml.shared.xpath.*;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -52,13 +49,25 @@ public class XPathBuilder implements ICommon {
 		return hasAnyAttributes(createAttributesMap(attributes));
 	}
 
-	public static IExpression hasAnyAttributeValues(String name, String value, String... values) {
+	public static IExpression hasAnyAttributeValues(String name, String value, List<String> values) {
 		IExpression equal = equalAttribute(name, value);
 
-		if (values.length == 0)
+		if (values.size() == 0)
 			return predicate(equal);
 
 		return predicate(or(equal, createExpressions(_value -> equalAttribute(name, _value), values)));
+	}
+
+	private static List<String> skipFirst(List<String> values) {
+		return values.size() == 1 ? Collections.emptyList() : values.subList(1, values.size());
+	}
+
+	public static IExpression hasAnyAttributeValues(String name, List<String> values) {
+		return hasAnyAttributeValues(name, values.get(0), skipFirst(values));
+	}
+
+	public static IExpression hasAnyAttributeValues(String name, String value, String... values) {
+		return hasAnyAttributeValues(name, value, Arrays.asList(values));
 	}
 
 	public static IExpression all(IExpression... expressions) {
@@ -105,23 +114,25 @@ public class XPathBuilder implements ICommon {
 		return createExpressions(XPathBuilder::attr, arguments);
 	}
 
-	public static IExpression[] createExpressions(Function<String, IExpression> function,
-												  String[] arguments) {
-		IExpression[] expressions = new IExpression[arguments.length];
+	public static IExpression[] createExpressions(Function<String, IExpression> function, List<String> arguments) {
+		IExpression[] expressions = new IExpression[arguments.size()];
 
 		for (int i = 0; i < expressions.length; i++) {
-			expressions[i] = function.apply(arguments[i]);
+			expressions[i] = function.apply(arguments.get(i));
 		}
 
 		return expressions;
+	}
+
+	public static IExpression[] createExpressions(Function<String, IExpression> function, String[] arguments) {
+		return createExpressions(function, Arrays.asList(arguments));
 	}
 
 	public static IExpression[] createLitExpressions(String[] arguments) {
 		return createExpressions(XPathBuilder::lit, arguments);
 	}
 
-	public static <T> IExpression createParenthesesAnd(Collection<T> arguments,
-													   Function<T, IExpression> creator) {
+	public static <T> IExpression createParenthesesAnd(Collection<T> arguments, Function<T, IExpression> creator) {
 		int size = arguments.size();
 
 		if (size == 0)
