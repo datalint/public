@@ -74,6 +74,10 @@ public class XPathBuilder implements ICommon {
 		return join(WILDCARD, expressions);
 	}
 
+	public static String allTagsExcept(String excludedTagName, String... excludedTagNames) {
+		return join(WILDCARD, predicate(not(or(self(excludedTagName), createExpressions(XPathBuilder::self, excludedTagNames))))).build();
+	}
+
 	public static IExpression and(IExpression first, IExpression... expressions) {
 		return Operator.and(first, expressions);
 	}
@@ -209,8 +213,12 @@ public class XPathBuilder implements ICommon {
 		return hasXPathAttributeNames(WILDCARD, firstAttributeName, attributeNames);
 	}
 
+	public static String hasXPathAttributeNames(IExpression expression, String firstAttributeName, String... attributeNames) {
+		return join(expression, predicate(or(attr(firstAttributeName), createAttrExpressions(attributeNames)))).build();
+	}
+
 	public static String hasXPathAttributeNames(String xPath, String firstAttributeName, String... attributeNames) {
-		return join(lit(xPath), predicate(or(attr(firstAttributeName), createAttrExpressions(attributeNames)))).build();
+		return hasXPathAttributeNames(lit(xPath), firstAttributeName, attributeNames);
 	}
 
 	public static IExpression join(IExpression first, IExpression... expressions) {
@@ -299,6 +307,10 @@ public class XPathBuilder implements ICommon {
 
 	public static IExpression self() {
 		return parentheses(lit(DOT));
+	}
+
+	public static IExpression self(String value) {
+		return new Self(value);
 	}
 
 	public static IExpression startsWith(IExpression first, IExpression second) {

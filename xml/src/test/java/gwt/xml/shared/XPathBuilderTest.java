@@ -27,5 +27,7 @@ public class XPathBuilderTest {
 				join("xPath", XPathBuilder.hasAnyAttributeValues("idRef", "id1", "id2", "id3")).build());
 
 		assertEquals("xPath[1]", xPathPredicate("xPath", 1).build());
+
+		assertEquals("*[not(self::modifier)]", XPathBuilder.allTagsExcept("modifier"));
 	}
 }
