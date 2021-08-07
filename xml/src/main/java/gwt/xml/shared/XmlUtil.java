@@ -1,5 +1,6 @@
 package gwt.xml.shared;
 
+import com.google.common.collect.Sets;
 import gwt.xml.shared.impl.XmlUtilImpl;
 import org.w3c.dom.*;
 
@@ -385,7 +386,7 @@ public class XmlUtil implements ICommon {
 		}
 	}
 
-	public static void copyAttributes(Element src, Element dest, String... attributesName) {
+	public static Element copyAttributes(Element src, Element dest, String... attributesName) {
 		for (String name : attributesName) {
 			String value = src.getAttribute(name);
 			if (value != null)
@@ -393,28 +394,37 @@ public class XmlUtil implements ICommon {
 			else
 				dest.removeAttribute(name);
 		}
+
+		return dest;
 	}
 
-	public static void copyAttributes(Element src, Element dest) {
-		copyAttributes(src, dest, true);
+	public static Element copyAttributesB(Element src, Element dest, String... skippedNames) {
+		return copyAttributesB(src, dest, true, skippedNames);
 	}
 
-	public static void copyAttributes(Element src, Element dest, boolean remove) {
-		NamedNodeMap destAttrs = dest.getAttributes();
-		Map<String, String> destAttrsMap = new HashMap<>(destAttrs.getLength());
-		for (int i = 0; i < destAttrs.getLength(); i++) {
-			Node attr = destAttrs.item(i);
-			destAttrsMap.put(attr.getNodeName(), attr.getNodeValue());
+	private static Map<String, String> createAttributesMap(Element element) {
+		NamedNodeMap attributes = element.getAttributes();
+		Map<String, String> attributesMap = new HashMap<>(attributes.getLength());
+		for (int i = 0; i < attributes.getLength(); i++) {
+			Node attribute = attributes.item(i);
+			attributesMap.put(attribute.getNodeName(), attribute.getNodeValue());
 		}
 
+		return attributesMap;
+	}
+
+	public static Element copyAttributesB(Element src, Element dest, boolean remove, String... skippedNames) {
+		Map<String, String> destAttrsMap = remove ? createAttributesMap(dest) : Collections.emptyMap();
+
 		NamedNodeMap srcAttrs = src.getAttributes();
+		Set<String> skippedNameSet = skippedNames.length == 0 ? Collections.emptySet() : Sets.newHashSet(skippedNames);
 		for (int i = 0; i < srcAttrs.getLength(); i++) {
 			Node srcAttr = srcAttrs.item(i);
 
 			String name = srcAttr.getNodeName();
 			String destValue = destAttrsMap.remove(name);
 
-			if (destValue != null && destValue.equals(srcAttr.getNodeValue()))
+			if (skippedNameSet.contains(name) || (destValue != null && destValue.equals(srcAttr.getNodeValue())))
 				continue;
 
 			dest.setAttribute(name, srcAttr.getNodeValue());
@@ -425,6 +435,8 @@ public class XmlUtil implements ICommon {
 				dest.removeAttribute(key);
 			}
 		}
+
+		return dest;
 	}
 
 	public static boolean copyAttributeIfUnequal(Element src, Element dest, String attributeName) {
