@@ -107,6 +107,10 @@ public interface ICommon {
 		return source == null ? substitution : source;
 	}
 
+	default String nonEmpty(@Nullable String source, String substitution) {
+		return isEmpty(source) ? substitution : source;
+	}
+
 	default String escapeAttr(String attribute) {
 		return XmlEscapers.xmlAttributeEscaper().escape(attribute);
 	}
