@@ -123,17 +123,39 @@ public interface ICommon {
 		return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operationName);
 	}
 
-	default List<Node> asList(NodeList nodeList) {
-		return new NodeListWrapper(nodeList);
+	default NodeList asNodeList(List<Node> nodes) {
+		return new NodeListWrapper(nodes);
 	}
 
-	class NodeListWrapper extends AbstractList<Node> {
+	default List<Node> asList(NodeList nodeList) {
+		return new ListWrapper(nodeList);
+	}
+
+	class NodeListWrapper implements NodeList {
+		private final List<Node> nodes;
+
+		private NodeListWrapper(List<Node> nodes) {
+			this.nodes = nodes;
+		}
+
+		@Override
+		public Node item(int index) {
+			return nodes.get(index);
+		}
+
+		@Override
+		public int getLength() {
+			return nodes.size();
+		}
+	}
+
+	class ListWrapper extends AbstractList<Node> {
 		private final NodeList nodeList;
 		private final int length;
 
 		private List<Node> extraList;
 
-		private NodeListWrapper(NodeList nodeList) {
+		private ListWrapper(NodeList nodeList) {
 			this.nodeList = nodeList;
 			length = nodeList.getLength();
 		}
