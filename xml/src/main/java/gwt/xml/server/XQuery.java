@@ -12,7 +12,6 @@ import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
@@ -32,12 +31,6 @@ public class XQuery {
 	private static final Map<String, ObjectPool<XQPreparedExpression>> INSTANCE_QUERY_MAP = new ConcurrentHashMap<>();
 
 	private XQuery() {
-	}
-
-	public static NodeList createNodeList(XQResultSequence resultSequence) {
-		// TODO
-
-		return null;
 	}
 
 	public static void setConfiguration(DocumentBuilderImpl documentBuilderImpl) {
