@@ -245,10 +245,4 @@ class NodeImpl extends DOMItem implements Node {
 	public String toString() {
 		return XmlParserImpl.getInstance().toStringImpl(this);
 	}
-
-	@Override
-	public native String getTextContent() /*-{
-		var jsNode = this.@gwt.xml.shared.impl.DOMItem::getJsObject()();
-		return jsNode.textContent;
-	}-*/;
 }

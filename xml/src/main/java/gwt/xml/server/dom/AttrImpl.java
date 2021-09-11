@@ -75,9 +75,4 @@ public class AttrImpl extends NodeImpl implements Attr {
 	public boolean isId() {
 		throw createUoException("isId");
 	}
-
-	@Override
-	public String getTextContent() {
-		return EMPTY;
-	}
 }

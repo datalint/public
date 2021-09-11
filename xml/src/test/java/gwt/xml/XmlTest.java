@@ -96,7 +96,5 @@ public class XmlTest {
 		assertEquals(XPath.evaluateNumber(oldDocument), XPath.evaluateNumber(newDocument));
 
 		assertEquals(XPath.evaluateText(oldDocument), XPath.evaluateText(newDocument));
-
-		assertEquals(oldDocument.getDocumentElement().getTextContent(), newDocument.getDocumentElement().getTextContent());
 	}
 }

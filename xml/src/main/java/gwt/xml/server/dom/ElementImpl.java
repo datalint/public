@@ -154,6 +154,11 @@ public class ElementImpl extends ParentNode implements Element {
 	}
 
 	@Override
+	public NodeList getChildNodes() {
+		return new NodeListImpl(this);
+	}
+
+	@Override
 	public NamedNodeMap getAttributes() {
 		return new NamedNodeMapImpl(this);
 	}

@@ -196,11 +196,6 @@ public abstract class NodeImpl implements Node, ICommon {
 	}
 
 	@Override
-	public String getTextContent() {
-		return getNodeValue();
-	}
-
-	@Override
 	public boolean isSupported(String feature, String version) {
 		throw createUoException("isSupported");
 	}
@@ -208,6 +203,11 @@ public abstract class NodeImpl implements Node, ICommon {
 	@Override
 	public String getBaseURI() {
 		throw createUoException("getBaseURI");
+	}
+
+	@Override
+	public String getTextContent() {
+		throw createUoException("getTextContent");
 	}
 
 	@Override

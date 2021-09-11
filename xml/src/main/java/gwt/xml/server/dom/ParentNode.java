@@ -1,7 +1,6 @@
 package gwt.xml.server.dom;
 
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,24 +91,6 @@ public abstract class ParentNode extends NodeImpl {
 	@Override
 	public boolean hasChildNodes() {
 		return children != null;
-	}
-
-	@Override
-	public String getTextContent() {
-		if (children == null)
-			return EMPTY;
-
-		StringBuilder sB = new StringBuilder();
-		for (int i = 0; i < children.size(); i++) {
-			sB.append(children.get(i).getTextContent());
-		}
-
-		return sB.toString();
-	}
-
-	@Override
-	public NodeList getChildNodes() {
-		return new NodeListImpl(this);
 	}
 
 	@Override
