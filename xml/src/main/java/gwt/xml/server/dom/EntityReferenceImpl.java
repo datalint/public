@@ -26,4 +26,9 @@ public class EntityReferenceImpl extends NodeImpl implements EntityReference {
 	public Node cloneNode(boolean deep) {
 		return new EntityReferenceImpl(getOwnerDocument(), name);
 	}
+
+	@Override
+	public String getTextContent() {
+		return EMPTY;
+	}
 }

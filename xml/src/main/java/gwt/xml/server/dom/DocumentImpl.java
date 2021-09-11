@@ -204,6 +204,11 @@ public class DocumentImpl extends NodeImpl implements Document {
 	}
 
 	@Override
+	public String getTextContent() {
+		return null;
+	}
+
+	@Override
 	public DocumentType getDoctype() {
 		throw createUoException("getDoctype");
 	}
