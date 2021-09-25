@@ -1,21 +1,30 @@
 package gwt.xml.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import gwt.xml.shared.XmlParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import elemental2.core.JsDate;
+import elemental2.dom.DomGlobal;
+import elemental2.dom.Element;
+import elemental2.dom.PopStateEvent;
 
 public class XmlDemo implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
-		Document document = XmlParser.createDocument();
-		Element a = document.createElement("a");
-		document.appendChild(a);
+		DomGlobal.window.addEventListener("popstate", event -> DomGlobal.console.log(String.valueOf(((PopStateEvent) event).state)));
 
-		a.setAttribute("b", "'\t\n\r\"");
+		Element button = DomGlobal.document.createElement("button");
+		button.textContent = "Click here to create a state";
+		button.addEventListener("click", event -> DomGlobal.history.pushState("state: " + JsDate.now(), "title"));
 
-		RootPanel.get().add(new Label(document.toString()));
+		DomGlobal.document.body.appendChild(button);
 	}
+
+//	public void testDocument() {
+//		Document document = XmlParser.createDocument();
+//		Element a = document.createElement("a");
+//		document.appendChild(a);
+//
+//		a.setAttribute("b", "'\t\n\r\"");
+//
+//		RootPanel.get().add(new Label(document.toString()));
+//	}
 }

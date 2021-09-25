@@ -3,6 +3,7 @@
 		"http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module rename-to="xml">
 	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.common.collect.Collect"/>
 	<inherits name="com.google.common.xml.Xml"/>
 
 	<replace-with class="gwt.xml.shared.impl.XmlParserImplStandard">
