@@ -4,6 +4,18 @@
 <module rename-to="demo">
 	<inherits name="gwt.xml.Xml"/>
 	<inherits name="elemental2.dom.Dom"/>
+	<inherits name="org.dominokit.domino.ui.DominoUI"/>
+
+	<!--  -->
+	<collapse-all-properties/>
+
+	<!-- Enable I18N -->
+	<inherits name="com.google.gwt.i18n.I18N"/>
+	<extend-property name="locale" values="en,zh"/>
+	<set-property-fallback name="locale" value="en"/>
+	<set-property name="locale" value="en,zh"/>
+	<set-configuration-property name="locale.cookie" value="locale"/>
+	<set-configuration-property name="locale.useragent" value="Y"/>
 
 	<set-property name="user.agent" value="safari"/>
 
@@ -13,5 +25,5 @@
 	<source path="shared"/>
 	<super-source path="super"/>
 
-	<!--	<add-linker name="sso"/>-->
+	<!-- <add-linker name="sso"/> -->
 </module>

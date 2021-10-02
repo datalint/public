@@ -96,6 +96,9 @@
 				<version>1.0.0</version>
 				<extensions>true</extensions>
 				<configuration>
+					<compilerArgs>
+						<compilerArg>-compileReport</compilerArg>
+					</compilerArgs>
 					<skipModule>true</skipModule>
 					<moduleName>${project.gwt.module}</moduleName>
 					<classpathScope>compile</classpathScope>
