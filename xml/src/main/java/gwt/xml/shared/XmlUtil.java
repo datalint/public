@@ -63,7 +63,7 @@ public class XmlUtil implements ICommon {
 		return createElement(tagName, childAndOrAttributes).toString();
 	}
 
-	public static String createXML(String tagName, String text) {
+	public static String createXml(String tagName, String text) {
 		Document document = XmlParser.createDocument();
 
 		Element element = document.createElement(tagName);
