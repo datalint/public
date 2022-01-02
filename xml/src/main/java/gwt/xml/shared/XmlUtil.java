@@ -547,4 +547,20 @@ public class XmlUtil implements ICommon {
 	public static StringBuilder createElement(String tagName, Object... childAndOrAttributes) {
 		return appendElement(new StringBuilder(), tagName, childAndOrAttributes);
 	}
+
+	public static String createXml(String tagName, List<String> children) {
+		int size = children.isEmpty() ? 0 : children.size() * children.get(0).length();
+		StringBuilder sB = new StringBuilder(size + (tagName.length() << 1) + 5);
+		appendBeginTag(sB, tagName);
+		for (String recordData : children) {
+			sB.append(recordData);
+		}
+		appendEndTag(sB, tagName);
+
+		return sB.toString();
+	}
+
+	public static Document createDocument(String tagName, List<String> children) {
+		return XmlParser.parse(createXml(tagName, children));
+	}
 }

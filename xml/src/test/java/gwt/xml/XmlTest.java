@@ -4,8 +4,7 @@ import gwt.xml.server.parser.DocumentSerializer;
 import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
 import gwt.xml.shared.XmlUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
@@ -15,7 +14,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class XmlTest {
 	@Test
@@ -29,7 +28,7 @@ public class XmlTest {
 
 		assertEquals(newDocument.toString(), XmlUtil.serializeToString(newDocument));
 
-		Assert.assertEquals(DocumentSerializer.serialize(oldDocument).length(),
+		assertEquals(DocumentSerializer.serialize(oldDocument).length(),
 				DocumentSerializer.serialize(newDocument).length());
 		assertEquals(DocumentSerializer.serialize(oldDocument).length(), newDocument.toString().length());
 
@@ -40,13 +39,13 @@ public class XmlTest {
 		assertEquals(5, newDocument.getDocumentElement().getElementsByTagName("*").getLength());
 		assertEquals(3, newDocument.getElementsByTagName("two").getLength());
 
-		Assert.assertEquals(oldDocument.getDocumentElement(), XPath.evaluateNode(oldDocument, "."));
+		assertEquals(oldDocument.getDocumentElement(), XPath.evaluateNode(oldDocument, "."));
 		assertEquals(oldDocument.getDocumentElement(), XPath.evaluateNode(oldDocument, "//root"));
 		assertEquals(newDocument.getDocumentElement(), XPath.evaluateNode(newDocument, "."));
 		assertEquals(newDocument.getDocumentElement(), XPath.evaluateNode(newDocument, "//root"));
 
 		assertEquals(3, XPath.evaluateNodes(oldDocument, "one/two").size());
-		Assert.assertEquals(XmlUtil.getFirstChildElement(oldDocument.getDocumentElement()),
+		assertEquals(XmlUtil.getFirstChildElement(oldDocument.getDocumentElement()),
 				XPath.evaluateNode(oldDocument, "one"));
 		assertEquals(3, XPath.evaluateNodes(XPath.<Element>evaluateNode(oldDocument, "one"), "two").size());
 		assertEquals(3, XPath.evaluateNodes(newDocument, "one/two").size());

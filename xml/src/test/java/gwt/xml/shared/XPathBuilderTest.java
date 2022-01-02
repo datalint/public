@@ -1,12 +1,12 @@
 package gwt.xml.shared;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static gwt.xml.shared.XPathBuilder.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class XPathBuilderTest {
 	@Test
