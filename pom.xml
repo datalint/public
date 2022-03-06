@@ -105,6 +105,7 @@
 					<codeserverArgs>
 						-bindAddress,0.0.0.0,-src,${project.build.sourceDirectory}${project.gwt.codeserver.extra.src}
 					</codeserverArgs>
+					<jvmArgs>-Xmx4096m</jvmArgs>
 					<launcherDir>${project.build.directory}/${project.build.finalName}</launcherDir>
 					<sourceLevel>11</sourceLevel>
 				</configuration>
