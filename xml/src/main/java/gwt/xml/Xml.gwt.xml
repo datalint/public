@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN"
-		"http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+        "http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module rename-to="xml">
-	<inherits name="com.google.gwt.user.User"/>
-	<inherits name="com.google.common.collect.Collect"/>
-	<inherits name="com.google.common.xml.Xml"/>
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.common.collect.Collect"/>
+    <inherits name="com.google.common.xml.Xml"/>
 
-	<replace-with class="gwt.xml.shared.impl.XmlParserImplStandard">
-		<when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XmlParserImplStandard">
+        <when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XmlParserImplIE6">
-		<when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
-		<any>
-			<when-property-is name="user.agent" value="ie8"/>
-			<when-property-is name="user.agent" value="ie9"/>
-			<when-property-is name="user.agent" value="ie10"/>
-			<when-property-is name="user.agent" value="ie11"/>
-		</any>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XmlParserImplIE6">
+        <when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
+        <any>
+            <when-property-is name="user.agent" value="ie8"/>
+            <when-property-is name="user.agent" value="ie9"/>
+            <when-property-is name="user.agent" value="ie10"/>
+            <when-property-is name="user.agent" value="ie11"/>
+        </any>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XmlParserImplSafari">
-		<when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
-		<when-property-is name="user.agent" value="safari"/>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XmlParserImplSafari">
+        <when-type-is class="gwt.xml.shared.impl.XmlParserImpl"/>
+        <when-property-is name="user.agent" value="safari"/>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XmlUtilImplIE">
-		<when-type-is class="gwt.xml.shared.impl.XmlUtilImpl"/>
-		<any>
-			<when-property-is name="user.agent" value="ie11"/>
-		</any>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XmlUtilImplIE">
+        <when-type-is class="gwt.xml.shared.impl.XmlUtilImpl"/>
+        <any>
+            <when-property-is name="user.agent" value="ie11"/>
+        </any>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XPathImplStandard">
-		<when-type-is class="gwt.xml.shared.impl.XPathImpl"/>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XPathImplStandard">
+        <when-type-is class="gwt.xml.shared.impl.XPathImpl"/>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XPathImplIE">
-		<when-type-is class="gwt.xml.shared.impl.XPathImpl"/>
-		<any>
-			<when-property-is name="user.agent" value="ie11"/>
-		</any>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XPathImplIE">
+        <when-type-is class="gwt.xml.shared.impl.XPathImpl"/>
+        <any>
+            <when-property-is name="user.agent" value="ie11"/>
+        </any>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XsltImplStandard">
-		<when-type-is class="gwt.xml.shared.impl.XsltImpl"/>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XsltImplStandard">
+        <when-type-is class="gwt.xml.shared.impl.XsltImpl"/>
+    </replace-with>
 
-	<replace-with class="gwt.xml.shared.impl.XsltImplIE">
-		<when-type-is class="gwt.xml.shared.impl.XsltImpl"/>
-		<any>
-			<when-property-is name="user.agent" value="ie11"/>
-		</any>
-	</replace-with>
+    <replace-with class="gwt.xml.shared.impl.XsltImplIE">
+        <when-type-is class="gwt.xml.shared.impl.XsltImpl"/>
+        <any>
+            <when-property-is name="user.agent" value="ie11"/>
+        </any>
+    </replace-with>
 
-	<source path="client"/>
-	<source path="shared"/>
-	<super-source path="super"/>
+    <source path="client"/>
+    <source path="shared"/>
+    <super-source path="super"/>
 </module>

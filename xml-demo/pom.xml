@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.datalint.gwt</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.0</version>
-	</parent>
-	<artifactId>xml-demo</artifactId>
-	<packaging>war</packaging>
+    <parent>
+        <groupId>com.datalint.gwt</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>xml-demo</artifactId>
+    <packaging>war</packaging>
 
-	<name>Gwt Xml Demo</name>
-	<properties>
-		<project.phase.war.exploded>compile</project.phase.war.exploded>
-		<project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
+    <name>Gwt Xml Demo</name>
+    <properties>
+        <project.phase.war.exploded>compile</project.phase.war.exploded>
+        <project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
 
-		<project.gwt.module>gwt.xml.XmlDemo</project.gwt.module>
-		<project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
-	</properties>
+        <project.gwt.module>gwt.xml.XmlDemo</project.gwt.module>
+        <project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.datalint.gwt</groupId>
-			<artifactId>xml</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.elemental2</groupId>
-			<artifactId>elemental2-dom</artifactId>
-			<version>1.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.dominokit</groupId>
-			<artifactId>domino-ui</artifactId>
-			<version>1.0.0-RC10</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.datalint.gwt</groupId>
+            <artifactId>xml</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.elemental2</groupId>
+            <artifactId>elemental2-dom</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit</groupId>
+            <artifactId>domino-ui</artifactId>
+            <version>1.0.0-RC10</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-parent</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>../xml/target/classes</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-parent</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>../xml/target/classes</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
