@@ -8,24 +8,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class XmlBuilder {
-	private XmlBuilder() {
-	}
+    private XmlBuilder() {
+    }
 
-	public static XmlElement createXmlElement(String tagName, List<String> attributes) {
-		return new XmlElement(tagName, createAttrExpressions(attributes));
-	}
+    public static XmlElement createXmlElement(String tagName, List<String> attributes) {
+        return new XmlElement(tagName, createAttrExpressions(attributes));
+    }
 
-	public static XmlElement createXmlElement(String tagName, String... attributes) {
-		return new XmlElement(tagName, createAttrExpressions(Arrays.asList(attributes)));
-	}
+    public static XmlElement createXmlElement(String tagName, String... attributes) {
+        return new XmlElement(tagName, createAttrExpressions(Arrays.asList(attributes)));
+    }
 
-	private static IExpression[] createAttrExpressions(List<String> attributes) {
-		IExpression[] expressions = new IExpression[attributes.size() >> 1];
+    private static IExpression[] createAttrExpressions(List<String> attributes) {
+        IExpression[] expressions = new IExpression[attributes.size() >> 1];
 
-		for (int i = 0, j = 0; i < expressions.length; i++, j++) {
-			expressions[i] = new XmlAttribute(attributes.get(j++), attributes.get(j));
-		}
+        for (int i = 0, j = 0; i < expressions.length; i++, j++) {
+            expressions[i] = new XmlAttribute(attributes.get(j++), attributes.get(j));
+        }
 
-		return expressions;
-	}
+        return expressions;
+    }
 }

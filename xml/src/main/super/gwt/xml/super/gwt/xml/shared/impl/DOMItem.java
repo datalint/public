@@ -22,36 +22,36 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 class DOMItem {
 
-	private final JavaScriptObject jsObject;
+    private final JavaScriptObject jsObject;
 
-	protected DOMItem(JavaScriptObject jso) {
-		this.jsObject = jso;
-	}
+    protected DOMItem(JavaScriptObject jso) {
+        this.jsObject = jso;
+    }
 
-	/**
-	 * This method determines equality for DOMItems.
-	 *
-	 * @param o - the other object being tested for equality
-	 * @return true iff the two objects are equal.
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object o) {
-		if (o instanceof DOMItem) {
-			return this.getJsObject() == ((DOMItem) o).getJsObject();
-		}
-		return false;
-	}
+    /**
+     * This method determines equality for DOMItems.
+     *
+     * @param o - the other object being tested for equality
+     * @return true iff the two objects are equal.
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (o instanceof DOMItem) {
+            return this.getJsObject() == ((DOMItem) o).getJsObject();
+        }
+        return false;
+    }
 
-	/**
-	 * Returns the hash code for this DOMItem.
-	 */
-	@Override
-	public int hashCode() {
-		return jsObject.hashCode();
-	}
+    /**
+     * Returns the hash code for this DOMItem.
+     */
+    @Override
+    public int hashCode() {
+        return jsObject.hashCode();
+    }
 
-	JavaScriptObject getJsObject() {
-		return jsObject;
-	}
+    JavaScriptObject getJsObject() {
+        return jsObject;
+    }
 }

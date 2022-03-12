@@ -22,24 +22,24 @@ import org.w3c.dom.DOMException;
  */
 public class DOMNodeException extends DOMException {
 
-	private DOMItem item;
+    private DOMItem item;
 
-	public DOMNodeException() {
-		super((short) 0, "node exception");
-	}
+    public DOMNodeException() {
+        super((short) 0, "node exception");
+    }
 
-	public DOMNodeException(short code, Throwable e, DOMItem item) {
-		// This item must be initialized during construction, and Java does not
-		// allow any statements before the super, so
-		// toString must be evaluated twice
-		super(code, "Error during DOM manipulation of: "
-				+ DOMParseException.summarize(item.toString()));
-		initCause(e);
-		this.item = item;
-	}
+    public DOMNodeException(short code, Throwable e, DOMItem item) {
+        // This item must be initialized during construction, and Java does not
+        // allow any statements before the super, so
+        // toString must be evaluated twice
+        super(code, "Error during DOM manipulation of: "
+                + DOMParseException.summarize(item.toString()));
+        initCause(e);
+        this.item = item;
+    }
 
-	public DOMItem getItem() {
-		return item;
-	}
+    public DOMItem getItem() {
+        return item;
+    }
 
 }

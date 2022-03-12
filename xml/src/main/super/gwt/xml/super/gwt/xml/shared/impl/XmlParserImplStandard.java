@@ -23,11 +23,11 @@ import gwt.xml.shared.XmlUtil;
  * DOMParser model of XML parsing.
  */
 class XmlParserImplStandard extends XmlParserImpl {
-	private static boolean supportNativeSerializer = supportNativeSerializer();
+    private static boolean supportNativeSerializer = supportNativeSerializer();
 
-	protected final JavaScriptObject domParser = createDOMParser();
+    protected final JavaScriptObject domParser = createDOMParser();
 
-	private static native boolean supportNativeSerializer() /*-{
+    private static native boolean supportNativeSerializer() /*-{
 		var a = document.implementation.createDocument("", "", null).createElement("a");
 		a.setAttribute("b", "\t\n\r");
 
@@ -35,42 +35,42 @@ class XmlParserImplStandard extends XmlParserImpl {
 		return result.includes("&#9;&#10;&#13;") || result.includes("&#x9;&#xa;&#xd;") || result.includes("&#9;&#xa;&#xd;");
 	}-*/;
 
-	protected static native JavaScriptObject createDOMParser() /*-{
+    protected static native JavaScriptObject createDOMParser() /*-{
 		return new DOMParser();
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject createDocumentImpl() /*-{
+    @Override
+    protected native JavaScriptObject createDocumentImpl() /*-{
 		return document.implementation.createDocument("", "", null);
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject getElementByIdImpl(JavaScriptObject document, String id) /*-{
+    @Override
+    protected native JavaScriptObject getElementByIdImpl(JavaScriptObject document, String id) /*-{
 		return document.getElementById(id);
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject getElementsByTagNameImpl(JavaScriptObject o, String tagName) /*-{
+    @Override
+    protected native JavaScriptObject getElementsByTagNameImpl(JavaScriptObject o, String tagName) /*-{
 		return o.getElementsByTagNameNS("*", tagName);
 	}-*/;
 
-	@Override
-	protected String getPrefixImpl(JavaScriptObject jsObject) {
-		String fullName = XmlParserImpl.getNodeName(jsObject);
-		if (fullName != null && fullName.indexOf(":") != -1) {
-			return fullName.split(":", 2)[0];
-		}
-		return null;
-	}
+    @Override
+    protected String getPrefixImpl(JavaScriptObject jsObject) {
+        String fullName = XmlParserImpl.getNodeName(jsObject);
+        if (fullName != null && fullName.indexOf(":") != -1) {
+            return fullName.split(":", 2)[0];
+        }
+        return null;
+    }
 
-	@Override
-	protected native JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
-													 boolean deep) /*-{
+    @Override
+    protected native JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
+                                                     boolean deep) /*-{
 		return jsObject.importNode(importedNode, deep);
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject parseImpl(String contents) /*-{
+    @Override
+    protected native JavaScriptObject parseImpl(String contents) /*-{
 		var domParser = this.@gwt.xml.shared.impl.XmlParserImplStandard::domParser;
 		var result = domParser.parseFromString(contents, "text/xml");
 		var roottag = result.documentElement;
@@ -81,20 +81,20 @@ class XmlParserImplStandard extends XmlParserImpl {
 		return result;
 	}-*/;
 
-	@Override
-	protected String toStringImpl(ProcessingInstructionImpl node) {
-		return toStringImpl((NodeImpl) node);
-	}
+    @Override
+    protected String toStringImpl(ProcessingInstructionImpl node) {
+        return toStringImpl((NodeImpl) node);
+    }
 
-	@Override
-	protected String toStringImpl(NodeImpl node) {
-		if (supportNativeSerializer)
-			return toStringImplNative(node);
+    @Override
+    protected String toStringImpl(NodeImpl node) {
+        if (supportNativeSerializer)
+            return toStringImplNative(node);
 
-		return XmlUtil.serializeToString(node);
-	}
+        return XmlUtil.serializeToString(node);
+    }
 
-	protected native String toStringImplNative(NodeImpl node) /*-{
+    protected native String toStringImplNative(NodeImpl node) /*-{
 		var jsNode = node.@gwt.xml.shared.impl.DOMItem::getJsObject()();
 		return new XMLSerializer().serializeToString(jsNode);
 	}-*/;

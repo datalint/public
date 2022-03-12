@@ -24,26 +24,26 @@ package org.w3c.dom;
  */
 public class DOMException extends RuntimeException {
 
-	public static final short INVALID_ACCESS_ERR = 15;
-	public static final short INVALID_CHARACTER_ERR = 5;
-	public static final short INVALID_MODIFICATION_ERR = 13;
-	public static final short INVALID_STATE_ERR = 11;
-	public static final short SYNTAX_ERR = 12;
+    public static final short INVALID_ACCESS_ERR = 15;
+    public static final short INVALID_CHARACTER_ERR = 5;
+    public static final short INVALID_MODIFICATION_ERR = 13;
+    public static final short INVALID_STATE_ERR = 11;
+    public static final short SYNTAX_ERR = 12;
 
-	protected short code;
+    protected short code;
 
-	public DOMException(short code, String message) {
-		super(message);
-		this.code = code;
-	}
+    public DOMException(short code, String message) {
+        super(message);
+        this.code = code;
+    }
 
-	/**
-	 * This method gets the code of this <code>DOMException</code>.
-	 *
-	 * @return the code of this <code>DOMException</code>
-	 */
-	public short getCode() {
-		return code;
-	}
+    /**
+     * This method gets the code of this <code>DOMException</code>.
+     *
+     * @return the code of this <code>DOMException</code>
+     */
+    public short getCode() {
+        return code;
+    }
 
 }

@@ -25,31 +25,31 @@ import org.w3c.dom.NodeList;
  */
 class NodeListImpl extends DOMItem implements NodeList {
 
-	protected NodeListImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected NodeListImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	public int getLength() {
-		return XmlParserImpl.getLength(this.getJsObject());
-	}
+    public int getLength() {
+        return XmlParserImpl.getLength(this.getJsObject());
+    }
 
-	/**
-	 * This method gets the index item.
-	 *
-	 * @param index - the index to be retrieved
-	 * @return the item at this index
-	 * @see org.w3c.dom.NodeList#item(int)
-	 */
-	public Node item(int index) {
-		return NodeImpl.build(XmlParserImpl.item(this.getJsObject(), index));
-	}
+    /**
+     * This method gets the index item.
+     *
+     * @param index - the index to be retrieved
+     * @return the item at this index
+     * @see org.w3c.dom.NodeList#item(int)
+     */
+    public Node item(int index) {
+        return NodeImpl.build(XmlParserImpl.item(this.getJsObject(), index));
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder();
-		for (int i = 0; i < getLength(); i++) {
-			b.append(item(i).toString());
-		}
-		return b.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < getLength(); i++) {
+            b.append(item(i).toString());
+        }
+        return b.toString();
+    }
 }

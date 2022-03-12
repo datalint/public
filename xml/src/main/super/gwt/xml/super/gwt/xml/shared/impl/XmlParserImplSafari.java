@@ -21,29 +21,29 @@ import com.google.gwt.core.client.JavaScriptObject;
  * This class is Safari implementation of the XmlParser interface.
  */
 public class XmlParserImplSafari extends XmlParserImplStandard {
-	private static boolean safari2LevelWebKit = (getWebKitVersion() <= 420);
+    private static boolean safari2LevelWebKit = (getWebKitVersion() <= 420);
 
-	public static boolean isSafari2LevelWebKit() {
-		return safari2LevelWebKit;
-	}
+    public static boolean isSafari2LevelWebKit() {
+        return safari2LevelWebKit;
+    }
 
-	private static native int getWebKitVersion() /*-{
+    private static native int getWebKitVersion() /*-{
 		var result = / AppleWebKit\/([\d]+)/.exec(navigator.userAgent);
 		return ((result) ? parseInt(result[1]) : 0) || 0;
 	}-*/;
 
-	private static void throwDOMParseException(String message) {
-		throw new DOMParseException(message);
-	}
+    private static void throwDOMParseException(String message) {
+        throw new DOMParseException(message);
+    }
 
-	@Override
-	protected native JavaScriptObject getElementsByTagNameImpl(JavaScriptObject o, String tagName) /*-{
+    @Override
+    protected native JavaScriptObject getElementsByTagNameImpl(JavaScriptObject o, String tagName) /*-{
 		return o.getElementsByTagName(tagName);
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
-													 boolean deep) /*-{
+    @Override
+    protected native JavaScriptObject importNodeImpl(JavaScriptObject jsObject, JavaScriptObject importedNode,
+                                                     boolean deep) /*-{
 		// Works around a Safari2 issue where importing a node will steal attributes
 		// from the original.
 		if (@gwt.xml.shared.impl.XmlParserImplSafari::isSafari2LevelWebKit()()) {
@@ -52,23 +52,23 @@ public class XmlParserImplSafari extends XmlParserImplStandard {
 		return jsObject.importNode(importedNode, deep);
 	}-*/;
 
-	/**
-	 * <html><body><parsererror style="white-space: pre; border: 2px solid #c77;
-	 * padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black" >
-	 * <h3>This page contains the following errors:</h3>
-	 * <div style="font-family:monospace;font-size:12px" >error on line 1 at column
-	 * 2: xmlParseStartTag: invalid element name </div>
-	 * <h3>Below is a rendering of the page up to the first error.</h3>
-	 * </parsererror></body></html> is all you get from Safari. Hope that nobody
-	 * wants to send one of those error reports over the wire to be parsed by
-	 * safari...
-	 *
-	 * @param contents contents
-	 * @return parsed JavaScript object
-	 * @see gwt.xml.shared.impl.XmlParserImpl#parseImpl(java.lang.String)
-	 */
-	@Override
-	protected native JavaScriptObject parseImpl(String contents) /*-{
+    /**
+     * <html><body><parsererror style="white-space: pre; border: 2px solid #c77;
+     * padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black" >
+     * <h3>This page contains the following errors:</h3>
+     * <div style="font-family:monospace;font-size:12px" >error on line 1 at column
+     * 2: xmlParseStartTag: invalid element name </div>
+     * <h3>Below is a rendering of the page up to the first error.</h3>
+     * </parsererror></body></html> is all you get from Safari. Hope that nobody
+     * wants to send one of those error reports over the wire to be parsed by
+     * safari...
+     *
+     * @param contents contents
+     * @return parsed JavaScript object
+     * @see gwt.xml.shared.impl.XmlParserImpl#parseImpl(java.lang.String)
+     */
+    @Override
+    protected native JavaScriptObject parseImpl(String contents) /*-{
 		var domParser = this.@gwt.xml.shared.impl.XmlParserImplStandard::domParser;
 		var result = domParser.parseFromString(contents, "text/xml");
 		var parseerrors = result.getElementsByTagName("parsererror");

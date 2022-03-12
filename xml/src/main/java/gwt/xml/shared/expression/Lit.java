@@ -1,28 +1,28 @@
 package gwt.xml.shared.expression;
 
 public class Lit implements IExpression {
-	private final Object value;
+    private final Object value;
 
-	public static IExpression create(Object value) {
-		return value instanceof IExpression ? (IExpression) value : new Lit(value);
-	}
+    public Lit(Object value) {
+        this.value = value;
+    }
 
-	public static IExpression[] create(Object... values) {
-		IExpression[] expressions = new Lit[values.length];
+    public static IExpression create(Object value) {
+        return value instanceof IExpression ? (IExpression) value : new Lit(value);
+    }
 
-		for (int i = 0; i < values.length; i++) {
-			expressions[i] = create(values[i]);
-		}
+    public static IExpression[] create(Object... values) {
+        IExpression[] expressions = new Lit[values.length];
 
-		return expressions;
-	}
+        for (int i = 0; i < values.length; i++) {
+            expressions[i] = create(values[i]);
+        }
 
-	public Lit(Object value) {
-		this.value = value;
-	}
+        return expressions;
+    }
 
-	@Override
-	public StringBuilder append(StringBuilder target) {
-		return target.append(value);
-	}
+    @Override
+    public StringBuilder append(StringBuilder target) {
+        return target.append(value);
+    }
 }

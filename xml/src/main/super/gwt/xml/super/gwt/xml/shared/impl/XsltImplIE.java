@@ -3,8 +3,8 @@ package gwt.xml.shared.impl;
 import com.google.gwt.core.client.JavaScriptObject;
 
 class XsltImplIE extends XsltImpl {
-	@Override
-	protected native void importStyleSheetImpl(String styleSheet) /*-{
+    @Override
+    protected native void importStyleSheetImpl(String styleSheet) /*-{
 		var styleSheetDocument = new ActiveXObject(
 				"MSXML2.FreeThreadedDOMDocument");
 		styleSheetDocument.async = false;
@@ -17,14 +17,14 @@ class XsltImplIE extends XsltImpl {
 				.createProcessor();
 	}-*/;
 
-	@Override
-	protected native void setParameterImpl(String name, String value) /*-{
+    @Override
+    protected native void setParameterImpl(String name, String value) /*-{
 		this.@gwt.xml.shared.impl.XsltImpl::processor
 				.addParameter(name, value, "");
 	}-*/;
 
-	@Override
-	protected native String transformToStringImpl() /*-{
+    @Override
+    protected native String transformToStringImpl() /*-{
 		this.@gwt.xml.shared.impl.XsltImpl::processor.input = this.@gwt.xml.shared.impl.XsltImpl::document;
 
 		this.@gwt.xml.shared.impl.XsltImpl::processor.transform();
@@ -32,19 +32,19 @@ class XsltImplIE extends XsltImpl {
 		return this.@gwt.xml.shared.impl.XsltImpl::processor.output;
 	}-*/;
 
-	@Override
-	protected JavaScriptObject transformToDocumentImpl() {
-		return parseImpl(transformToStringImpl());
-	}
+    @Override
+    protected JavaScriptObject transformToDocumentImpl() {
+        return parseImpl(transformToStringImpl());
+    }
 
-	@Override
-	protected JavaScriptObject transformToFragmentImpl() {
-		JavaScriptObject document = transformToDocumentImpl();
+    @Override
+    protected JavaScriptObject transformToFragmentImpl() {
+        JavaScriptObject document = transformToDocumentImpl();
 
-		JavaScriptObject documentFragment = XmlParserImpl.createDocumentFragment(document);
+        JavaScriptObject documentFragment = XmlParserImpl.createDocumentFragment(document);
 
-		XmlParserImpl.appendChild(documentFragment, XmlParserImpl.getDocumentElement(document));
+        XmlParserImpl.appendChild(documentFragment, XmlParserImpl.getDocumentElement(document));
 
-		return documentFragment;
-	}
+        return documentFragment;
+    }
 }

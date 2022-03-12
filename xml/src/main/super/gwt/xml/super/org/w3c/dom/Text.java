@@ -20,14 +20,14 @@ package org.w3c.dom;
  * also be <code>CDATASection</code> nodes.
  */
 public interface Text extends CharacterData {
-	/**
-	 * Splits the node into two text nodes.  The current node is truncated to
-	 * <code>offset</code>, and the new node is inserted as the next sibling.
-	 * The new node created is also returned.
-	 *
-	 * @param offset how far from the beginning to start splitting
-	 * @return new <code>Text</code> node containing the data after <code>offset</code>
-	 */
-	Text splitText(int offset);
+    /**
+     * Splits the node into two text nodes.  The current node is truncated to
+     * <code>offset</code>, and the new node is inserted as the next sibling.
+     * The new node created is also returned.
+     *
+     * @param offset how far from the beginning to start splitting
+     * @return new <code>Text</code> node containing the data after <code>offset</code>
+     */
+    Text splitText(int offset);
 
 }

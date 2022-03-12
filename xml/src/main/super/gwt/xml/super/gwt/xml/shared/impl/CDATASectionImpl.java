@@ -23,22 +23,22 @@ import org.w3c.dom.CDATASection;
  */
 
 class CDATASectionImpl extends TextImpl implements CDATASection {
-	protected CDATASectionImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected CDATASectionImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This method returns the string representation of this
-	 * <code>CDATASectionImpl</code>.
-	 *
-	 * @return the string representation of this <code>CDATASectionImpl</code>.
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder("<![CDATA[");
-		b.append(getData());
-		b.append("]]>");
-		return b.toString();
-	}
+    /**
+     * This method returns the string representation of this
+     * <code>CDATASectionImpl</code>.
+     *
+     * @return the string representation of this <code>CDATASectionImpl</code>.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder("<![CDATA[");
+        b.append(getData());
+        b.append("]]>");
+        return b.toString();
+    }
 }

@@ -4,9 +4,9 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 
 class XPathImplStandard extends XPathImpl {
-	private static final JavaScriptObject resolver = getResolver();
+    private static final JavaScriptObject resolver = getResolver();
 
-	private native static JavaScriptObject getResolver() /*-{
+    private native static JavaScriptObject getResolver() /*-{
 		return function resolver(prefix) {
 			var ns = {
 				'xsl' : 'http://www.w3.org/1999/XSL/Transform',
@@ -16,15 +16,15 @@ class XPathImplStandard extends XPathImpl {
 		};
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject evaluateNodesImpl(JavaScriptObject element, String xPath) /*-{
+    @Override
+    protected native JavaScriptObject evaluateNodesImpl(JavaScriptObject element, String xPath) /*-{
 		return element.ownerDocument.evaluate(xPath, element,
 				@gwt.xml.shared.impl.XPathImplStandard::resolver,
 				XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	}-*/;
 
-	@Override
-	protected native JsArray<JavaScriptObject> evaluateNodesImpl(JavaScriptObject nodes) /*-{
+    @Override
+    protected native JsArray<JavaScriptObject> evaluateNodesImpl(JavaScriptObject nodes) /*-{
 		var result = new Array();
 		var currentNode = nodes.iterateNext();
 		while (currentNode) {
@@ -35,29 +35,29 @@ class XPathImplStandard extends XPathImpl {
 		return result;
 	}-*/;
 
-	@Override
-	protected native JavaScriptObject evaluateNodeImpl(JavaScriptObject element, String xPath) /*-{
+    @Override
+    protected native JavaScriptObject evaluateNodeImpl(JavaScriptObject element, String xPath) /*-{
 		return element.ownerDocument.evaluate(xPath, element,
 				@gwt.xml.shared.impl.XPathImplStandard::resolver,
 				XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue;
 	}-*/;
 
-	@Override
-	protected native String evaluateStringImpl(JavaScriptObject element, String xPath) /*-{
+    @Override
+    protected native String evaluateStringImpl(JavaScriptObject element, String xPath) /*-{
 		return element.ownerDocument.evaluate(xPath, element,
 				@gwt.xml.shared.impl.XPathImplStandard::resolver,
 				XPathResult.STRING_TYPE, null).stringValue;
 	}-*/;
 
-	@Override
-	protected native double evaluateNumberImpl(JavaScriptObject element, String xPath) /*-{
+    @Override
+    protected native double evaluateNumberImpl(JavaScriptObject element, String xPath) /*-{
 		return element.ownerDocument.evaluate(xPath, element,
 				@gwt.xml.shared.impl.XPathImplStandard::resolver,
 				XPathResult.NUMBER_TYPE, null).numberValue;
 	}-*/;
 
-	@Override
-	protected native int evaluatePosition(JavaScriptObject nodes, JavaScriptObject reference) /*-{
+    @Override
+    protected native int evaluatePosition(JavaScriptObject nodes, JavaScriptObject reference) /*-{
 		var result = 0;
 		var currentNode = nodes.iterateNext();
 		while (currentNode) {

@@ -9,42 +9,42 @@ import org.w3c.dom.Element;
 import java.util.HashMap;
 
 public class XsltUtil {
-	private static final HashMap<AbstractSetting, Xslt> cachedMap = new HashMap<AbstractSetting, Xslt>();
+    private static final HashMap<AbstractSetting, Xslt> cachedMap = new HashMap<AbstractSetting, Xslt>();
 
-	private XsltUtil() {
-	}
+    private XsltUtil() {
+    }
 
-	private static Xslt getXSLT(AbstractSetting setting) {
-		Xslt xslt = cachedMap.get(setting);
+    private static Xslt getXSLT(AbstractSetting setting) {
+        Xslt xslt = cachedMap.get(setting);
 
-		if (xslt == null) {
-			xslt = new Xslt();
-			xslt.importStyleSheet(setting.styleSheet());
+        if (xslt == null) {
+            xslt = new Xslt();
+            xslt.importStyleSheet(setting.styleSheet());
 
-			cachedMap.put(setting, xslt);
-		}
+            cachedMap.put(setting, xslt);
+        }
 
-		return xslt;
-	}
+        return xslt;
+    }
 
-	public static void performSort(Element element, SortSetting setting) {
-		element = XPath.evaluateNode(element, setting.getXPathParent());
+    public static void performSort(Element element, SortSetting setting) {
+        element = XPath.evaluateNode(element, setting.getXPathParent());
 
-		if (element == null)
-			return;
+        if (element == null)
+            return;
 
-		getXSLT(setting).performReplacement(element);
-	}
+        getXSLT(setting).performReplacement(element);
+    }
 
-	public static String getMinMax(Document document, MinMaxSetting setting) {
-		Xslt xslt = getXSLT(setting);
+    public static String getMinMax(Document document, MinMaxSetting setting) {
+        Xslt xslt = getXSLT(setting);
 
-		xslt.importSource(document);
+        xslt.importSource(document);
 
-		return xslt.transformToString();
-	}
+        return xslt.transformToString();
+    }
 
-	public static String getMinMax(Element element, MinMaxSetting setting) {
-		return getXSLT(setting).transformToString(element);
-	}
+    public static String getMinMax(Element element, MinMaxSetting setting) {
+        return getXSLT(setting).transformToString(element);
+    }
 }

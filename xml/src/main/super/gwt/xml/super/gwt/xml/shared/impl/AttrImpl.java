@@ -22,31 +22,31 @@ import org.w3c.dom.Attr;
  * This class implements the XML Attr interface.
  */
 class AttrImpl extends NodeImpl implements Attr {
-	protected AttrImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected AttrImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This function delegates to the native method <code>getName</code> in
-	 * XmlParserImpl.
-	 */
-	public String getName() {
-		return XmlParserImpl.getName(this.getJsObject());
-	}
+    /**
+     * This function delegates to the native method <code>getName</code> in
+     * XmlParserImpl.
+     */
+    public String getName() {
+        return XmlParserImpl.getName(this.getJsObject());
+    }
 
-	/**
-	 * This function delegates to the native method <code>getSpecified</code> in
-	 * XmlParserImpl.
-	 */
-	public boolean getSpecified() {
-		return XmlParserImpl.getSpecified(this.getJsObject());
-	}
+    /**
+     * This function delegates to the native method <code>getSpecified</code> in
+     * XmlParserImpl.
+     */
+    public boolean getSpecified() {
+        return XmlParserImpl.getSpecified(this.getJsObject());
+    }
 
-	/**
-	 * This function delegates to the native method <code>getValue</code> in
-	 * XmlParserImpl.
-	 */
-	public String getValue() {
-		return XmlParserImpl.getValue(this.getJsObject());
-	}
+    /**
+     * This function delegates to the native method <code>getValue</code> in
+     * XmlParserImpl.
+     */
+    public String getValue() {
+        return XmlParserImpl.getValue(this.getJsObject());
+    }
 }

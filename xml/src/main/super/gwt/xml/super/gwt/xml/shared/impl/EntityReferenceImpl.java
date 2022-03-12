@@ -23,7 +23,7 @@ import org.w3c.dom.EntityReference;
  */
 class EntityReferenceImpl extends NodeImpl implements EntityReference {
 
-	protected EntityReferenceImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected EntityReferenceImpl(JavaScriptObject o) {
+        super(o);
+    }
 }

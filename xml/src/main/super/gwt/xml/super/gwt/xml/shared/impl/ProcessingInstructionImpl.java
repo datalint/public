@@ -24,42 +24,42 @@ import org.w3c.dom.ProcessingInstruction;
  * This class implements the XML DOM ProcessingInstruction interface.
  */
 class ProcessingInstructionImpl extends NodeImpl implements
-		ProcessingInstruction {
+        ProcessingInstruction {
 
-	protected ProcessingInstructionImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected ProcessingInstructionImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This function delegates to the native method <code>getData</code> in
-	 * XmlParserImpl.
-	 */
-	public String getData() {
-		return XmlParserImpl.getData(this.getJsObject());
-	}
+    /**
+     * This function delegates to the native method <code>getData</code> in
+     * XmlParserImpl.
+     */
+    public String getData() {
+        return XmlParserImpl.getData(this.getJsObject());
+    }
 
-	/**
-	 * This function delegates to the native method <code>setData</code> in
-	 * XmlParserImpl.
-	 */
-	public void setData(String data) {
-		try {
-			XmlParserImpl.setData(this.getJsObject(), data);
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>setData</code> in
+     * XmlParserImpl.
+     */
+    public void setData(String data) {
+        try {
+            XmlParserImpl.setData(this.getJsObject(), data);
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method <code>getTarget</code> in
-	 * XmlParserImpl.
-	 */
-	public String getTarget() {
-		return XmlParserImpl.getTarget(this.getJsObject());
-	}
+    /**
+     * This function delegates to the native method <code>getTarget</code> in
+     * XmlParserImpl.
+     */
+    public String getTarget() {
+        return XmlParserImpl.getTarget(this.getJsObject());
+    }
 
-	@Override
-	public String toString() {
-		return XmlParserImpl.getInstance().toStringImpl(this);
-	}
+    @Override
+    public String toString() {
+        return XmlParserImpl.getInstance().toStringImpl(this);
+    }
 }

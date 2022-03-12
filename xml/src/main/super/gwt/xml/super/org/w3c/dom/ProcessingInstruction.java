@@ -20,24 +20,24 @@ package org.w3c.dom;
  * <pre>&lt;?xml-stylesheet href="mystyle.css" type="text/css"?&gt;</pre>
  */
 public interface ProcessingInstruction extends Node {
-	/**
-	 * This method retrieves the data.
-	 *
-	 * @return the data of this <code>ProcessingInstruction</code>
-	 */
-	String getData();
+    /**
+     * This method retrieves the data.
+     *
+     * @return the data of this <code>ProcessingInstruction</code>
+     */
+    String getData();
 
-	/**
-	 * This method sets the data to <code>data</code>.
-	 *
-	 * @param data the new data
-	 */
-	void setData(String data);
+    /**
+     * This method sets the data to <code>data</code>.
+     *
+     * @param data the new data
+     */
+    void setData(String data);
 
-	/**
-	 * This method retrieves the target.
-	 *
-	 * @return the target of this <code>ProcessingInstruction</code>
-	 */
-	String getTarget();
+    /**
+     * This method retrieves the target.
+     *
+     * @return the target of this <code>ProcessingInstruction</code>
+     */
+    String getTarget();
 }

@@ -11,174 +11,174 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ICommon {
-	char _APOSTROPHE = '\'';
-	char _AT = '@';
-	char _COMMA = ',';
-	char _EQUALS = '=';
-	char _GREATER_THAN = '>';
-	char _LESS_THAN = '<';
-	char _LINE_FEED = '\n';
-	char _QUOTE = '"';
-	char _SLASH = '/';
-	char _SPACE = ' ';
-	char _TAB = '\t';
-	char _UNDERSCORE = '_';
+    char _APOSTROPHE = '\'';
+    char _AT = '@';
+    char _COMMA = ',';
+    char _EQUALS = '=';
+    char _GREATER_THAN = '>';
+    char _LESS_THAN = '<';
+    char _LINE_FEED = '\n';
+    char _QUOTE = '"';
+    char _SLASH = '/';
+    char _SPACE = ' ';
+    char _TAB = '\t';
+    char _UNDERSCORE = '_';
 
-	String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
-	String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	String AND_WITH_SPACE = " and ";
-	String AT = "@";
-	String COUNT_ALL = "count(*)";
-	String DOLLAR = "$";
-	String DOT = ".";
-	String EMPTY = "";
-	String LAST_F = "last()";
-	String MINUS_WITH_SPACE = " - ";
-	String ONE = "1";
-	String OR_WITH_SPACE = " or ";
-	String PLUS_WITH_SPACE = " + ";
-	String POSITION_F = "position()";
-	String SPACE = " ";
-	String TEXT_F = "text()";
-	String UNDERSCORE = "_";
-	String WILDCARD = "*";
-	String ZERO = "0";
+    String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+    String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String AND_WITH_SPACE = " and ";
+    String AT = "@";
+    String COUNT_ALL = "count(*)";
+    String DOLLAR = "$";
+    String DOT = ".";
+    String EMPTY = "";
+    String LAST_F = "last()";
+    String MINUS_WITH_SPACE = " - ";
+    String ONE = "1";
+    String OR_WITH_SPACE = " or ";
+    String PLUS_WITH_SPACE = " + ";
+    String POSITION_F = "position()";
+    String SPACE = " ";
+    String TEXT_F = "text()";
+    String UNDERSCORE = "_";
+    String WILDCARD = "*";
+    String ZERO = "0";
 
-	default int getAttributeInt(Element element, String name) {
-		return parseInt(element.getAttribute(name));
-	}
+    default int getAttributeInt(Element element, String name) {
+        return parseInt(element.getAttribute(name));
+    }
 
-	default Integer getAttributeInteger(Element element, String name) {
-		return parseInteger(element.getAttribute(name));
-	}
+    default Integer getAttributeInteger(Element element, String name) {
+        return parseInteger(element.getAttribute(name));
+    }
 
-	default String nonNullAttribute(Element element, String name) {
-		return attribute(element, name, EMPTY);
-	}
+    default String nonNullAttribute(Element element, String name) {
+        return attribute(element, name, EMPTY);
+    }
 
-	default String attribute(Element element, String name, String substitution) {
-		return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
-	}
+    default String attribute(Element element, String name, String substitution) {
+        return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
+    }
 
-	default String simpleName(Class<?> clazz) {
-		return clazz.getSimpleName();
-	}
+    default String simpleName(Class<?> clazz) {
+        return clazz.getSimpleName();
+    }
 
-	default int parseInt(String source) {
-		return parseInt(source, 0);
-	}
+    default int parseInt(String source) {
+        return parseInt(source, 0);
+    }
 
-	default int parseInt(String source, int defaultValue) {
-		if (!isEmpty(source))
-			try {
-				return Integer.parseInt(source);
-			} catch (NumberFormatException e) {
-				// Ignore
-			}
+    default int parseInt(String source, int defaultValue) {
+        if (!isEmpty(source))
+            try {
+                return Integer.parseInt(source);
+            } catch (NumberFormatException e) {
+                // Ignore
+            }
 
-		return defaultValue;
-	}
+        return defaultValue;
+    }
 
-	default Integer parseInteger(String source) {
-		if (!isEmpty(source)) {
-			try {
-				return Integer.valueOf(source);
-			} catch (NumberFormatException e) {
-				// Ignore;
-			}
-		}
+    default Integer parseInteger(String source) {
+        if (!isEmpty(source)) {
+            try {
+                return Integer.valueOf(source);
+            } catch (NumberFormatException e) {
+                // Ignore;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	default boolean isEven(int x) {
-		return (x & 1) == 0;
-	}
+    default boolean isEven(int x) {
+        return (x & 1) == 0;
+    }
 
-	default boolean isEmpty(@Nullable Object source) {
-		return source == null || source.toString().isEmpty();
-	}
+    default boolean isEmpty(@Nullable Object source) {
+        return source == null || source.toString().isEmpty();
+    }
 
-	default String nonNull(@Nullable String source) {
-		return nonNull(source, EMPTY);
-	}
+    default String nonNull(@Nullable String source) {
+        return nonNull(source, EMPTY);
+    }
 
-	default String nonNull(@Nullable String source, String substitution) {
-		return source == null ? substitution : source;
-	}
+    default String nonNull(@Nullable String source, String substitution) {
+        return source == null ? substitution : source;
+    }
 
-	default String nonEmpty(@Nullable String source, String substitution) {
-		return isEmpty(source) ? substitution : source;
-	}
+    default String nonEmpty(@Nullable String source, String substitution) {
+        return isEmpty(source) ? substitution : source;
+    }
 
-	default String escapeAttr(String attribute) {
-		return XmlEscapers.xmlAttributeEscaper().escape(attribute);
-	}
+    default String escapeAttr(String attribute) {
+        return XmlEscapers.xmlAttributeEscaper().escape(attribute);
+    }
 
-	default String escapeContent(String content) {
-		return XmlEscapers.xmlContentEscaper().escape(content);
-	}
+    default String escapeContent(String content) {
+        return XmlEscapers.xmlContentEscaper().escape(content);
+    }
 
-	default UnsupportedOperationException createUoException(String operationName) {
-		return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operationName);
-	}
+    default UnsupportedOperationException createUoException(String operationName) {
+        return new UnsupportedOperationException(getClass().getName() + " does not support operation " + operationName);
+    }
 
-	default NodeList asNodeList(List<Node> nodes) {
-		return new NodeListWrapper(nodes);
-	}
+    default NodeList asNodeList(List<Node> nodes) {
+        return new NodeListWrapper(nodes);
+    }
 
-	default List<Node> asList(NodeList nodeList) {
-		return new ListWrapper(nodeList);
-	}
+    default List<Node> asList(NodeList nodeList) {
+        return new ListWrapper(nodeList);
+    }
 
-	class NodeListWrapper implements NodeList {
-		private final List<Node> nodes;
+    class NodeListWrapper implements NodeList {
+        private final List<Node> nodes;
 
-		private NodeListWrapper(List<Node> nodes) {
-			this.nodes = nodes;
-		}
+        private NodeListWrapper(List<Node> nodes) {
+            this.nodes = nodes;
+        }
 
-		@Override
-		public Node item(int index) {
-			return nodes.get(index);
-		}
+        @Override
+        public Node item(int index) {
+            return nodes.get(index);
+        }
 
-		@Override
-		public int getLength() {
-			return nodes.size();
-		}
-	}
+        @Override
+        public int getLength() {
+            return nodes.size();
+        }
+    }
 
-	class ListWrapper extends AbstractList<Node> {
-		private final NodeList nodeList;
-		private final int length;
+    class ListWrapper extends AbstractList<Node> {
+        private final NodeList nodeList;
+        private final int length;
 
-		private List<Node> extraList;
+        private List<Node> extraList;
 
-		private ListWrapper(NodeList nodeList) {
-			this.nodeList = nodeList;
-			length = nodeList.getLength();
-		}
+        private ListWrapper(NodeList nodeList) {
+            this.nodeList = nodeList;
+            length = nodeList.getLength();
+        }
 
-		@Override
-		public void add(int index, Node node) {
-			if (extraList == null)
-				extraList = new ArrayList<>();
+        @Override
+        public void add(int index, Node node) {
+            if (extraList == null)
+                extraList = new ArrayList<>();
 
-			extraList.add(index - length, node);
-		}
+            extraList.add(index - length, node);
+        }
 
-		@Override
-		public Node get(int index) {
-			if (index < length)
-				return nodeList.item(index);
+        @Override
+        public Node get(int index) {
+            if (index < length)
+                return nodeList.item(index);
 
-			return extraList.get(index - length);
-		}
+            return extraList.get(index - length);
+        }
 
-		@Override
-		public int size() {
-			return extraList == null ? length : length + extraList.size();
-		}
-	}
+        @Override
+        public int size() {
+            return extraList == null ? length : length + extraList.size();
+        }
+    }
 }

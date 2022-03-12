@@ -23,21 +23,21 @@ import org.w3c.dom.Comment;
  */
 class CommentImpl extends CharacterDataImpl implements Comment {
 
-	CommentImpl(JavaScriptObject o) {
-		super(o);
-	}
+    CommentImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This method returns the string representation of this <code>CommentImpl</code>.
-	 *
-	 * @return the string representation of this <code>CommentImpl</code>.
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder("<!--");
-		b.append(getData());
-		b.append("-->");
-		return b.toString();
-	}
+    /**
+     * This method returns the string representation of this <code>CommentImpl</code>.
+     *
+     * @return the string representation of this <code>CommentImpl</code>.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder("<!--");
+        b.append(getData());
+        b.append("-->");
+        return b.toString();
+    }
 }

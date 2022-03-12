@@ -19,20 +19,20 @@ package org.w3c.dom;
  * This interface represents an immutable ordered collection of nodes.
  */
 public interface NodeList {
-	/**
-	 * This method retrieves the number of items in this <code>NodeList</code>
-	 * object.
-	 *
-	 * @return the number of nodes in this <code>NodeList</code> object.
-	 */
-	int getLength();
+    /**
+     * This method retrieves the number of items in this <code>NodeList</code>
+     * object.
+     *
+     * @return the number of nodes in this <code>NodeList</code> object.
+     */
+    int getLength();
 
-	/**
-	 * This method gets the item in the position denoted by <code>index</code>.
-	 *
-	 * @param index - the index to be retrieved
-	 * @return the item at this index
-	 */
-	Node item(int index);
+    /**
+     * This method gets the item in the position denoted by <code>index</code>.
+     *
+     * @param index - the index to be retrieved
+     * @return the item at this index
+     */
+    Node item(int index);
 
 }

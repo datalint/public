@@ -23,7 +23,7 @@ import org.w3c.dom.DocumentFragment;
  */
 class DocumentFragmentImpl extends NodeImpl implements DocumentFragment {
 
-	protected DocumentFragmentImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected DocumentFragmentImpl(JavaScriptObject o) {
+        super(o);
+    }
 }

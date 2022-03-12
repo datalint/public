@@ -33,124 +33,124 @@ import org.w3c.dom.Text;
  */
 class DocumentImpl extends NodeImpl implements Document {
 
-	protected DocumentImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected DocumentImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This function delegates to the native method
-	 * <code>createCDATASection</code> in XmlParserImpl.
-	 */
-	public CDATASection createCDATASection(String data) {
-		try {
-			return (CDATASection) NodeImpl.build(XmlParserImpl.createCDATASection(
-					this.getJsObject(), data));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method
+     * <code>createCDATASection</code> in XmlParserImpl.
+     */
+    public CDATASection createCDATASection(String data) {
+        try {
+            return (CDATASection) NodeImpl.build(XmlParserImpl.createCDATASection(
+                    this.getJsObject(), data));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method <code>createComment</code>
-	 * in XmlParserImpl.
-	 */
-	public Comment createComment(String data) {
-		try {
-			return (Comment) NodeImpl.build(XmlParserImpl.createComment(
-					this.getJsObject(), data));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>createComment</code>
+     * in XmlParserImpl.
+     */
+    public Comment createComment(String data) {
+        try {
+            return (Comment) NodeImpl.build(XmlParserImpl.createComment(
+                    this.getJsObject(), data));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method
-	 * <code>createDocumentFragment</code> in XmlParserImpl.
-	 */
-	public DocumentFragment createDocumentFragment() {
-		try {
-			return (DocumentFragment) NodeImpl.build(XmlParserImpl.createDocumentFragment(this.getJsObject()));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method
+     * <code>createDocumentFragment</code> in XmlParserImpl.
+     */
+    public DocumentFragment createDocumentFragment() {
+        try {
+            return (DocumentFragment) NodeImpl.build(XmlParserImpl.createDocumentFragment(this.getJsObject()));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method <code>createElement</code>
-	 * in XmlParserImpl.
-	 */
-	public Element createElement(String tagName) {
-		try {
-			return (Element) NodeImpl.build(XmlParserImpl.createElement(
-					this.getJsObject(), tagName));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>createElement</code>
+     * in XmlParserImpl.
+     */
+    public Element createElement(String tagName) {
+        try {
+            return (Element) NodeImpl.build(XmlParserImpl.createElement(
+                    this.getJsObject(), tagName));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method
-	 * <code>createProcessingInstruction</code> in XmlParserImpl.
-	 */
-	public ProcessingInstruction createProcessingInstruction(String target,
-															 String data) {
-		try {
-			return (ProcessingInstruction) NodeImpl.build(XmlParserImpl.createProcessingInstruction(
-					this.getJsObject(), target, data));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method
+     * <code>createProcessingInstruction</code> in XmlParserImpl.
+     */
+    public ProcessingInstruction createProcessingInstruction(String target,
+                                                             String data) {
+        try {
+            return (ProcessingInstruction) NodeImpl.build(XmlParserImpl.createProcessingInstruction(
+                    this.getJsObject(), target, data));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method <code>createTextNode</code>
-	 * in XmlParserImpl.
-	 */
-	public Text createTextNode(String data) {
-		try {
-			return (Text) NodeImpl.build(XmlParserImpl.createTextNode(
-					this.getJsObject(), data));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>createTextNode</code>
+     * in XmlParserImpl.
+     */
+    public Text createTextNode(String data) {
+        try {
+            return (Text) NodeImpl.build(XmlParserImpl.createTextNode(
+                    this.getJsObject(), data));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_CHARACTER_ERR, e, this);
+        }
+    }
 
-	/**
-	 * This function delegates to the native method
-	 * <code>getDocumentElement</code> in XmlParserImpl.
-	 */
-	public Element getDocumentElement() {
-		return (Element) NodeImpl.build(XmlParserImpl.getDocumentElement(this.getJsObject()));
-	}
+    /**
+     * This function delegates to the native method
+     * <code>getDocumentElement</code> in XmlParserImpl.
+     */
+    public Element getDocumentElement() {
+        return (Element) NodeImpl.build(XmlParserImpl.getDocumentElement(this.getJsObject()));
+    }
 
-	/**
-	 * This function delegates to the native method <code>getElementById</code>
-	 * in XmlParserImpl.
-	 */
-	public Element getElementById(String elementId) {
-		return (Element) NodeImpl.build(XmlParserImpl.getElementById(
-				this.getJsObject(), elementId));
-	}
+    /**
+     * This function delegates to the native method <code>getElementById</code>
+     * in XmlParserImpl.
+     */
+    public Element getElementById(String elementId) {
+        return (Element) NodeImpl.build(XmlParserImpl.getElementById(
+                this.getJsObject(), elementId));
+    }
 
-	/**
-	 * This function delegates to the native method
-	 * <code>getElementsByTagName</code> in XmlParserImpl.
-	 */
-	public NodeList getElementsByTagName(String tagName) {
-		return new NodeListImpl(XmlParserImpl.getElementsByTagName(
-				this.getJsObject(), tagName));
-	}
+    /**
+     * This function delegates to the native method
+     * <code>getElementsByTagName</code> in XmlParserImpl.
+     */
+    public NodeList getElementsByTagName(String tagName) {
+        return new NodeListImpl(XmlParserImpl.getElementsByTagName(
+                this.getJsObject(), tagName));
+    }
 
-	/**
-	 * This function delegates to the native method <code>importNode</code> in
-	 * XmlParserImpl.
-	 */
-	public Node importNode(Node importedNode, boolean deep) {
-		try {
-			return NodeImpl.build(XmlParserImpl.importNode(this.getJsObject(),
-					((DOMItem) importedNode).getJsObject(), deep));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_STATE_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>importNode</code> in
+     * XmlParserImpl.
+     */
+    public Node importNode(Node importedNode, boolean deep) {
+        try {
+            return NodeImpl.build(XmlParserImpl.importNode(this.getJsObject(),
+                    ((DOMItem) importedNode).getJsObject(), deep));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_STATE_ERR, e, this);
+        }
+    }
 }

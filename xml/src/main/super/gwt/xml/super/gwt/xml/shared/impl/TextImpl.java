@@ -25,50 +25,50 @@ import org.w3c.dom.Text;
  */
 class TextImpl extends CharacterDataImpl implements Text {
 
-	protected TextImpl(JavaScriptObject o) {
-		super(o);
-	}
+    protected TextImpl(JavaScriptObject o) {
+        super(o);
+    }
 
-	/**
-	 * This function delegates to the native method <code>splitText</code> in
-	 * XmlParserImpl.
-	 */
-	public Text splitText(int offset) {
-		try {
-			return (Text) NodeImpl.build(XmlParserImpl.splitText(this.getJsObject(),
-					offset));
-		} catch (JavaScriptException e) {
-			throw new DOMNodeException(DOMException.INVALID_MODIFICATION_ERR, e, this);
-		}
-	}
+    /**
+     * This function delegates to the native method <code>splitText</code> in
+     * XmlParserImpl.
+     */
+    public Text splitText(int offset) {
+        try {
+            return (Text) NodeImpl.build(XmlParserImpl.splitText(this.getJsObject(),
+                    offset));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_MODIFICATION_ERR, e, this);
+        }
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder();
-		String[] x = getData().split("(?=[;&<>\'\"])", -1);
-		for (int i = 0; i < x.length; i++) {
-			if (x[i].startsWith(";")) {
-				b.append("&semi;");
-				b.append(x[i].substring(1));
-			} else if (x[i].startsWith("&")) {
-				b.append("&amp;");
-				b.append(x[i].substring(1));
-			} else if (x[i].startsWith("\"")) {
-				b.append("&quot;");
-				b.append(x[i].substring(1));
-			} else if (x[i].startsWith("'")) {
-				b.append("&apos;");
-				b.append(x[i].substring(1));
-			} else if (x[i].startsWith("<")) {
-				b.append("&lt;");
-				b.append(x[i].substring(1));
-			} else if (x[i].startsWith(">")) {
-				b.append("&gt;");
-				b.append(x[i].substring(1));
-			} else {
-				b.append(x[i]);
-			}
-		}
-		return b.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        String[] x = getData().split("(?=[;&<>\'\"])", -1);
+        for (int i = 0; i < x.length; i++) {
+            if (x[i].startsWith(";")) {
+                b.append("&semi;");
+                b.append(x[i].substring(1));
+            } else if (x[i].startsWith("&")) {
+                b.append("&amp;");
+                b.append(x[i].substring(1));
+            } else if (x[i].startsWith("\"")) {
+                b.append("&quot;");
+                b.append(x[i].substring(1));
+            } else if (x[i].startsWith("'")) {
+                b.append("&apos;");
+                b.append(x[i].substring(1));
+            } else if (x[i].startsWith("<")) {
+                b.append("&lt;");
+                b.append(x[i].substring(1));
+            } else if (x[i].startsWith(">")) {
+                b.append("&gt;");
+                b.append(x[i].substring(1));
+            } else {
+                b.append(x[i]);
+            }
+        }
+        return b.toString();
+    }
 }

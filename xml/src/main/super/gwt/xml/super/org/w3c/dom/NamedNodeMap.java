@@ -24,26 +24,26 @@ package org.w3c.dom;
  * Represents a string-to-node map, used in <code>getAttributes</code>.
  */
 public interface NamedNodeMap {
-	/**
-	 * Returns the number of items in this <code>NamedNodeMap</code>.
-	 *
-	 * @return the number of items in this <code>NamedNodeMap</code>
-	 */
-	int getLength();
+    /**
+     * Returns the number of items in this <code>NamedNodeMap</code>.
+     *
+     * @return the number of items in this <code>NamedNodeMap</code>
+     */
+    int getLength();
 
-	/**
-	 * This method gets the item having the given name.
-	 *
-	 * @param name - the name used to look up the item
-	 * @return the item retrieved
-	 */
-	Node getNamedItem(String name);
+    /**
+     * This method gets the item having the given name.
+     *
+     * @param name - the name used to look up the item
+     * @return the item retrieved
+     */
+    Node getNamedItem(String name);
 
-	/**
-	 * This method gets the item at the index position.
-	 *
-	 * @param index - the index to retrieve the item from
-	 * @return the item retrieved
-	 */
-	Node item(int index);
+    /**
+     * This method gets the item at the index position.
+     *
+     * @param index - the index to retrieve the item from
+     * @return the item retrieved
+     */
+    Node item(int index);
 }

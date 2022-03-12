@@ -22,32 +22,32 @@ import org.w3c.dom.DOMException;
  */
 public class DOMParseException extends DOMException {
 
-	/**
-	 * Maximum size of error message in summary.
-	 */
-	private static final int MAX_SUMMARY_LENGTH = 128;
-	private String contents;
+    /**
+     * Maximum size of error message in summary.
+     */
+    private static final int MAX_SUMMARY_LENGTH = 128;
+    private String contents;
 
-	public DOMParseException() {
-		super(DOMException.SYNTAX_ERR, "Parse error");
-	}
+    public DOMParseException() {
+        super(DOMException.SYNTAX_ERR, "Parse error");
+    }
 
-	public DOMParseException(String contents) {
-		super(DOMException.SYNTAX_ERR, "Failed to parse: " + summarize(contents));
-		this.contents = contents;
-	}
+    public DOMParseException(String contents) {
+        super(DOMException.SYNTAX_ERR, "Failed to parse: " + summarize(contents));
+        this.contents = contents;
+    }
 
-	public DOMParseException(String contents, Throwable e) {
-		super(DOMException.SYNTAX_ERR, "Failed to parse: " + summarize(contents));
-		initCause(e);
-		this.contents = contents;
-	}
+    public DOMParseException(String contents, Throwable e) {
+        super(DOMException.SYNTAX_ERR, "Failed to parse: " + summarize(contents));
+        initCause(e);
+        this.contents = contents;
+    }
 
-	static String summarize(String text) {
-		return text.substring(0, Math.min(text.length(), MAX_SUMMARY_LENGTH));
-	}
+    static String summarize(String text) {
+        return text.substring(0, Math.min(text.length(), MAX_SUMMARY_LENGTH));
+    }
 
-	public String getContents() {
-		return contents;
-	}
+    public String getContents() {
+        return contents;
+    }
 }
