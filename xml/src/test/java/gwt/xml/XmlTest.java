@@ -98,4 +98,13 @@ public class XmlTest {
 
         assertEquals(oldDocument.getDocumentElement().getTextContent(), newDocument.getDocumentElement().getTextContent());
     }
+
+    @Test
+    public void testDetermineLevel() {
+        Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
+                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+
+        assertEquals(0, XmlUtil.determineLevel(document.getDocumentElement()));
+        assertEquals(2, XmlUtil.determineLevel(document.getDocumentElement().getFirstChild().getFirstChild()));
+    }
 }

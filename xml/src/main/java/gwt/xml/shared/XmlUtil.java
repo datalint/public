@@ -19,8 +19,30 @@ public class XmlUtil implements ICommon {
         return instance.escapeAttr(attribute);
     }
 
+    public static int determineLevel(Node node) {
+        int level = 0;
+
+        Node reference = node.getOwnerDocument().getDocumentElement();
+        while (node != null) {
+            if (node.equals(reference))
+                return level;
+
+            node = node.getParentNode();
+            level++;
+        }
+
+        return -1;
+    }
+
     public static List<Element> getAncestors(Node descendant) {
+        return getAncestors(descendant, false);
+    }
+
+    public static List<Element> getAncestors(Node descendant, boolean inclusive) {
         List<Element> ancestors = new ArrayList<>();
+
+        if (inclusive && descendant instanceof Element)
+            ancestors.add((Element) descendant);
 
         while ((descendant = descendant.getParentNode()) instanceof Element) {
             ancestors.add((Element) descendant);
