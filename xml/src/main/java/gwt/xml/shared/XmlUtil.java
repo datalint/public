@@ -15,6 +15,22 @@ public class XmlUtil implements ICommon {
     private XmlUtil() {
     }
 
+    /**
+     * Return the first present attribute value.
+     *
+     * @param element        the source element
+     * @param attributeNames an array being tested with
+     * @return the first present attribute value
+     */
+    public static String coalesce(Element element, String... attributeNames) {
+        for (String attributeName : attributeNames) {
+            if (element.hasAttribute(attributeName))
+                return element.getAttribute(attributeName);
+        }
+
+        return null;
+    }
+
     public static String escapeAttrStatic(String attribute) {
         return instance.escapeAttr(attribute);
     }
