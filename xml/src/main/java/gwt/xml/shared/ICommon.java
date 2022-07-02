@@ -5,7 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.annotation.Nullable;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +59,22 @@ public interface ICommon {
         return element.hasAttribute(name) ? element.getAttribute(name) : substitution;
     }
 
+    /**
+     * Return the first present attribute value.
+     *
+     * @param element        the source element
+     * @param attributeNames an array being tested with
+     * @return the first present attribute value
+     */
+    default String coalesce(Element element, String... attributeNames) {
+        for (String attributeName : attributeNames) {
+            if (element.hasAttribute(attributeName))
+                return element.getAttribute(attributeName);
+        }
+
+        return null;
+    }
+
     default String simpleName(Class<?> clazz) {
         return clazz.getSimpleName();
     }
@@ -95,19 +110,24 @@ public interface ICommon {
         return (x & 1) == 0;
     }
 
-    default boolean isEmpty(@Nullable Object source) {
+    default boolean isEmpty(Object source) {
         return source == null || source.toString().isEmpty();
     }
 
-    default String nonNull(@Nullable String source) {
-        return nonNull(source, EMPTY);
+    default String nonNull(String source) {
+        return coalesce(source, EMPTY);
     }
 
-    default String nonNull(@Nullable String source, String substitution) {
-        return source == null ? substitution : source;
+    default <T> T coalesce(T... values) {
+        for (T value : values) {
+            if (value != null)
+                return value;
+        }
+
+        return null;
     }
 
-    default String nonEmpty(@Nullable String source, String substitution) {
+    default String nonEmpty(String source, String substitution) {
         return isEmpty(source) ? substitution : source;
     }
 

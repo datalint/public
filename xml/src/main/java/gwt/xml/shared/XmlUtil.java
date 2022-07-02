@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import gwt.xml.shared.impl.XmlUtilImpl;
 import org.w3c.dom.*;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class XmlUtil implements ICommon {
@@ -13,22 +12,6 @@ public class XmlUtil implements ICommon {
     private static final XmlUtil instance = new XmlUtil();
 
     private XmlUtil() {
-    }
-
-    /**
-     * Return the first present attribute value.
-     *
-     * @param element        the source element
-     * @param attributeNames an array being tested with
-     * @return the first present attribute value
-     */
-    public static String coalesce(Element element, String... attributeNames) {
-        for (String attributeName : attributeNames) {
-            if (element.hasAttribute(attributeName))
-                return element.getAttribute(attributeName);
-        }
-
-        return null;
     }
 
     public static String escapeAttrStatic(String attribute) {
@@ -82,7 +65,7 @@ public class XmlUtil implements ICommon {
         return ancestors;
     }
 
-    public static String createHTML(String tagName, @Nullable String className, @Nullable String childHTML) {
+    public static String createHTML(String tagName, String className, String childHTML) {
         int size = className == null ? 0 : 2;
 
         if (childHTML != null)
@@ -112,7 +95,7 @@ public class XmlUtil implements ICommon {
         return XmlUtil.toString(document);
     }
 
-    public static String getItem(Element item, @Nullable String locale) {
+    public static String getItem(Element item, String locale) {
         if (!instance.isEmpty(locale)) {
             if (item.hasAttribute(locale))
                 return item.getAttribute(locale);
@@ -238,7 +221,7 @@ public class XmlUtil implements ICommon {
      *                           first one in the removed holder is the last one in
      *                           the original parent.
      */
-    public static void removePreviousSiblings(Node referenceNode, @Nullable List<Node> removedNodesHolder) {
+    public static void removePreviousSiblings(Node referenceNode, List<Node> removedNodesHolder) {
         if (referenceNode == null)
             return;
 
@@ -455,7 +438,7 @@ public class XmlUtil implements ICommon {
         return true;
     }
 
-    public static void setAttribute(Element src, String name, @Nullable String value) {
+    public static void setAttribute(Element src, String name, String value) {
         if (value == null)
             src.removeAttribute(name);
         else

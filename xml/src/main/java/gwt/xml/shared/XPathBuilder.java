@@ -3,7 +3,6 @@ package gwt.xml.shared;
 import gwt.xml.shared.expression.*;
 import gwt.xml.shared.xpath.*;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -265,7 +264,7 @@ public class XPathBuilder implements ICommon {
         return Operator.minus(first, second);
     }
 
-    public static IExpression name(@Nullable IExpression expression) {
+    public static IExpression name(IExpression expression) {
         return new Name(expression);
     }
 

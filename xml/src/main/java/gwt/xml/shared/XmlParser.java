@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -60,7 +59,7 @@ public class XmlParser {
      * @param exceptionHandler handler used if the parse fails.
      * @return the newly created <code>Document</code> or null if the parse fails.
      */
-    public static Document parse(String contents, @Nullable Consumer<Exception> exceptionHandler) {
+    public static Document parse(String contents, Consumer<Exception> exceptionHandler) {
         try {
             return impl.parse(contents);
         } catch (Exception e) {
