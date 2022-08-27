@@ -33,34 +33,66 @@ public class XmlUtil implements ICommon {
         return -1;
     }
 
-    public static List<Element> getAncestors(Node descendant) {
-        return getAncestors(descendant, false);
+    public static Element getClosestCommonAncestor(Node descendant, Node other) {
+        Set<Element> ancestors = new HashSet<>();
+        appendAncestors(ancestors, descendant, true);
+
+        do {
+            if (ancestors.contains(other))
+                return (Element) other;
+        } while ((other = other.getParentNode()) instanceof Element);
+
+        return null;
     }
 
-    public static List<Element> getAncestors(Node descendant, boolean inclusive) {
-        List<Element> ancestors = new ArrayList<>();
+    public static void appendAncestors(Collection<Element> ancestors, Node descendant, boolean inclusive) {
+        appendAncestors(ancestors, descendant, inclusive, null, false);
+    }
 
-        if (inclusive && descendant instanceof Element)
+    public static void appendAncestors(Collection<Element> ancestors, Node descendant, boolean inclusiveD,
+                                       Node ancestor, boolean inclusiveA) {
+        if (descendant.equals(ancestor)) {
+            if (inclusiveD || inclusiveA)
+                ancestors.add((Element) descendant);
+
+            return;
+        }
+
+        if (inclusiveD && descendant instanceof Element)
             ancestors.add((Element) descendant);
 
         while ((descendant = descendant.getParentNode()) instanceof Element) {
+            if (descendant.equals(ancestor)) {
+                if (inclusiveA)
+                    ancestors.add((Element) descendant);
+
+                break;
+            }
+
             ancestors.add((Element) descendant);
         }
+    }
+
+    public static Set<Element> ancestorSet(Node descendant, boolean inclusiveD, Node ancestor, boolean inclusiveA) {
+        Set<Element> ancestors = new HashSet<>();
+
+        appendAncestors(ancestors, descendant, inclusiveD, ancestor, inclusiveA);
 
         return ancestors;
     }
 
-    public static List<Element> getAncestors(Element descendant, Element ancestor) {
-        if (descendant.equals(ancestor))
-            return Collections.singletonList(descendant);
-
+    public static List<Element> ancestorList(Node descendant, boolean inclusive) {
         List<Element> ancestors = new ArrayList<>();
 
-        do {
-            ancestors.add(descendant);
-        } while (!(descendant = (Element) descendant.getParentNode()).equals(ancestor));
+        appendAncestors(ancestors, descendant, inclusive);
 
-        ancestors.add(ancestor);
+        return ancestors;
+    }
+
+    public static List<Element> ancestorList(Node descendant, Node ancestor) {
+        List<Element> ancestors = new ArrayList<>();
+
+        appendAncestors(ancestors, descendant, true, ancestor, true);
 
         return ancestors;
     }

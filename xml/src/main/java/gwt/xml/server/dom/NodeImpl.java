@@ -6,6 +6,7 @@ import org.w3c.dom.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public abstract class NodeImpl implements Node, ICommon {
@@ -165,24 +166,35 @@ public abstract class NodeImpl implements Node, ICommon {
 
     @Override
     public short compareDocumentPosition(Node other) {
-        List<Element> ancestors = XmlUtil.getAncestors(this);
-        List<Element> otherAncestors = XmlUtil.getAncestors(other);
+        if (equals(other))
+            return 0;
+        else if (equals(other.getOwnerDocument()))
+            return DOCUMENT_POSITION_FOLLOWING + DOCUMENT_POSITION_CONTAINED_BY;
+        else if (getOwnerDocument().equals(other))
+            return DOCUMENT_POSITION_PRECEDING + DOCUMENT_POSITION_CONTAINS;
 
-        for (Element ancestor : ancestors) {
-            if (otherAncestors.contains(ancestor)) {
-                ElementImpl ancestorImpl = (ElementImpl) ancestor;
+        Element closestCommonAncestor = XmlUtil.getClosestCommonAncestor(this, other);
 
-                int compare = Integer.compare(ancestorImpl.getChildIndex(this), ancestorImpl.getChildIndex(other));
-                if (compare < 0)
-                    return DOCUMENT_POSITION_PRECEDING;
-                else if (compare > 0)
-                    return DOCUMENT_POSITION_FOLLOWING;
-                else
-                    return 0;
-            }
-        }
+        if (closestCommonAncestor == null)
+            return DOCUMENT_POSITION_DISCONNECTED;
 
-        return DOCUMENT_POSITION_DISCONNECTED;
+        Set<Element> ancestors = XmlUtil.ancestorSet(this, true, closestCommonAncestor, true);
+        if (ancestors.contains(other))
+            return DOCUMENT_POSITION_PRECEDING + DOCUMENT_POSITION_CONTAINS;
+
+        Set<Element> otherAncestors = XmlUtil.ancestorSet(other, true, closestCommonAncestor, true);
+        if (otherAncestors.contains(this))
+            return DOCUMENT_POSITION_FOLLOWING + DOCUMENT_POSITION_CONTAINED_BY;
+
+        Node child = closestCommonAncestor.getFirstChild();
+        do {
+            if (ancestors.contains(child))
+                return DOCUMENT_POSITION_FOLLOWING;
+            else if (otherAncestors.contains(child))
+                return DOCUMENT_POSITION_PRECEDING;
+
+            child = child.getNextSibling();
+        } while (true);
     }
 
     protected Node getAncestor(Node node) {

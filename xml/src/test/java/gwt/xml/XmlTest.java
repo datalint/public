@@ -107,4 +107,27 @@ public class XmlTest {
         assertEquals(0, XmlUtil.determineLevel(document.getDocumentElement()));
         assertEquals(2, XmlUtil.determineLevel(document.getDocumentElement().getFirstChild().getFirstChild()));
     }
+
+    @Test
+    public void testCompareDocumentPosition() {
+        Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
+                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+
+        Element a1 = XPath.evaluateNode(document, "a[1]");
+        Element a1_1 = XPath.evaluateNode(document, "a[1]/a[1]");
+        Element a1_2 = XPath.evaluateNode(document, "a[1]/a[2]");
+
+        assertEquals(0, a1.compareDocumentPosition(XPath.evaluateNode(document, "a[1]")));
+        assertEquals(0, a1_1.compareDocumentPosition(a1_1));
+        assertEquals(20, a1.compareDocumentPosition(a1_1));
+        assertEquals(10, a1_1.compareDocumentPosition(a1));
+        assertEquals(4, a1_1.compareDocumentPosition(a1_2));
+        assertEquals(2, a1_2.compareDocumentPosition(a1_1));
+        assertEquals(1, a1_2.compareDocumentPosition(XmlParser.parse("<a/>").getDocumentElement()));
+
+        assertEquals(10, a1.compareDocumentPosition(document));
+        assertEquals(20, document.compareDocumentPosition(a1));
+        assertEquals(10, document.getDocumentElement().compareDocumentPosition(document));
+        assertEquals(20, document.compareDocumentPosition(document.getDocumentElement()));
+    }
 }

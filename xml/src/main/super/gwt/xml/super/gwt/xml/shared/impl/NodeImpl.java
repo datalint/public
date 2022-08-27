@@ -251,4 +251,11 @@ class NodeImpl extends DOMItem implements Node {
 		var jsNode = this.@gwt.xml.shared.impl.DOMItem::getJsObject()();
 		return jsNode.textContent;
 	}-*/;
+
+    @Override
+    public native short compareDocumentPosition(Node other) /*-{
+		var jsNode = this.@gwt.xml.shared.impl.DOMItem::getJsObject()();
+		var jsNodeOther = other.@gwt.xml.shared.impl.DOMItem::getJsObject()();
+		return jsNode.compareDocumentPosition(jsNodeOther);
+	}-*/;
 }

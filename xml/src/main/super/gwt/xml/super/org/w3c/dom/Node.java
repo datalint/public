@@ -81,6 +81,52 @@ public interface Node {
      */
     short NOTATION_NODE = 12;
 
+    // DocumentPosition
+    /**
+     * The two nodes are disconnected. Order between disconnected nodes is
+     * always implementation-specific.
+     */
+    short DOCUMENT_POSITION_DISCONNECTED = 0x01;
+
+    /**
+     * The second node precedes the reference node.
+     */
+    short DOCUMENT_POSITION_PRECEDING = 0x02;
+
+    /**
+     * The node follows the reference node.
+     */
+    short DOCUMENT_POSITION_FOLLOWING = 0x04;
+
+    /**
+     * The node contains the reference node. A node which contains is always
+     * preceding, too.
+     */
+    short DOCUMENT_POSITION_CONTAINS = 0x08;
+
+    /**
+     * The node is contained by the reference node. A node which is contained
+     * is always following, too.
+     */
+    short DOCUMENT_POSITION_CONTAINED_BY = 0x10;
+
+    /**
+     * The determination of preceding versus following is
+     * implementation-specific.
+     */
+    short DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = 0x20;
+
+    /**
+     * Compares the reference node, i.e. the node on which this method is
+     * being called, with a node, i.e. the one passed as a parameter, with
+     * regard to their position in the document and according to the
+     * document order.
+     *
+     * @param other the <code>Node</code> to compare against the reference node.
+     * @return how the node is positioned relatively to the reference node
+     */
+    short compareDocumentPosition(Node other);
+
     /**
      * This method appends child <code>newChild</code>.
      *
