@@ -24,7 +24,7 @@ public abstract class NodeImpl implements Node, ICommon {
         return Collections.emptyList();
     }
 
-    public void onChildNodesChanged() {
+    public void onChildNodesChanged(Node removed, Node appended) {
     }
 
     public void appendElementsByTagName(List<Node> holder, Predicate<String> predicate) {

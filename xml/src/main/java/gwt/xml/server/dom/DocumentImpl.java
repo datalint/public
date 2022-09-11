@@ -3,11 +3,15 @@ package gwt.xml.server.dom;
 import org.w3c.dom.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class DocumentImpl extends NodeImpl implements Document {
     public static final String KEY_id = "id";
+
+    private Map<String, Element> idMap;
 
     private ElementImpl element;
 
@@ -15,6 +19,17 @@ public class DocumentImpl extends NodeImpl implements Document {
 
     public DocumentImpl() {
         super(null);
+    }
+
+    void updateIdMap(String oldValue, Element element) {
+        if (idMap == null)
+            return;
+
+        if (oldValue != null)
+            idMap.remove(oldValue);
+
+        if (element != null)
+            idMap.put(element.getAttribute(ID), element);
     }
 
     @Override
@@ -28,7 +43,7 @@ public class DocumentImpl extends NodeImpl implements Document {
     }
 
     @Override
-    public void onChildNodesChanged() {
+    public void onChildNodesChanged(Node removed, Node appended) {
         childNodesRevision++;
     }
 
@@ -113,22 +128,21 @@ public class DocumentImpl extends NodeImpl implements Document {
         return new ProcessingInstructionImpl(this, target, data);
     }
 
-    /*
-     * This method is NOT optimized. Client side shall cache idMap by self through
-     * getElementsByTagName(*).
-     */
     @Override
     public Element getElementById(String elementId) {
-        NodeList nodeList = getElementsByTagName("*");
+        if (idMap == null) {
+            idMap = new HashMap<>();
 
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Element element = (Element) nodeList.item(i);
+            NodeList nodeList = getElementsByTagName(WILDCARD);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Element element = (Element) nodeList.item(i);
 
-            if (elementId.equals(element.getAttribute(KEY_id)))
-                return element;
+                if (element.hasAttribute(KEY_id))
+                    idMap.put(element.getAttribute(KEY_id), element);
+            }
         }
 
-        return null;
+        return idMap.get(elementId);
     }
 
     @Override
@@ -145,7 +159,7 @@ public class DocumentImpl extends NodeImpl implements Document {
     public Node insertBefore(Node newChild, Node refChild) {
         element = (ElementImpl) newChild;
 
-        onChildNodesChanged();
+        onChildNodesChanged(null, newChild);
 
         return newChild;
     }
@@ -154,14 +168,14 @@ public class DocumentImpl extends NodeImpl implements Document {
     public Node replaceChild(Node newChild, Node oldChild) {
         element = (ElementImpl) newChild;
 
-        onChildNodesChanged();
+        onChildNodesChanged(oldChild, newChild);
 
         return oldChild;
     }
 
     @Override
     public Node removeChild(Node oldChild) {
-        onChildNodesChanged();
+        onChildNodesChanged(oldChild, null);
 
         return oldChild;
     }
@@ -170,7 +184,7 @@ public class DocumentImpl extends NodeImpl implements Document {
     public Node appendChild(Node newChild) {
         element = (ElementImpl) newChild;
 
-        onChildNodesChanged();
+        onChildNodesChanged(null, newChild);
 
         return newChild;
     }

@@ -1,8 +1,8 @@
 package gwt.xml.server.parser;
 
-import gwt.xml.server.XQuery;
+import com.google.common.io.CharStreams;
 import gwt.xml.server.common.BasePooledObjectFactory;
-import net.sf.saxon.dom.DocumentBuilderImpl;
+import gwt.xml.server.dom.DocumentImpl;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
@@ -11,51 +11,41 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class DocumentParser {
-    private static DocumentBuilder documentBuilderReadOnly;
+    private static String asXml(InputSource inputSource) throws IOException {
+        InputStream inputStream = inputSource.getByteStream();
 
-    public static Document newDocument() throws Exception {
-        DocumentBuilder documentBuilder = BuilderFactory.instance.borrowObject();
-        try {
-            return documentBuilder.newDocument();
-        } finally {
-            BuilderFactory.instance.returnObject(documentBuilder);
-        }
-    }
+        if (inputStream != null)
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
-    public static Document newDocumentSilent() {
-        try {
-            return newDocument();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private static InputSource asInputSource(String xml) {
-        return new InputSource(new StringReader(xml));
+        return CharStreams.toString(inputSource.getCharacterStream());
     }
 
     public static Document parse(String xml) throws Exception {
-        return parse(asInputSource(xml));
+        Document document = new DocumentImpl();
+
+        document.appendChild(parse(document, xml));
+
+        return document;
     }
 
     public static Document parse(InputSource inputSource) throws Exception {
-        DocumentBuilder documentBuilder = BuilderFactory.instance.borrowObject();
-        try {
-            return documentBuilder.parse(inputSource);
-        } finally {
-            BuilderFactory.instance.returnObject(documentBuilder);
-        }
+        return parse(asXml(inputSource));
     }
 
     public static Document parseSilent(String xml) {
-        return parseSilent(asInputSource(xml));
+        try {
+            return parse(xml);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static Document parseSilent(InputSource inputSource) {
@@ -66,29 +56,11 @@ public class DocumentParser {
         }
     }
 
-    public static Document parseReadOnly(String xml) throws Exception {
-        if (documentBuilderReadOnly == null) {
-            documentBuilderReadOnly = new DocumentBuilderImpl();
-
-            XQuery.setConfiguration((DocumentBuilderImpl) documentBuilderReadOnly);
-        }
-
-        return documentBuilderReadOnly.parse(asInputSource(xml));
-    }
-
-    public static Document parseReadOnlySilent(String xml) {
-        try {
-            return parseReadOnly(xml);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     public static <T extends DefaultHandler> T parse(String xml, T handler) throws Exception {
         SAXParser sAXParser = ParserFactory.instance.borrowObject();
 
         try {
-            sAXParser.parse(asInputSource(xml), handler);
+            sAXParser.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)), handler);
 
             return handler;
         } finally {
@@ -96,7 +68,7 @@ public class DocumentParser {
         }
     }
 
-    public static <T extends DefaultHandler> T parseSilent(String xml, T handler) throws Exception {
+    public static <T extends DefaultHandler> T parseSilent(String xml, T handler) {
         try {
             return parse(xml, handler);
         } catch (Exception e) {
@@ -126,20 +98,6 @@ public class DocumentParser {
 
         @Override
         public void passivateObject(PooledObject<SAXParser> wrapper) {
-            wrapper.getObject().reset();
-        }
-    }
-
-    private static class BuilderFactory extends BasePooledObjectFactory<DocumentBuilder> {
-        private static ObjectPool<DocumentBuilder> instance = new GenericObjectPool<>(new BuilderFactory());
-
-        @Override
-        public DocumentBuilder create() throws Exception {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        }
-
-        @Override
-        public void passivateObject(PooledObject<DocumentBuilder> wrapper) {
             wrapper.getObject().reset();
         }
     }

@@ -35,16 +35,28 @@ public class ElementImpl extends ParentNode implements Element {
     }
 
     @Override
-    public void onChildNodesChanged() {
+    public void onChildNodesChanged(Node removed, Node appended) {
         Node parent = getParentNode();
 
-        while (parent instanceof NodeImpl) {
-            ((NodeImpl) parent).onChildNodesChanged();
-
-            parent = parent.getParentNode();
-        }
+        if (parent instanceof NodeImpl)
+            ((NodeImpl) parent).onChildNodesChanged(null, null);
 
         childNodesRevision++;
+
+        if (removed == null && appended == null)
+            return;
+
+        Document ownerDocument = getOwnerDocument();
+
+        if (ownerDocument instanceof DocumentImpl) {
+            Element element;
+
+            if (removed instanceof Element && (element = (Element) removed).hasAttribute(ID))
+                ((DocumentImpl) ownerDocument).updateIdMap(element.getAttribute(ID), null);
+
+            if (appended instanceof Element && (element = (Element) appended).hasAttribute(ID))
+                ((DocumentImpl) ownerDocument).updateIdMap(element.getAttribute(ID), element);
+        }
     }
 
     @Override
@@ -89,25 +101,44 @@ public class ElementImpl extends ParentNode implements Element {
 
         value = nonNull(value);
 
-        if (!value.equals(attributes.put(name, value)))
+        String oldValue;
+
+        if (!value.equals((oldValue = attributes.put(name, value)))) {
             attributesRevision++;
+
+            if (ID.equals(name) && getParentNode() != null) {
+                Document ownerDocument = getOwnerDocument();
+
+                if (ownerDocument instanceof DocumentImpl) {
+                    ((DocumentImpl) ownerDocument).updateIdMap(oldValue, this);
+                    ((DocumentImpl) ownerDocument).updateIdMap(value, this);
+                }
+            }
+        }
     }
 
     @Override
     public void removeAttribute(String name) {
-        if (attributes != null && attributes.remove(name) != null) {
+        String value;
+
+        if (attributes != null && (value = attributes.remove(name)) != null) {
             if (attributes.isEmpty())
                 attributes = null;
 
             attributesRevision++;
+
+            if (ID.equals(name)) {
+                Document ownerDocument = getOwnerDocument();
+
+                if (ownerDocument instanceof DocumentImpl)
+                    ((DocumentImpl) ownerDocument).updateIdMap(value, this);
+            }
         }
     }
 
     @Override
     public Attr getAttributeNode(String name) {
-        String value = getAttribute(name);
-
-        return value == null ? null : new AttrImpl(this, name, value);
+        return attributes == null ? null : new AttrImpl(this, name, nonNull(attributes.get(name)));
     }
 
     @Override
@@ -131,10 +162,7 @@ public class ElementImpl extends ParentNode implements Element {
 
         if (attributes != null) {
             clone.attributes = new HashMap<>(attributes.size());
-
-            for (Entry<String, String> entry : attributes.entrySet()) {
-                clone.attributes.put(entry.getKey(), entry.getValue());
-            }
+            clone.attributes.putAll(attributes);
         }
 
         if (deep && children != null) {

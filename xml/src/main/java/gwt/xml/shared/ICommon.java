@@ -31,6 +31,7 @@ public interface ICommon {
     String DOLLAR = "$";
     String DOT = ".";
     String EMPTY = "";
+    String ID = "id";
     String LAST_F = "last()";
     String MINUS_WITH_SPACE = " - ";
     String ONE = "1";

@@ -14,7 +14,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class XmlTest {
     @Test
@@ -129,5 +129,47 @@ public class XmlTest {
         assertEquals(20, document.compareDocumentPosition(a1));
         assertEquals(10, document.getDocumentElement().compareDocumentPosition(document));
         assertEquals(20, document.compareDocumentPosition(document.getDocumentElement()));
+    }
+
+    @Test
+    public void testGetElementById() {
+        String xml = "<root><a id='a1' name='na1'><b id='b1' name='nb1'/></a></root>";
+
+        Document document = XmlParser.parse(xml);
+        Element a1 = document.getElementById("a1");
+        assertNotNull(a1);
+
+        assertNotNull(document.getElementById("b1"));
+        assertNull(document.getElementById("b2"));
+
+        document.getElementById("b1").setAttribute("name", "nb2");
+        assertNotNull(document.getElementById("b1"));
+
+        document.getElementById("b1").setAttribute("id", "b2");
+        assertNull(document.getElementById("b1"));
+        assertNotNull(document.getElementById("b2"));
+
+        Element b2 = document.getElementById("b2");
+        b2.removeAttribute("id");
+        assertNull(document.getElementById("b2"));
+
+        Element b3 = document.createElement("b");
+        b3.setAttribute("id", "b3");
+        assertNull(document.getElementById("b3"));
+        a1.appendChild(b3);
+        assertNotNull(document.getElementById("b3"));
+
+        Element b4 = document.createElement("b");
+        b4.setAttribute("id", "b4");
+        a1.replaceChild(b4, b3);
+        assertNull(document.getElementById("b3"));
+        assertNotNull(document.getElementById("b4"));
+
+        a1.removeChild(b4);
+        assertNull(document.getElementById("b4"));
+
+        a1.setAttribute("id", "a2");
+        assertNull(document.getElementById("a1"));
+        assertNotNull(document.getElementById("a2"));
     }
 }

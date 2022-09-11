@@ -47,7 +47,7 @@ public class NodeListImpl implements NodeList, ICommon {
         if (cacheRevision != childNodesRevision || cache == null) {
             cacheRevision = childNodesRevision;
 
-            cache = new ArrayList<Node>();
+            cache = new ArrayList<>();
             owner.appendElementsByTagName(cache, tagName.equals(WILDCARD) ? TAG_ALL : name -> name.equals(tagName));
         }
 

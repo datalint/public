@@ -41,7 +41,7 @@ public abstract class ParentNode extends NodeImpl {
 
         setOwner(newChild, this);
 
-        onChildNodesChanged();
+        onChildNodesChanged(null, newChild);
 
         return newChild;
     }
@@ -55,7 +55,7 @@ public abstract class ParentNode extends NodeImpl {
         setOwner(newChild, this);
         setOwner(oldChild, getOwnerDocument());
 
-        onChildNodesChanged();
+        onChildNodesChanged(oldChild, newChild);
 
         return oldChild;
     }
@@ -69,7 +69,7 @@ public abstract class ParentNode extends NodeImpl {
 
         setOwner(oldChild, getOwnerDocument());
 
-        onChildNodesChanged();
+        onChildNodesChanged(oldChild, null);
 
         return oldChild;
     }
@@ -84,7 +84,7 @@ public abstract class ParentNode extends NodeImpl {
         children.add(newChild);
         setOwner(newChild, this);
 
-        onChildNodesChanged();
+        onChildNodesChanged(null, newChild);
 
         return newChild;
     }
