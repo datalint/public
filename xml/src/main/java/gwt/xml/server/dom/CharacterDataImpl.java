@@ -23,13 +23,18 @@ public abstract class CharacterDataImpl extends NodeImpl implements CharacterDat
     }
 
     @Override
+    public void setNodeValue(String nodeValue) {
+        builder = new StringBuilder(nodeValue);
+    }
+
+    @Override
     public String getData() {
         return getNodeValue();
     }
 
     @Override
     public void setData(String data) {
-        builder = new StringBuilder(data);
+        setNodeValue(data);
     }
 
     @Override

@@ -127,7 +127,7 @@ public abstract class NodeImpl implements Node, ICommon {
 
     @Override
     public String getNamespaceURI() {
-        return null;
+        return EMPTY;
     }
 
     @Override
@@ -135,7 +135,7 @@ public abstract class NodeImpl implements Node, ICommon {
         String name = getNodeName();
 
         if (name != null) {
-            int index = name.indexOf(':');
+            int index = name.indexOf(_COLON);
 
             if (index >= 0)
                 return name.substring(0, index);
