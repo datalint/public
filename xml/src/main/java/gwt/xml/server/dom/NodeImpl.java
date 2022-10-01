@@ -209,12 +209,11 @@ public abstract class NodeImpl implements Node, ICommon {
 
     @Override
     public String getTextContent() {
-        return getNodeValue();
+        return null;
     }
 
     @Override
     public void setTextContent(String textContent) {
-        throw createUoException("textContent");
     }
 
     @Override

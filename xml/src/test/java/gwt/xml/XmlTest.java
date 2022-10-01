@@ -172,4 +172,17 @@ public class XmlTest {
         assertNull(document.getElementById("a1"));
         assertNotNull(document.getElementById("a2"));
     }
+
+    @Test
+    public void testTextContent() {
+        String xml = "<div id=\"divA\">This is <span>some</span> text!</div>";
+        Element element = XmlParser.parse(xml).getDocumentElement();
+        assertEquals(xml, element.toString());
+        assertEquals("This is some text!", element.getTextContent());
+
+        String textContent = "This text is different!";
+        element.setTextContent(textContent);
+        assertEquals("<div id=\"divA\">This text is different!</div>", element.toString());
+        assertEquals(textContent, element.getTextContent());
+    }
 }

@@ -10,19 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ICommon {
+    char _AMPERSAND = '&';
     char _APOSTROPHE = '\'';
     char _AT = '@';
     char _COLON = ':';
     char _COMMA = ',';
+    char _DOT = '.';
     char _EQUALS = '=';
     char _GREATER_THAN = '>';
+    char _HYPHEN = '-';
     char _LESS_THAN = '<';
     char _LINE_FEED = '\n';
+    char _PERCENT = '%';
+    char _QUERY = '?';
     char _QUOTE = '"';
+    char _SEMICOLON = ';';
     char _SLASH = '/';
     char _SPACE = ' ';
     char _TAB = '\t';
     char _UNDERSCORE = '_';
+
+    char _a = 'a';
+    char _p = 'p';
+    char _v = 'v';
+    char _w = 'w';
+    char _x = 'x';
 
     String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -34,7 +46,8 @@ public interface ICommon {
     String EMPTY = "";
     String ID = "id";
     String LAST_F = "last()";
-    String MINUS_WITH_SPACE = " - ";
+    String HYPHEN = "-";
+    String HYPHEN_WITH_SPACE = " - ";
     String ONE = "1";
     String OR_WITH_SPACE = " or ";
     String PLUS_WITH_SPACE = " + ";
@@ -44,6 +57,12 @@ public interface ICommon {
     String UNDERSCORE = "_";
     String WILDCARD = "*";
     String ZERO = "0";
+
+    default String beforeLast(String source, char c) {
+        int index = source.lastIndexOf(c);
+
+        return index < 0 ? source : source.substring(0, index);
+    }
 
     default int getAttributeInt(Element element, String name) {
         return parseInt(element.getAttribute(name));

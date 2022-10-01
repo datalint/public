@@ -98,7 +98,7 @@ public class Operator {
 
         @Override
         protected StringBuilder operator(StringBuilder target) {
-            return target.append(MINUS_WITH_SPACE);
+            return target.append(HYPHEN_WITH_SPACE);
         }
     }
 

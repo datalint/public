@@ -38,6 +38,16 @@ public abstract class CharacterDataImpl extends NodeImpl implements CharacterDat
     }
 
     @Override
+    public String getTextContent() {
+        return getNodeValue();
+    }
+
+    @Override
+    public void setTextContent(String textContent) {
+        setNodeValue(textContent);
+    }
+
+    @Override
     public int getLength() {
         return builder.length();
     }

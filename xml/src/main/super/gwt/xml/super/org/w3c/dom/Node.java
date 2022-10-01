@@ -292,4 +292,6 @@ public interface Node {
     Node replaceChild(Node newChild, Node oldChild);
 
     String getTextContent();
+
+    void setTextContent(String textContent);
 }

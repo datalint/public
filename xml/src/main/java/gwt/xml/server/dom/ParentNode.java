@@ -101,10 +101,20 @@ public abstract class ParentNode extends NodeImpl {
 
         StringBuilder sB = new StringBuilder();
         for (int i = 0; i < children.size(); i++) {
-            sB.append(children.get(i).getTextContent());
+            String textContent = children.get(i).getTextContent();
+
+            if (textContent != null)
+                sB.append(textContent);
         }
 
         return sB.toString();
+    }
+
+    @Override
+    public void setTextContent(String textContent) {
+        children = new ArrayList<>();
+
+        children.add(getOwnerDocument().createTextNode(textContent));
     }
 
     @Override

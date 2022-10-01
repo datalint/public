@@ -6,6 +6,7 @@ import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
 import org.gwtproject.i18n.client.DateTimeFormat;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.Date;
@@ -13,6 +14,18 @@ import java.util.Date;
 public class XmlDemo implements EntryPoint {
     @Override
     public void onModuleLoad() {
+        String xml = "<div id=\"divA\">This is <span>some</span> text!</div>";
+        Element element = XmlParser.parse(xml).getDocumentElement();
+        DomGlobal.console.log(element.toString());
+        DomGlobal.console.log(element.getTextContent());
+
+        String textContent = "This text is different!";
+        element.setTextContent(textContent);
+        DomGlobal.console.log(element.toString());
+        DomGlobal.console.log(element.getTextContent());
+    }
+
+    private static void testCompareDocumentPosition() {
         DomGlobal.document.body.appendChild(DomGlobal.document.createTextNode(XmlDemoConstants.INSTANCE.helloWorld()
                 + "\t" + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_FULL).format(new Date())));
 

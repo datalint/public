@@ -57,6 +57,16 @@ public class AttrImpl extends NodeImpl implements Attr {
     }
 
     @Override
+    public String getTextContent() {
+        return getNodeValue();
+    }
+
+    @Override
+    public void setTextContent(String textContent) {
+        setNodeValue(textContent);
+    }
+
+    @Override
     public Node cloneNode(boolean deep) {
         return new AttrImpl(getOwnerDocument(), name, value);
     }
