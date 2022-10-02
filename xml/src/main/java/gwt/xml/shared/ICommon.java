@@ -58,10 +58,16 @@ public interface ICommon {
     String WILDCARD = "*";
     String ZERO = "0";
 
-    default String beforeLast(String source, char c) {
-        int index = source.lastIndexOf(c);
-
+    default String beforeIndex(String source, int index) {
         return index < 0 ? source : source.substring(0, index);
+    }
+
+    default String before(String source, char c) {
+        return beforeIndex(source, source.indexOf(c));
+    }
+
+    default String beforeLast(String source, char c) {
+        return beforeIndex(source, source.lastIndexOf(c));
     }
 
     default int getAttributeInt(Element element, String name) {
