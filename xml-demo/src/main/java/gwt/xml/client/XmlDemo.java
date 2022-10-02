@@ -1,5 +1,7 @@
 package gwt.xml.client;
 
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultiset;
 import com.google.gwt.core.client.EntryPoint;
 import elemental2.dom.DomGlobal;
 import gwt.xml.shared.XPath;
@@ -40,6 +42,14 @@ public class XmlDemo implements EntryPoint {
         element.setTextContent(textContent);
         DomGlobal.console.log(element.toString());
         DomGlobal.console.log(element.getTextContent());
+
+        HashBiMap<String, String> hashBiMap = HashBiMap.create();
+        hashBiMap.put("key", "value");
+        DomGlobal.console.log(hashBiMap.toString());
+
+        HashMultiset<String> hashMultiset = HashMultiset.create();
+        hashMultiset.add("item");
+        DomGlobal.console.log(hashMultiset.toString());
     }
 
 //	public void showHistoryBug() {
