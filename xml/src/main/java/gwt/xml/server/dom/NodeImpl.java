@@ -6,6 +6,7 @@ import org.w3c.dom.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -160,6 +161,20 @@ public abstract class NodeImpl implements Node, ICommon {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(getNodeType(), getNodeName(), getNodeValue());
+    }
+
+    @Override
+    public boolean isEqualNode(Node arg) {
+        return equals(arg) || arg != null && getNodeType() == arg.getNodeType()
+                && Objects.equals(getNodeName(), arg.getNodeName())
+                && Objects.equals(getNodeValue(), arg.getNodeValue())
+                && Objects.equals(getAttributes(), arg.getAttributes())
+                && getChildNodes().equals(arg.getChildNodes());
+    }
+
+    @Override
     public boolean isSameNode(Node other) {
         return equals(other);
     }
@@ -239,11 +254,6 @@ public abstract class NodeImpl implements Node, ICommon {
     @Override
     public String lookupNamespaceURI(String prefix) {
         throw createUoException("lookupNamespaceURI");
-    }
-
-    @Override
-    public boolean isEqualNode(Node arg) {
-        throw createUoException("isEqualNode");
     }
 
     @Override

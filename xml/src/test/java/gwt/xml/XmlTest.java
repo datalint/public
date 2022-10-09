@@ -7,6 +7,7 @@ import gwt.xml.shared.XmlUtil;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +17,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class XmlTest {
+public class XmlTest implements IDomTest {
     @Test
     public void testAll() throws Exception {
         String xml = Files.readString(Paths.get("src/test/resources/test.xml"));
@@ -184,5 +185,53 @@ public class XmlTest {
         element.setTextContent(textContent);
         assertEquals("<div id=\"divA\">This text is different!</div>", element.toString());
         assertEquals(textContent, element.getTextContent());
+    }
+
+    @Test
+    public void testEquals() {
+        String xml = "<div id='divA'>This is <span>some</span> text!</div>";
+        Document document = XmlParser.parse(xml);
+        Element element = document.getDocumentElement();
+
+        assertEqualNode(document, element.getOwnerDocument());
+
+        String xmlTwo = xml;
+        Document documentTwo;
+        documentTwo = XmlParser.parse(xmlTwo);
+        assertEqualNode(document, documentTwo);
+        assertEqualNode(element, documentTwo.getDocumentElement());
+        Element span = XPath.evaluateNode(document, "span");
+        Element spanTwo = XPath.evaluateNode(documentTwo, "span");
+        assertEqualNode(span, spanTwo);
+
+        spanTwo.setAttribute("name", "a name");
+        assertNotEqualNode(span, spanTwo);
+        assertNotEqualNode(document, documentTwo);
+        assertNotEqualNode(element, documentTwo.getDocumentElement());
+
+        span.setAttribute("name", "a different name");
+        assertNotEqualNode(span, spanTwo);
+        assertNotEqualNode(document, documentTwo);
+        assertNotEqualNode(element, documentTwo.getDocumentElement());
+
+        span.setAttribute("name", "a name");
+        assertEqualNode(span, spanTwo);
+        assertEqualNode(document, documentTwo);
+        assertEqualNode(element, documentTwo.getDocumentElement());
+
+
+        Text text = XPath.evaluateNode(span, "text()");
+        Text textTwo = XPath.evaluateNode(spanTwo, "text()");
+        assertEqualNode(text, textTwo);
+
+        textTwo.setNodeValue("some some");
+        assertNotEqualNode(text, textTwo);
+        assertNotEqualNode(document, documentTwo);
+        assertNotEqualNode(element, documentTwo.getDocumentElement());
+
+        text.setNodeValue("some some");
+        assertEqualNode(text, textTwo);
+        assertEqualNode(document, documentTwo);
+        assertEqualNode(element, documentTwo.getDocumentElement());
     }
 }

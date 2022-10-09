@@ -264,4 +264,27 @@ class NodeImpl extends DOMItem implements Node {
 		var jsNodeOther = other.@gwt.xml.shared.impl.DOMItem::getJsObject()();
 		return jsNode.compareDocumentPosition(jsNodeOther);
 	}-*/;
+
+    private static native boolean hasIsEqualNode(Object object) /*-{
+        return !!object && !!object.isEqualNode;
+    }-*/;
+
+    private static native boolean callIsEqualNode(Object thisObject, Object thatObject) /*-{
+        return thisObject.isEqualNode(thatObject);
+    }-*/;
+
+    @Override
+    public boolean isEqualNode(Node arg) {
+        if (isSameNode(arg))
+            return true;
+        else if (hasIsEqualNode(this.getJsObject()) && arg instanceof DOMItem)
+            return callIsEqualNode(this.getJsObject(), ((DOMItem) arg).getJsObject());
+
+        return equals(arg);
+    }
+
+    @Override
+    public boolean isSameNode(Node other) {
+        return this == other;
+    }
 }

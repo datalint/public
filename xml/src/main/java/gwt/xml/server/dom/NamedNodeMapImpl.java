@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
     private final ElementImpl owner;
@@ -83,5 +84,37 @@ public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
     @Override
     public Node removeNamedItemNS(String namespaceURI, String localName) throws DOMException {
         throw createUoException("removeNamedItemNS");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj instanceof NamedNodeMap) {
+            NamedNodeMap namedNodeMap = (NamedNodeMap) obj;
+
+            Map<String, String> attributes = getAttributes();
+
+            int length = getLength();
+            if (length == namedNodeMap.getLength()) {
+                for (int i = 0; i < length; i++) {
+                    Node item = namedNodeMap.item(i);
+                    String name = item.getNodeName();
+
+                    if (!attributes.containsKey(name) || !Objects.equals(attributes.get(name), item.getNodeValue()))
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getAttributes().hashCode();
     }
 }

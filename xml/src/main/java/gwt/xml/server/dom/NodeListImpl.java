@@ -63,4 +63,31 @@ public class NodeListImpl implements NodeList, ICommon {
     public int getLength() {
         return getNodes().size();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj instanceof NodeList) {
+            NodeList nodeList = (NodeList) obj;
+
+            int length = getLength();
+            if (length == nodeList.getLength()) {
+                for (int i = 0; i < length; i++) {
+                    if (!item(i).isEqualNode(nodeList.item(i)))
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getNodes().hashCode();
+    }
 }

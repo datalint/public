@@ -10,6 +10,7 @@ import org.gwtproject.i18n.client.DateTimeFormat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -31,8 +32,7 @@ public class XmlDemo implements EntryPoint {
         DomGlobal.console.log(String.valueOf(parse.getDocumentElement().compareDocumentPosition(parse)));
     }
 
-    @Override
-    public void onModuleLoad() {
+    private static void testTextContent() {
         String xml = "<div id=\"divA\">This is <span>some</span> text!</div>";
         Element element = XmlParser.parse(xml).getDocumentElement();
         DomGlobal.console.log(element.toString());
@@ -50,6 +50,57 @@ public class XmlDemo implements EntryPoint {
         HashMultiset<String> hashMultiset = HashMultiset.create();
         hashMultiset.add("item");
         DomGlobal.console.log(hashMultiset.toString());
+    }
+
+    private static void testEquals() {
+        String xml = "<div id='divA'>This is <span>some</span> text!</div>";
+        Document document = XmlParser.parse(xml);
+        Element element = document.getDocumentElement();
+
+        DomGlobal.console.log(document.isEqualNode(element.getOwnerDocument()));
+
+        String xmlTwo = xml;
+        Document documentTwo;
+        documentTwo = XmlParser.parse(xmlTwo);
+        DomGlobal.console.log(document.isEqualNode(documentTwo));
+        DomGlobal.console.log(element.isEqualNode(documentTwo.getDocumentElement()));
+        Element span = XPath.evaluateNode(document, "span");
+        Element spanTwo = XPath.evaluateNode(documentTwo, "span");
+        DomGlobal.console.log(span.isEqualNode(spanTwo));
+
+        spanTwo.setAttribute("name", "a name");
+        DomGlobal.console.log("false: " + span.isEqualNode(spanTwo));
+        DomGlobal.console.log("false: " + document.isEqualNode(documentTwo));
+        DomGlobal.console.log("false: " + element.isEqualNode(documentTwo.getDocumentElement()));
+
+        span.setAttribute("name", "a different name");
+        DomGlobal.console.log("false: " + span.isEqualNode(spanTwo));
+        DomGlobal.console.log("false: " + document.isEqualNode(documentTwo));
+        DomGlobal.console.log("false: " + element.isEqualNode(documentTwo.getDocumentElement()));
+
+        span.setAttribute("name", "a name");
+        DomGlobal.console.log(span.isEqualNode(spanTwo));
+        DomGlobal.console.log(document.isEqualNode(documentTwo));
+        DomGlobal.console.log(element.isEqualNode(documentTwo.getDocumentElement()));
+
+        Text text = XPath.evaluateNode(span, "text()");
+        Text textTwo = XPath.evaluateNode(spanTwo, "text()");
+        DomGlobal.console.log(text.isEqualNode(textTwo));
+
+        textTwo.setNodeValue("some some");
+        DomGlobal.console.log("false: " + text.isEqualNode(textTwo));
+        DomGlobal.console.log("false: " + document.isEqualNode(documentTwo));
+        DomGlobal.console.log("false: " + element.isEqualNode(documentTwo.getDocumentElement()));
+
+        text.setNodeValue("some some");
+        DomGlobal.console.log(text.isEqualNode(textTwo));
+        DomGlobal.console.log(document.isEqualNode(documentTwo));
+        DomGlobal.console.log(element.isEqualNode(documentTwo.getDocumentElement()));
+    }
+
+    @Override
+    public void onModuleLoad() {
+        testEquals();
     }
 
 //	public void showHistoryBug() {

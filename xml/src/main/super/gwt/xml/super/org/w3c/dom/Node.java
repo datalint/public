@@ -294,4 +294,8 @@ public interface Node {
     String getTextContent();
 
     void setTextContent(String textContent);
+
+    boolean isEqualNode(Node arg);
+
+    boolean isSameNode(Node other);
 }
