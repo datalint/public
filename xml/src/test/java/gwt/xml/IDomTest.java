@@ -16,6 +16,6 @@ public interface IDomTest {
     }
 
     default Supplier<String> messageSupplier(Node expected, Node actual) {
-        return () -> "expected " + expected + ", but was " + actual;
+        return () -> "\nexpected " + expected + "\nbut was " + actual;
     }
 }
