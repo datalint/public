@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.datalint.gwt</groupId>
-    <artifactId>parent</artifactId>
+    <groupId>com.datalint.public</groupId>
+    <artifactId>public-parent</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
@@ -12,8 +12,8 @@
         <module>xml-demo</module>
     </modules>
 
-    <name>Gwt</name>
-    <url>https://gwt.datalint.com</url>
+    <name>Public Parent</name>
+    <url>https://public.datalint.com</url>
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
 

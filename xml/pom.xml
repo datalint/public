@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.datalint.gwt</groupId>
-        <artifactId>parent</artifactId>
+        <groupId>com.datalint.public</groupId>
+        <artifactId>public-parent</artifactId>
         <version>1.0</version>
     </parent>
     <artifactId>xml</artifactId>
     <packaging>gwt-lib</packaging>
 
-    <name>Gwt Xml</name>
+    <name>Xml</name>
     <properties>
         <project.phase.javadoc>install</project.phase.javadoc>
     </properties>
