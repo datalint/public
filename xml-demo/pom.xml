@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.dominokit</groupId>
             <artifactId>domino-ui</artifactId>
-            <version>1.0.0-RC13</version>
+            <version>1.0.0-RC16</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
