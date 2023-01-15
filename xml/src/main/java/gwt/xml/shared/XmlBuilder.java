@@ -16,7 +16,7 @@ public class XmlBuilder {
     }
 
     public static XmlElement createXmlElement(String tagName, String... attributes) {
-        return new XmlElement(tagName, createAttrExpressions(Arrays.asList(attributes)));
+        return createXmlElement(tagName, Arrays.asList(attributes));
     }
 
     private static IExpression[] createAttrExpressions(List<String> attributes) {
