@@ -97,7 +97,7 @@ public class ElementImpl extends ParentNode implements Element {
     @Override
     public void setAttribute(String name, String value) {
         if (attributes == null)
-            attributes = new HashMap<>();
+            attributes = new LinkedHashMap<>();
 
         value = nonNull(value);
 
@@ -161,7 +161,7 @@ public class ElementImpl extends ParentNode implements Element {
         ElementImpl clone = new ElementImpl(getOwnerDocument(), tagName);
 
         if (attributes != null) {
-            clone.attributes = new HashMap<>(attributes.size());
+            clone.attributes = new LinkedHashMap<>(attributes.size());
             clone.attributes.putAll(attributes);
         }
 
