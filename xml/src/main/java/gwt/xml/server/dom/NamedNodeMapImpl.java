@@ -63,12 +63,20 @@ public class NamedNodeMapImpl implements NamedNodeMap, ICommon {
 
     @Override
     public Node setNamedItem(Node arg) throws DOMException {
-        throw createUoException("setNamedItem");
+        Attr attr = (Attr) arg;
+
+        Attr current = owner.getAttributeNode(attr.getName());
+
+        owner.setAttribute(attr.getName(), attr.getValue());
+
+        return current;
     }
 
     @Override
     public Node removeNamedItem(String name) throws DOMException {
-        throw createUoException("removeNamedItem");
+        String value = owner.removeAttributeImpl(name);
+
+        return value == null ? null : new AttrImpl(owner.getOwnerDocument(), name, value);
     }
 
     @Override

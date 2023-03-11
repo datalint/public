@@ -21,9 +21,10 @@ public class AttrImpl extends NodeImpl implements Attr {
         return getNodeName();
     }
 
+    @Deprecated
     @Override
     public boolean getSpecified() {
-        return value != null;
+        return true;
     }
 
     @Override

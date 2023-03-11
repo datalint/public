@@ -5,9 +5,7 @@ import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
 import gwt.xml.shared.XmlUtil;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Text;
+import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -103,7 +101,7 @@ public class XmlTest implements IDomTest {
     @Test
     public void testDetermineLevel() {
         Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
-                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+                                            "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
 
         assertEquals(0, XmlUtil.determineLevel(document.getDocumentElement()));
         assertEquals(2, XmlUtil.determineLevel(document.getDocumentElement().getFirstChild().getFirstChild()));
@@ -112,7 +110,7 @@ public class XmlTest implements IDomTest {
     @Test
     public void testCompareDocumentPosition() {
         Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
-                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+                                            "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
 
         Element a1 = XPath.evaluateNode(document, "a[1]");
         Element a1_1 = XPath.evaluateNode(document, "a[1]/a[1]");
@@ -233,5 +231,27 @@ public class XmlTest implements IDomTest {
         assertEqualNode(text, textTwo);
         assertEqualNode(document, documentTwo);
         assertEqualNode(element, documentTwo.getDocumentElement());
+    }
+
+    @Test
+    public void testNamedNodeMapImpl() {
+        String xml = "<div id='divA' name=''/>";
+        Element element = XmlParser.parse(xml).getDocumentElement();
+        NamedNodeMap namedNodeMap = element.getAttributes();
+
+        assertEquals(2, namedNodeMap.getLength());
+        assertEquals(null, namedNodeMap.removeNamedItem("wrongId"));
+
+        Node id = namedNodeMap.removeNamedItem("id");
+        assertEquals("divA", id.getNodeValue());
+        assertEquals(1, namedNodeMap.getLength());
+
+        element.setAttribute("newValue", "newValue");
+        assertEquals("newValue", element.getAttribute("newValue"));
+        assertEquals(2, namedNodeMap.getLength());
+
+        namedNodeMap.setNamedItem(id.cloneNode(false));
+        assertEquals("divA", element.getAttribute("id"));
+        assertEquals(3, namedNodeMap.getLength());
     }
 }

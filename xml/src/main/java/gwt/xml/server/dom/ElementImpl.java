@@ -117,9 +117,8 @@ public class ElementImpl extends ParentNode implements Element {
         }
     }
 
-    @Override
-    public void removeAttribute(String name) {
-        String value;
+    protected String removeAttributeImpl(String name) {
+        String value = null;
 
         if (attributes != null && (value = attributes.remove(name)) != null) {
             if (attributes.isEmpty())
@@ -134,11 +133,25 @@ public class ElementImpl extends ParentNode implements Element {
                     ((DocumentImpl) ownerDocument).updateIdMap(value, this);
             }
         }
+
+        return value;
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        removeAttributeImpl(name);
     }
 
     @Override
     public Attr getAttributeNode(String name) {
-        return attributes == null ? null : new AttrImpl(this, name, nonNull(attributes.get(name)));
+        if (attributes != null) {
+            String value = attributes.get(name);
+
+            if (value != null)
+                new AttrImpl(this, name, value);
+        }
+
+        return null;
     }
 
     @Override

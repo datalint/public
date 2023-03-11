@@ -38,6 +38,7 @@ class AttrImpl extends NodeImpl implements Attr {
      * This function delegates to the native method <code>getSpecified</code> in
      * XmlParserImpl.
      */
+    @Deprecated
     public boolean getSpecified() {
         return XmlParserImpl.getSpecified(this.getJsObject());
     }
