@@ -19,11 +19,14 @@ public interface ICommon {
     char _EQUALS = '=';
     char _GREATER_THAN = '>';
     char _HYPHEN = '-';
+    char _LEFT_BRACKET = '[';
     char _LESS_THAN = '<';
     char _LINE_FEED = '\n';
+    char _NULL = '\u0000';
     char _PERCENT = '%';
     char _QUERY = '?';
     char _QUOTE = '"';
+    char _RIGHT_BRACKET = ']';
     char _SEMICOLON = ';';
     char _SLASH = '/';
     char _SPACE = ' ';
@@ -45,6 +48,7 @@ public interface ICommon {
     String DOLLAR = "$";
     String DOT = ".";
     String EMPTY = "";
+    String HASH = "#";
     String HYPHEN = "-";
     String HYPHEN_WITH_SPACE = " - ";
     String ID = "id";
