@@ -20,27 +20,6 @@
         <project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.datalint.gwt</groupId>
-            <artifactId>xml</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.elemental2</groupId>
-            <artifactId>elemental2-dom</artifactId>
-            <version>1.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.dominokit</groupId>
-            <artifactId>domino-ui</artifactId>
-            <version>1.0.0-RC16</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -67,4 +46,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.datalint.gwt</groupId>
+            <artifactId>xml</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.elemental2</groupId>
+            <artifactId>elemental2-dom</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit</groupId>
+            <artifactId>domino-ui</artifactId>
+            <version>1.0.0-RC16</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
