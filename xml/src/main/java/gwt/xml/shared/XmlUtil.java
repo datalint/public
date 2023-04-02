@@ -9,9 +9,18 @@ import java.util.*;
 public class XmlUtil implements ICommon {
     private static final String ROOT_WRAPPER = "root";
 
+    private static final String XPAHT_WHITE_SPACE = "//text()[normalize-space(.) = '']";
+
     private static final XmlUtil instance = new XmlUtil();
 
     private XmlUtil() {
+    }
+
+    public static void removeWhiteSpace(Element target) {
+        List<Node> nodes = XPath.evaluateNodes(target, XPAHT_WHITE_SPACE);
+        for (Node node : nodes) {
+            node.getParentNode().removeChild(node);
+        }
     }
 
     public static String escapeAttrStatic(String attribute) {

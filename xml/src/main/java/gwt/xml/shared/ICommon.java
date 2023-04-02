@@ -64,6 +64,18 @@ public interface ICommon {
     String WILDCARD = "*";
     String ZERO = "0";
 
+    default String afterIndex(String source, int index) {
+        return index < 0 ? source : source.substring(index + 1);
+    }
+
+    default String after(String source, char c) {
+        return afterIndex(source, source.indexOf(c));
+    }
+
+    default String afterLast(String source, char c) {
+        return afterIndex(source, source.lastIndexOf(c));
+    }
+
     default String beforeIndex(String source, int index) {
         return index < 0 ? source : source.substring(0, index);
     }
