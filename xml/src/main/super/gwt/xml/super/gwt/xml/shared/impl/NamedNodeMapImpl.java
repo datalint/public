@@ -25,7 +25,6 @@ import org.w3c.dom.Node;
  * This class implements the NamedNodeMap interface.
  */
 class NamedNodeMapImpl extends NodeListImpl implements NamedNodeMap {
-
     protected NamedNodeMapImpl(JavaScriptObject o) {
         super(o);
     }
@@ -47,19 +46,30 @@ class NamedNodeMapImpl extends NodeListImpl implements NamedNodeMap {
      * @param name - the name of the item
      * @return the item retrieved from the name
      */
+    @Override
     public Node getNamedItem(String name) {
         return NodeImpl.build(XmlParserImpl.getNamedItem(this.getJsObject(), name));
     }
 
+    /**
+     * This function delegates to the native method <code>setNamedItem</code> in
+     * XmlParserImpl.
+     */
     @Override
-    public Node item(int index) {
-        return super.item(index);
+    public Node setNamedItem(Node arg) {
+        try {
+            return NodeImpl.build(XmlParserImpl.setNamedItem(this.getJsObject(),
+                    ((DOMItem) arg).getJsObject()));
+        } catch (JavaScriptException e) {
+            throw new DOMNodeException(DOMException.INVALID_MODIFICATION_ERR, e, this);
+        }
     }
 
     /**
      * This function delegates to the native method <code>removeNamedItem</code>
      * in XmlParserImpl.
      */
+    @Override
     public Node removeNamedItem(String name) {
         try {
             return NodeImpl.build(XmlParserImpl.removeNamedItem(this.getJsObject(),
@@ -69,16 +79,8 @@ class NamedNodeMapImpl extends NodeListImpl implements NamedNodeMap {
         }
     }
 
-    /**
-     * This function delegates to the native method <code>setNamedItem</code> in
-     * XmlParserImpl.
-     */
-    public Node setNamedItem(Node arg) {
-        try {
-            return NodeImpl.build(XmlParserImpl.setNamedItem(this.getJsObject(),
-                    ((DOMItem) arg).getJsObject()));
-        } catch (JavaScriptException e) {
-            throw new DOMNodeException(DOMException.INVALID_MODIFICATION_ERR, e, this);
-        }
+    @Override
+    public Node item(int index) {
+        return super.item(index);
     }
 }

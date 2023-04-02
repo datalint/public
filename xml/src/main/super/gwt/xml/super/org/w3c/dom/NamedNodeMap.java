@@ -39,6 +39,10 @@ public interface NamedNodeMap {
      */
     Node getNamedItem(String name);
 
+    Node setNamedItem(Node arg);
+
+    Node removeNamedItem(String name);
+
     /**
      * This method gets the item at the index position.
      *
