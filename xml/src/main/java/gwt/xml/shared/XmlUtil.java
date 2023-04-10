@@ -43,7 +43,7 @@ public class XmlUtil implements ICommon {
     }
 
     public static Element getClosestCommonAncestor(Node descendant, Node other) {
-        Set<Element> ancestors = new HashSet<>();
+        Set<Node> ancestors = new HashSet<>();
         appendAncestors(ancestors, descendant, true);
 
         do {
@@ -54,52 +54,52 @@ public class XmlUtil implements ICommon {
         return null;
     }
 
-    public static void appendAncestors(Collection<Element> ancestors, Node descendant, boolean inclusive) {
+    public static void appendAncestors(Collection<Node> ancestors, Node descendant, boolean inclusive) {
         appendAncestors(ancestors, descendant, inclusive, null, false);
     }
 
-    public static void appendAncestors(Collection<Element> ancestors, Node descendant, boolean inclusiveD,
-                                       Node ancestor, boolean inclusiveA) {
+    public static void appendAncestors(Collection<Node> ancestors, Node descendant, boolean inclusiveD, Node ancestor,
+                                       boolean inclusiveA) {
         if (descendant.equals(ancestor)) {
             if (inclusiveD || inclusiveA)
-                ancestors.add((Element) descendant);
+                ancestors.add(descendant);
 
             return;
         }
 
         if (inclusiveD && descendant instanceof Element)
-            ancestors.add((Element) descendant);
+            ancestors.add(descendant);
 
         while ((descendant = descendant.getParentNode()) instanceof Element) {
             if (descendant.equals(ancestor)) {
                 if (inclusiveA)
-                    ancestors.add((Element) descendant);
+                    ancestors.add(descendant);
 
                 break;
             }
 
-            ancestors.add((Element) descendant);
+            ancestors.add(descendant);
         }
     }
 
-    public static Set<Element> ancestorSet(Node descendant, boolean inclusiveD, Node ancestor, boolean inclusiveA) {
-        Set<Element> ancestors = new HashSet<>();
+    public static Set<Node> ancestorSet(Node descendant, boolean inclusiveD, Node ancestor, boolean inclusiveA) {
+        Set<Node> ancestors = new HashSet<>();
 
         appendAncestors(ancestors, descendant, inclusiveD, ancestor, inclusiveA);
 
         return ancestors;
     }
 
-    public static List<Element> ancestorList(Node descendant, boolean inclusive) {
-        List<Element> ancestors = new ArrayList<>();
+    public static List<Node> ancestorList(Node descendant, boolean inclusive) {
+        List<Node> ancestors = new ArrayList<>();
 
         appendAncestors(ancestors, descendant, inclusive);
 
         return ancestors;
     }
 
-    public static List<Element> ancestorList(Node descendant, Node ancestor) {
-        List<Element> ancestors = new ArrayList<>();
+    public static List<Node> ancestorList(Node descendant, Node ancestor) {
+        List<Node> ancestors = new ArrayList<>();
 
         appendAncestors(ancestors, descendant, true, ancestor, true);
 
@@ -178,7 +178,7 @@ public class XmlUtil implements ICommon {
     }
 
     public static void increaseIntValue(Element element, String attributeName, int defaultValue) {
-        element.setAttribute(attributeName, "" + (getIntValue(element, attributeName, defaultValue) + 1));
+        element.setAttribute(attributeName, EMPTY + (getIntValue(element, attributeName, defaultValue) + 1));
     }
 
     public static void appendText(Element element, String text) {
@@ -207,19 +207,17 @@ public class XmlUtil implements ICommon {
         return one.hasAttribute(name) ^ two.hasAttribute(name);
     }
 
-    public static boolean isPrimaryNotNullAndNotSame(Element primary, Element secondary, String name) {
-        String primaryAttribute = primary.getAttribute(name);
-
-        return primaryAttribute != null && !primaryAttribute.equals(secondary.getAttribute(name));
+    public static boolean hasDifferentAttribute(Element primary, Element secondary, String name) {
+        return !primary.getAttribute(name).equals(secondary.getAttribute(name));
     }
 
-    public static boolean isNotNullAndSameAttribute(Element primary, Element secondary, String name) {
+    public static boolean hasSameAttribute(Element primary, Element secondary, String name) {
         return primary.hasAttribute(name) && primary.getAttribute(name).equals(secondary.getAttribute(name));
     }
 
     public static <T extends Node> List<T> parseAsList(String source) {
-        return instance.isEmpty(source) ? Collections.emptyList()
-                : XPath.evaluateNodes(parseWithRootParent(source), "*");
+        return instance.isEmpty(source) ? Collections.emptyList() : XPath.evaluateNodes(parseWithRootParent(source),
+                WILDCARD);
     }
 
     public static Element parseWithRootParent(String children, String... parentAttributes) {
@@ -229,13 +227,14 @@ public class XmlUtil implements ICommon {
     public static Element parseWithParentElement(String parentTagName, String children, String... parentAttributes) {
         StringBuilder sB = new StringBuilder(children.length() + 16);
 
-        sB.append('<').append(parentTagName);
+        sB.append(_LESS_THAN).append(parentTagName);
 
         for (int i = 0; i < parentAttributes.length; i++) {
-            sB.append(' ').append(parentAttributes[i++]).append("='").append(parentAttributes[i]).append('\'');
+            sB.append(_SPACE).append(parentAttributes[i++]).append(_EQUALS).append(_APOSTROPHE).
+                    append(parentAttributes[i]).append(_APOSTROPHE);
         }
 
-        sB.append('>').append(children);
+        sB.append(_GREATER_THAN).append(children);
 
         return XmlParser.parse(appendEndTag(sB, parentTagName).toString()).getDocumentElement();
     }
@@ -356,8 +355,8 @@ public class XmlUtil implements ICommon {
     }
 
     public static Element appendElementWithText(Element parentElement, String childTagName, String text) {
-        return (Element) parentElement
-                .appendChild(createElementWithText(parentElement.getOwnerDocument(), childTagName, text));
+        return (Element) parentElement.appendChild(createElementWithText(parentElement.getOwnerDocument(), childTagName,
+                text));
     }
 
     public static Element createElementWithText(Document document, String tagName, String text) {
@@ -412,9 +411,8 @@ public class XmlUtil implements ICommon {
 
     public static Element copyAttributes(Element src, Element dest, String... attributesName) {
         for (String name : attributesName) {
-            String value = src.getAttribute(name);
-            if (value != null)
-                dest.setAttribute(name, value);
+            if (src.hasAttribute(name))
+                dest.setAttribute(name, src.getAttribute(name));
             else
                 dest.removeAttribute(name);
         }
@@ -446,7 +444,7 @@ public class XmlUtil implements ICommon {
             Node srcAttr = srcAttrs.item(i);
 
             String name = srcAttr.getNodeName();
-            String destValue = destAttrsMap.remove(name);
+            String destValue = remove ? destAttrsMap.remove(name) : null;
 
             if (skippedNameSet.contains(name) || (destValue != null && destValue.equals(srcAttr.getNodeValue())))
                 continue;
@@ -464,17 +462,14 @@ public class XmlUtil implements ICommon {
     }
 
     public static boolean copyAttributeIfUnequal(Element src, Element dest, String attributeName) {
-        String newAttribute = src.getAttribute(attributeName);
-        String attribute = dest.getAttribute(attributeName);
-
-        if (newAttribute == null && attribute == null)
-            return false;
-        else if (newAttribute == null)
+        if (src.hasAttribute(attributeName) && dest.hasAttribute(attributeName)) {
+            if (src.getAttribute(attributeName).equals(dest.getAttribute(attributeName)))
+                return false;
+        } else if (dest.hasAttribute(attributeName)) {
             dest.removeAttribute(attributeName);
-        else if (newAttribute.equals(attribute))
-            return false;
-        else
-            dest.setAttribute(attributeName, newAttribute);
+        }
+
+        dest.setAttribute(attributeName, src.getAttribute(attributeName));
 
         return true;
     }

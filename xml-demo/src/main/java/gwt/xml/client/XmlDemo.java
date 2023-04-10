@@ -4,6 +4,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultiset;
 import com.google.gwt.core.client.EntryPoint;
 import elemental2.dom.DomGlobal;
+import elemental2.webstorage.WebStorageWindow;
 import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
 import org.gwtproject.i18n.client.DateTimeFormat;
@@ -16,8 +17,9 @@ import java.util.Date;
 
 public class XmlDemo implements EntryPoint {
     private static void testCompareDocumentPosition() {
-        DomGlobal.document.body.appendChild(DomGlobal.document.createTextNode(XmlDemoConstants.INSTANCE.helloWorld()
-                + "\t" + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_FULL).format(new Date())));
+        DomGlobal.document.body.appendChild(DomGlobal.document.createTextNode(
+                XmlDemoConstants.INSTANCE.helloWorld() + "\t" +
+                DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_FULL).format(new Date())));
 
         Document parse = XmlParser.parse("<root><a/><b/></root>");
 
@@ -57,11 +59,13 @@ public class XmlDemo implements EntryPoint {
         Document document = XmlParser.parse(xml);
         Element element = document.getDocumentElement();
 
+        String builder = element.getAttribute("id") + "]\n" + ", [" + element.getAttribute("name") + "]\n";
+        DomGlobal.document.body.append(builder);
+
         DomGlobal.console.log(document.isEqualNode(element.getOwnerDocument()));
 
-        String xmlTwo = xml;
         Document documentTwo;
-        documentTwo = XmlParser.parse(xmlTwo);
+        documentTwo = XmlParser.parse(xml);
         DomGlobal.console.log(document.isEqualNode(documentTwo));
         DomGlobal.console.log(element.isEqualNode(documentTwo.getDocumentElement()));
         Element span = XPath.evaluateNode(document, "span");
@@ -96,6 +100,8 @@ public class XmlDemo implements EntryPoint {
         DomGlobal.console.log(text.isEqualNode(textTwo));
         DomGlobal.console.log(document.isEqualNode(documentTwo));
         DomGlobal.console.log(element.isEqualNode(documentTwo.getDocumentElement()));
+
+        WebStorageWindow.of(DomGlobal.window).sessionStorage.setItem("test", "value");
     }
 
     @Override

@@ -193,9 +193,8 @@ public class XmlTest implements IDomTest {
 
         assertEqualNode(document, element.getOwnerDocument());
 
-        String xmlTwo = xml;
         Document documentTwo;
-        documentTwo = XmlParser.parse(xmlTwo);
+        documentTwo = XmlParser.parse(xml);
         assertEqualNode(document, documentTwo);
         assertEqualNode(element, documentTwo.getDocumentElement());
         Element span = XPath.evaluateNode(document, "span");
@@ -240,7 +239,7 @@ public class XmlTest implements IDomTest {
         NamedNodeMap namedNodeMap = element.getAttributes();
 
         assertEquals(2, namedNodeMap.getLength());
-        assertEquals(null, namedNodeMap.removeNamedItem("wrongId"));
+        assertNull(namedNodeMap.removeNamedItem("wrongId"));
 
         Node id = namedNodeMap.removeNamedItem("id");
         assertEquals("divA", id.getNodeValue());
@@ -253,5 +252,29 @@ public class XmlTest implements IDomTest {
         namedNodeMap.setNamedItem(id.cloneNode(false));
         assertEquals("divA", element.getAttribute("id"));
         assertEquals(3, namedNodeMap.getLength());
+    }
+
+    @Test
+    public void testImportNode() {
+        String xml = "<a id='a1'><b name='b1'><c name='c1'/></b></a>";
+        Document document1 = XmlParser.parse(xml);
+        Document document2 = XmlParser.parse(xml);
+        Document document3 = XmlParser.parse(xml);
+
+        assertTrue(document1.isEqualNode(document2));
+        assertTrue(document1.isEqualNode(document3));
+
+        Node importNode = document3.importNode(document1.getDocumentElement().getFirstChild(), true);
+        assertTrue(document1.isEqualNode(document2));
+        assertTrue(document1.isEqualNode(document3));
+
+        assertEquals(document3, importNode.getOwnerDocument());
+
+        document3.getDocumentElement().appendChild(importNode);
+        assertTrue(document1.isEqualNode(document2));
+        assertFalse(document1.isEqualNode(document3));
+
+        assertEquals("<a id=\"a1\"><b name=\"b1\"><c name=\"c1\"/></b><b name=\"b1\"><c name=\"c1\"/></b></a>",
+                document3.toString());
     }
 }

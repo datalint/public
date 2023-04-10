@@ -152,7 +152,11 @@ public class DocumentImpl extends NodeImpl implements Document {
 
     @Override
     public Node importNode(Node importedNode, boolean deep) {
-        return importedNode;
+        Node clonedNode = importedNode.cloneNode(deep);
+
+        NodeImpl.setOwner(clonedNode, this);
+
+        return clonedNode;
     }
 
     @Override

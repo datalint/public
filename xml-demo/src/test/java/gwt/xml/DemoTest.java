@@ -1,6 +1,9 @@
 package gwt.xml;
 
+import org.junit.jupiter.api.Test;
+
 public class DemoTest {
-    public static void main(String[] args) {
+    @Test
+    public void test() {
     }
 }

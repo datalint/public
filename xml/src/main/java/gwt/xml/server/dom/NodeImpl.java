@@ -91,7 +91,7 @@ public abstract class NodeImpl implements Node, ICommon {
         return owner.getOwnerDocument();
     }
 
-    protected void setOwner(Node node, Node owner) {
+    public static void setOwner(Node node, Node owner) {
         assert node instanceof NodeImpl;
 
         ((NodeImpl) node).owner = owner;
@@ -135,12 +135,9 @@ public abstract class NodeImpl implements Node, ICommon {
     public String getPrefix() {
         String name = getNodeName();
 
-        if (name != null) {
-            int index = name.indexOf(_COLON);
-
-            if (index >= 0)
-                return name.substring(0, index);
-        }
+        int index = name.indexOf(_COLON);
+        if (index >= 0)
+            return name.substring(0, index);
 
         return null;
     }
@@ -168,10 +165,10 @@ public abstract class NodeImpl implements Node, ICommon {
     @Override
     public boolean isEqualNode(Node arg) {
         return equals(arg) || arg != null && getNodeType() == arg.getNodeType()
-                && Objects.equals(getNodeName(), arg.getNodeName())
-                && Objects.equals(getNodeValue(), arg.getNodeValue())
-                && Objects.equals(getAttributes(), arg.getAttributes())
-                && getChildNodes().equals(arg.getChildNodes());
+                              && Objects.equals(getNodeName(), arg.getNodeName())
+                              && Objects.equals(getNodeValue(), arg.getNodeValue())
+                              && Objects.equals(getAttributes(), arg.getAttributes())
+                              && getChildNodes().equals(arg.getChildNodes());
     }
 
     @Override
@@ -193,11 +190,11 @@ public abstract class NodeImpl implements Node, ICommon {
         if (closestCommonAncestor == null)
             return DOCUMENT_POSITION_DISCONNECTED;
 
-        Set<Element> ancestors = XmlUtil.ancestorSet(this, true, closestCommonAncestor, true);
+        Set<Node> ancestors = XmlUtil.ancestorSet(this, true, closestCommonAncestor, true);
         if (ancestors.contains(other))
             return DOCUMENT_POSITION_PRECEDING + DOCUMENT_POSITION_CONTAINS;
 
-        Set<Element> otherAncestors = XmlUtil.ancestorSet(other, true, closestCommonAncestor, true);
+        Set<Node> otherAncestors = XmlUtil.ancestorSet(other, true, closestCommonAncestor, true);
         if (otherAncestors.contains(this))
             return DOCUMENT_POSITION_FOLLOWING + DOCUMENT_POSITION_CONTAINED_BY;
 
@@ -210,16 +207,6 @@ public abstract class NodeImpl implements Node, ICommon {
 
             child = child.getNextSibling();
         } while (true);
-    }
-
-    protected Node getAncestor(Node node) {
-        Node parent = node.getParentNode();
-
-        while (parent != null) {
-            node = node.getParentNode();
-        }
-
-        return null;
     }
 
     @Override
