@@ -1,5 +1,6 @@
-package gwt.xml;
+package gwt.xml.server;
 
+import gwt.xml.IDomTest;
 import gwt.xml.server.parser.DocumentSerializer;
 import gwt.xml.shared.XPath;
 import gwt.xml.shared.XmlParser;
@@ -101,7 +102,7 @@ public class XmlTest implements IDomTest {
     @Test
     public void testDetermineLevel() {
         Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
-                                            "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
 
         assertEquals(0, XmlUtil.determineLevel(document.getDocumentElement()));
         assertEquals(2, XmlUtil.determineLevel(document.getDocumentElement().getFirstChild().getFirstChild()));
@@ -110,7 +111,7 @@ public class XmlTest implements IDomTest {
     @Test
     public void testCompareDocumentPosition() {
         Document document = XmlParser.parse("<root><a name='1_1'><a name='2_1'></a><a name='2_2'><a name='3_1'>" +
-                                            "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
+                "</a></a><a name='2_3'></a></a><a name='1_2'></a><a name='1_3'></a></root>");
 
         Element a1 = XPath.evaluateNode(document, "a[1]");
         Element a1_1 = XPath.evaluateNode(document, "a[1]/a[1]");
@@ -186,50 +187,50 @@ public class XmlTest implements IDomTest {
     }
 
     @Test
-    public void testEquals() {
+    public void testIsEqualNode() {
         String xml = "<div id='divA'>This is <span>some</span> text!</div>";
         Document document = XmlParser.parse(xml);
         Element element = document.getDocumentElement();
 
-        assertEqualNode(document, element.getOwnerDocument());
+        assertTrueIsEqualNode(document, element.getOwnerDocument());
 
         Document documentTwo;
         documentTwo = XmlParser.parse(xml);
-        assertEqualNode(document, documentTwo);
-        assertEqualNode(element, documentTwo.getDocumentElement());
+        assertTrueIsEqualNode(document, documentTwo);
+        assertTrueIsEqualNode(element, documentTwo.getDocumentElement());
         Element span = XPath.evaluateNode(document, "span");
         Element spanTwo = XPath.evaluateNode(documentTwo, "span");
-        assertEqualNode(span, spanTwo);
+        assertTrueIsEqualNode(span, spanTwo);
 
         spanTwo.setAttribute("name", "a name");
-        assertNotEqualNode(span, spanTwo);
-        assertNotEqualNode(document, documentTwo);
-        assertNotEqualNode(element, documentTwo.getDocumentElement());
+        assertFalseIsEqualNode(span, spanTwo);
+        assertFalseIsEqualNode(document, documentTwo);
+        assertFalseIsEqualNode(element, documentTwo.getDocumentElement());
 
         span.setAttribute("name", "a different name");
-        assertNotEqualNode(span, spanTwo);
-        assertNotEqualNode(document, documentTwo);
-        assertNotEqualNode(element, documentTwo.getDocumentElement());
+        assertFalseIsEqualNode(span, spanTwo);
+        assertFalseIsEqualNode(document, documentTwo);
+        assertFalseIsEqualNode(element, documentTwo.getDocumentElement());
 
         span.setAttribute("name", "a name");
-        assertEqualNode(span, spanTwo);
-        assertEqualNode(document, documentTwo);
-        assertEqualNode(element, documentTwo.getDocumentElement());
+        assertTrueIsEqualNode(span, spanTwo);
+        assertTrueIsEqualNode(document, documentTwo);
+        assertTrueIsEqualNode(element, documentTwo.getDocumentElement());
 
 
         Text text = XPath.evaluateNode(span, "text()");
         Text textTwo = XPath.evaluateNode(spanTwo, "text()");
-        assertEqualNode(text, textTwo);
+        assertTrueIsEqualNode(text, textTwo);
 
         textTwo.setNodeValue("some some");
-        assertNotEqualNode(text, textTwo);
-        assertNotEqualNode(document, documentTwo);
-        assertNotEqualNode(element, documentTwo.getDocumentElement());
+        assertFalseIsEqualNode(text, textTwo);
+        assertFalseIsEqualNode(document, documentTwo);
+        assertFalseIsEqualNode(element, documentTwo.getDocumentElement());
 
         text.setNodeValue("some some");
-        assertEqualNode(text, textTwo);
-        assertEqualNode(document, documentTwo);
-        assertEqualNode(element, documentTwo.getDocumentElement());
+        assertTrueIsEqualNode(text, textTwo);
+        assertTrueIsEqualNode(document, documentTwo);
+        assertTrueIsEqualNode(element, documentTwo.getDocumentElement());
     }
 
     @Test

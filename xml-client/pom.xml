@@ -8,15 +8,15 @@
         <artifactId>public-parent</artifactId>
         <version>1.0</version>
     </parent>
-    <artifactId>xml-demo</artifactId>
+    <artifactId>xml-client</artifactId>
     <packaging>war</packaging>
 
-    <name>Xml Demo</name>
+    <name>Xml Client</name>
     <properties>
         <project.phase.war.exploded>compile</project.phase.war.exploded>
         <project.phase.gwt.compile>prepare-package</project.phase.gwt.compile>
 
-        <project.gwt.module>gwt.xml.XmlDemo</project.gwt.module>
+        <project.gwt.module>gwt.xml.XmlClient</project.gwt.module>
         <project.gwt.codeserver.extra.src>,-src,../../xml/src/main/java</project.gwt.codeserver.extra.src>
     </properties>
 
@@ -49,7 +49,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.datalint.gwt</groupId>
+            <groupId>com.datalint.public</groupId>
             <artifactId>xml</artifactId>
             <version>1.0</version>
         </dependency>
