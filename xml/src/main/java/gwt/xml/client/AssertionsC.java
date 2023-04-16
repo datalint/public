@@ -7,8 +7,24 @@ import org.dominokit.domino.ui.utils.DominoElement;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class AssertionsC implements ICommon {
+    public static <A> void assertEquals(A actual, Predicate<A> predicate, String message) {
+        Paragraph paragraph;
+        if (predicate.test(actual))
+            paragraph = Paragraph.create(createMessage(actual, true)).setColor(Color.GREEN);
+        else
+            paragraph = Paragraph.create(message == null ? createMessage(actual, false) : message).
+                    setColor(Color.RED);
+
+        DominoElement.body().appendChild(paragraph);
+    }
+
+    public static <A> void assertEquals(A actual, Predicate<A> predicate) {
+        assertEquals(actual, predicate, (String) null);
+    }
+
     public static <E, A> void assertEquals(E expected, A actual, BiPredicate<E, A> predicate, String message) {
         Paragraph paragraph;
         if (predicate.test(expected, actual))
@@ -53,6 +69,19 @@ public class AssertionsC implements ICommon {
 
     public static void assertNotEquals(Object expected, Object actual, String message) {
         assertNotEquals(expected, actual, Objects::equals, message);
+    }
+
+    private static String createMessage(Object actual, boolean equals) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(_APOSTROPHE).append(actual).append(_APOSTROPHE);
+
+        if (equals)
+            builder.append(" EXPECTED");
+        else
+            builder.append(" NOT EXPECTED");
+
+        return builder.toString();
     }
 
     private static String createMessage(Object expected, Object actual, boolean equals) {

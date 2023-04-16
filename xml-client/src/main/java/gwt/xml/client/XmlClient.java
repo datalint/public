@@ -115,5 +115,7 @@ public class XmlClient implements EntryPoint {
         testTextContent();
         testIsEqualNode();
         testImportNode();
+
+        XPathTestC.getInstance().testEvaluate();
     }
 }
