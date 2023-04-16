@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>testServlet</servlet-name>
-        <servlet-class>gwt.xml.server.TestServlet</servlet-class>
+        <servlet-name>clientServlet</servlet-name>
+        <servlet-class>gwt.xml.server.XmlClientServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>testServlet</servlet-name>
-        <url-pattern>/test</url-pattern>
+        <servlet-name>clientServlet</servlet-name>
+        <url-pattern>/client</url-pattern>
     </servlet-mapping>
 </web-app>

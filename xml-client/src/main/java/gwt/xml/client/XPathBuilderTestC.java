@@ -1,15 +1,21 @@
-package gwt.xml.shared;
-
-import org.junit.jupiter.api.Test;
+package gwt.xml.client;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static gwt.xml.client.AssertionsC.assertEquals;
 import static gwt.xml.shared.XPathBuilder.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class XPathBuilderTest {
-    @Test
+public class XPathBuilderTestC {
+    private static final XPathBuilderTestC instance = new XPathBuilderTestC();
+
+    public static XPathBuilderTestC getInstance() {
+        return instance;
+    }
+
+    private XPathBuilderTestC() {
+    }
+
     public void testBuild() {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("k1", "v1");

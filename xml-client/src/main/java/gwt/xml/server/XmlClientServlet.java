@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TestServlet extends HttpServlet {
+public class XmlClientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.getWriter().println("Hello, world (from demoServlet)" + XmlParser.parse("<a/>"));
+        resp.getWriter().println("Hello, world (from xmlClientServlet)" + XmlParser.parse("<a/>"));
     }
 }

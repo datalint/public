@@ -26,18 +26,8 @@ public class XPathBuilder implements ICommon {
         return hasAttribute(attributes, Operator::and);
     }
 
-    private static Map<String, String> createAttributesMap(String... attributes) {
-        Map<String, String> map = new HashMap<>(attributes.length >> 1);
-
-        for (int i = 0; i < attributes.length; i++) {
-            map.put(attributes[i++], attributes[i]);
-        }
-
-        return map;
-    }
-
     public static IExpression hasAttributes(String... attributes) {
-        return hasAttribute(createAttributesMap(attributes));
+        return hasAttribute(CommonUtil.createMap(attributes));
     }
 
     public static IExpression hasAnyAttributes(Map<String, String> attributes) {
@@ -45,7 +35,7 @@ public class XPathBuilder implements ICommon {
     }
 
     public static IExpression hasAnyAttributes(String... attributes) {
-        return hasAnyAttributes(createAttributesMap(attributes));
+        return hasAnyAttributes(CommonUtil.createMap(attributes));
     }
 
     public static IExpression hasAnyAttributeValues(String name, String value, List<String> values) {
