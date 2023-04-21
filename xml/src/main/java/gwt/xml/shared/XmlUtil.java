@@ -16,6 +16,19 @@ public class XmlUtil implements ICommon {
     private XmlUtil() {
     }
 
+    public static Element getFirstElementChild(Node node) {
+        NodeList childNodes = node.getChildNodes();
+
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node childNode = childNodes.item(i);
+
+            if (childNode instanceof Element)
+                return (Element) childNode;
+        }
+
+        return null;
+    }
+
     public static void removeWhiteSpace(Element target) {
         List<Node> nodes = XPath.evaluateNodes(target, XPAHT_WHITE_SPACE);
         for (Node node : nodes) {

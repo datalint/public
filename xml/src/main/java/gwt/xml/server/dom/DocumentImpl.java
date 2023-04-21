@@ -146,8 +146,8 @@ public class DocumentImpl extends NodeImpl implements Document {
     }
 
     @Override
-    public NodeList getElementsByTagName(String tagname) {
-        return new NodeListImpl(this, tagname);
+    public NodeList getElementsByTagName(String tagName) {
+        return new NodeListImpl(this, tagName);
     }
 
     @Override

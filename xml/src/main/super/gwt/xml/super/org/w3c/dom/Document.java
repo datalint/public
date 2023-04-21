@@ -98,12 +98,12 @@ public interface Document extends Node {
 
     /**
      * This method retrieves any descendent elements which have a tag name of
-     * <code>tagname</code>.
+     * <code>tagName</code>.
      *
      * @return the <code>NodeList</code> of elements which has a tag name of
-     * <code>tagname</code> and belong to this <code>Document</code>
+     * <code>tagName</code> and belong to this <code>Document</code>
      */
-    NodeList getElementsByTagName(String tagname);
+    NodeList getElementsByTagName(String tagName);
 
     /**
      * This method imports a node into the current <code>Document</code>.
