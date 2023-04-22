@@ -45,11 +45,11 @@ public class XmlTest implements IDomTest {
         assertEquals(newDocument.getDocumentElement(), XPath.evaluateNode(newDocument, "//root"));
 
         assertEquals(3, XPath.evaluateNodes(oldDocument, "one/two").size());
-        assertEquals(XmlUtil.getFirstChildElement(oldDocument.getDocumentElement()),
+        assertEquals(XmlUtil.getFirstElementChild(oldDocument.getDocumentElement()),
                 XPath.evaluateNode(oldDocument, "one"));
         assertEquals(3, XPath.evaluateNodes(XPath.<Element>evaluateNode(oldDocument, "one"), "two").size());
         assertEquals(3, XPath.evaluateNodes(newDocument, "one/two").size());
-        assertEquals(XmlUtil.getFirstChildElement(newDocument.getDocumentElement()),
+        assertEquals(XmlUtil.getFirstElementChild(newDocument.getDocumentElement()),
                 XPath.evaluateNode(newDocument, "one"));
         assertEquals(3, XPath.evaluateNodes(XPath.<Element>evaluateNode(newDocument, "one"), "two").size());
 

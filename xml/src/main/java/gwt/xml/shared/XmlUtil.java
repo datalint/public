@@ -119,7 +119,7 @@ public class XmlUtil implements ICommon {
         return ancestors;
     }
 
-    public static String createHTML(String tagName, String className, String childHTML) {
+    public static String createHtml(String tagName, String className, String childHTML) {
         int size = className == null ? 0 : 2;
 
         if (childHTML != null)
@@ -378,19 +378,6 @@ public class XmlUtil implements ICommon {
         element.appendChild(document.createTextNode(text));
 
         return element;
-    }
-
-    public static Element getFirstChildElement(Element parentElement) {
-        Node child = parentElement.getFirstChild();
-
-        while (child != null) {
-            if (child instanceof Element)
-                return (Element) child;
-
-            child = child.getNextSibling();
-        }
-
-        return null;
     }
 
     public static boolean equals(Element elementOne, Element elementTwo) {
