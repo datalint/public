@@ -42,21 +42,25 @@ public class XPathBuilder implements ICommon {
         IExpression equal = equalAttribute(name, value);
 
         if (values.size() == 0)
-            return predicate(equal);
+            return equal;
 
-        return predicate(or(equal, createExpressions(_value -> equalAttribute(name, _value), values)));
+        return or(equal, createExpressions(_value -> equalAttribute(name, _value), values));
     }
 
     private static List<String> skipFirst(List<String> values) {
         return values.size() == 1 ? Collections.emptyList() : values.subList(1, values.size());
     }
 
-    public static IExpression hasAnyAttributeValues(String name, List<String> values) {
-        return hasAnyAttributeValues(name, values.get(0), skipFirst(values));
+    public static IExpression xPathHasAnyAttributeValues(String xPath, String name, List<String> values) {
+        return join(xPath, predicate(hasAnyAttributeValues(name, values.get(0), skipFirst(values))));
     }
 
-    public static IExpression hasAnyAttributeValues(String name, String value, String... values) {
-        return hasAnyAttributeValues(name, value, Arrays.asList(values));
+    public static IExpression xPathHasAnyAttributeValues(String xPath, String name, String value, String... values) {
+        return join(xPath, predicate(hasAnyAttributeValues(name, value, Arrays.asList(values))));
+    }
+
+    public static IExpression allHasAnyAttributeValues(String name, String value, String... values) {
+        return xPathHasAnyAttributeValues(WILDCARD, name, value, values);
     }
 
     public static IExpression all(IExpression... expressions) {
@@ -155,6 +159,18 @@ public class XPathBuilder implements ICommon {
 
     public static IExpression descendants(String first, IExpression... expressions) {
         return descendants(lit(first), expressions);
+    }
+
+    public static IExpression descendantsSelf(IExpression... expressions) {
+        return descendants(DOT, expressions);
+    }
+
+    public static IExpression descendantsAll(IExpression first) {
+        return descendants(first, lit(WILDCARD));
+    }
+
+    public static IExpression descendantsAll(String first) {
+        return descendants(first, lit(WILDCARD));
     }
 
     public static String descendantsWithTagNames(String xPath, String tagName, String... tagNames) {
