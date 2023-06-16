@@ -1,7 +1,7 @@
 package gwt.xml.shared.expression;
 
 public class Lit implements IExpression {
-    private final Object value;
+    protected final Object value;
 
     public Lit(Object value) {
         this.value = value;

@@ -3,72 +3,125 @@ package gwt.xml.shared;
 import gwt.xml.shared.expression.*;
 import gwt.xml.shared.xpath.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static gwt.xml.shared.CommonUtil.split;
 
 public class XPathBuilder implements ICommon {
-    public static final IExpression LAST = new Lit(LAST_F);
-    public static final IExpression POSITION = new Lit(POSITION_F);
-    public static final IExpression TEXT = new Lit(TEXT_F);
+    public static final String NODE = "node()";
 
-    private static final Supplier<RuntimeException> noValuePresent = () -> new NoSuchElementException("No value present");
+    public static final IExpression LAST = new Lit("last()");
+    public static final IExpression POSITION = new Lit("position()");
+    public static final IExpression TEXT = new Lit("text()");
 
     private XPathBuilder() {
     }
 
-    private static IExpression hasAttribute(Map<String, String> attributes, BinaryOperator<IExpression> operator) {
-        return attributes.entrySet().stream().map(XPathBuilder::equalAttribute).reduce(operator).orElseThrow(noValuePresent);
+    private static RuntimeException noValuePresent() {
+        return new NoSuchElementException("No value present");
     }
 
-    public static IExpression hasAttribute(Map<String, String> attributes) {
-        return hasAttribute(attributes, Operator::and);
+    private static IExpression[] wrap(Function<IExpression, IExpression> operator, IExpression... expressions) {
+        IExpression[] wrap = new IExpression[expressions.length];
+
+        for (int i = 0; i < wrap.length; i++) {
+            wrap[i] = operator.apply(expressions[i]);
+        }
+
+        return wrap;
     }
 
-    public static IExpression hasAttributes(String... attributes) {
-        return hasAttribute(CommonUtil.createMap(attributes));
+    private static <T> IExpression reduce(Function<T, IExpression> mapper, BinaryOperator<IExpression> accumulator,
+                                          Stream<T> stream) {
+        return stream.map(mapper).reduce(accumulator).orElseThrow(XPathBuilder::noValuePresent);
     }
 
-    public static IExpression hasAnyAttributes(Map<String, String> attributes) {
-        return hasAttribute(attributes, Operator::or);
+    private static <T> IExpression reduce(Function<T, IExpression> mapper, BinaryOperator<IExpression> accumulator,
+                                          T... arguments) {
+        return reduce(mapper, accumulator, Arrays.stream(arguments));
     }
 
-    public static IExpression hasAnyAttributes(String... attributes) {
-        return hasAnyAttributes(CommonUtil.createMap(attributes));
+    private static IExpression hasAttributes(BinaryOperator<IExpression> operator, Map<String, String> attributes) {
+        return reduce(XPathBuilder::equalAttribute, operator, attributes.entrySet().stream());
     }
 
-    public static IExpression hasAnyAttributeValues(String name, String value, List<String> values) {
+    public static IExpression hasAttributesAnd(Map<String, String> attributes) {
+        return hasAttributes(Operator::and, attributes);
+    }
+
+    public static IExpression hasAttributesAnd(String... attributes) {
+        return hasAttributesAnd(CommonUtil.createMap(attributes));
+    }
+
+    public static IExpression hasAttributesOr(Map<String, String> attributes) {
+        return hasAttributes(Operator::or, attributes);
+    }
+
+    public static IExpression hasAttributesOr(String... attributes) {
+        return hasAttributesOr(CommonUtil.createMap(attributes));
+    }
+
+    public static IExpression hasAttributeNamesOr(String... attributeNames) {
+        return reduce(XPathBuilder::attr, Operator::or, attributeNames);
+    }
+
+    public static IExpression hasAttributeValuesOr(String name, Collection<String> values) {
+        return split((head, tail) -> hasAttributeValuesOr(name, head, tail), values);
+    }
+
+    public static IExpression hasAttributeValuesOr(String name, String value, String... values) {
         IExpression equal = equalAttribute(name, value);
 
-        if (values.size() == 0)
+        if (values.length == 0)
             return equal;
 
         return or(equal, createExpressions(_value -> equalAttribute(name, _value), values));
     }
 
-    private static List<String> skipFirst(List<String> values) {
-        return values.size() == 1 ? Collections.emptyList() : values.subList(1, values.size());
+    public static IExpression hasAttributeValuesParenthesesOr(String name, String value, String... values) {
+        IExpression hasAttributeValuesOr = hasAttributeValuesOr(name, value, values);
+
+        return values.length == 0 ? hasAttributeValuesOr : parentheses(hasAttributeValuesOr);
     }
 
-    public static IExpression xPathHasAnyAttributeValues(String xPath, String name, List<String> values) {
-        return join(xPath, predicate(hasAnyAttributeValues(name, values.get(0), skipFirst(values))));
+    public static IExpression xPathHasAnyAttributeValues(String xPath, String name, Collection<String> values) {
+        return split((head, tail) -> xPathHasAnyAttributeValues(xPath, name, head, tail), values);
+    }
+
+    public static IExpression xPathHasAnyAttributeValues(IExpression xPath, String name, String value, String... values) {
+        return xPathPredicate(xPath, hasAttributeValuesOr(name, value, values));
     }
 
     public static IExpression xPathHasAnyAttributeValues(String xPath, String name, String value, String... values) {
-        return join(xPath, predicate(hasAnyAttributeValues(name, value, Arrays.asList(values))));
+        return xPathHasAnyAttributeValues(lit(xPath), name, value, values);
     }
 
-    public static IExpression allHasAnyAttributeValues(String name, String value, String... values) {
+    public static IExpression hasAnyAttributeValues(String name, String value, String... values) {
         return xPathHasAnyAttributeValues(WILDCARD, name, value, values);
+    }
+
+    public static IExpression xPathHasExactAttributes(String xPath, Map<String, String> attributes) {
+        return xPathPredicate(xPath, hasAttributesAnd(attributes));
     }
 
     public static IExpression all(IExpression... expressions) {
         return join(WILDCARD, expressions);
     }
 
-    public static String allTagsExcept(String excludedTagName, String... excludedTagNames) {
-        return join(WILDCARD, predicate(not(or(self(excludedTagName), createExpressions(XPathBuilder::self, excludedTagNames))))).build();
+    public static IExpression allTags(String includedTagName, String... includedTagNames) {
+        return xPathPredicate(WILDCARD, or(self(includedTagName), createExpressions(XPathBuilder::self,
+                includedTagNames)));
+    }
+
+    public static IExpression allTagsExcept(String excludedTagName, String... excludedTagNames) {
+        return xPathPredicate(WILDCARD, not(or(self(excludedTagName), createExpressions(XPathBuilder::self,
+                excludedTagNames))));
     }
 
     public static IExpression and(IExpression first, IExpression... expressions) {
@@ -83,8 +136,8 @@ public class XPathBuilder implements ICommon {
         return and(attr(attribute), not(startsWith(attr(attribute), quote(query))));
     }
 
-    public static String attributeNotStartsWith(String xPath, String attribute, String query) {
-        return join(xPath, predicate(attributeNotStartsWith(attribute, query))).build();
+    public static IExpression attributeNotStartsWith(String xPath, String attribute, String query) {
+        return xPathPredicate(xPath, attributeNotStartsWith(attribute, query));
     }
 
     public static IExpression attributeStartsWith(String attribute, String query) {
@@ -103,26 +156,23 @@ public class XPathBuilder implements ICommon {
         return new Count(expression);
     }
 
-    public static String count(String xPath) {
-        return count(lit(xPath)).build();
+    public static IExpression count(String expression) {
+        return count(lit(expression));
     }
 
     public static IExpression[] createAttrExpressions(String[] arguments) {
         return createExpressions(XPathBuilder::attr, arguments);
     }
 
-    public static IExpression[] createExpressions(Function<String, IExpression> function, List<String> arguments) {
-        IExpression[] expressions = new IExpression[arguments.size()];
+    public static IExpression[] createExpressions(Function<String, IExpression> function, String... arguments) {
+        IExpression[] expressions = new IExpression[arguments.length];
 
-        for (int i = 0; i < expressions.length; i++) {
-            expressions[i] = function.apply(arguments.get(i));
+        int index = 0;
+        for (String argument : arguments) {
+            expressions[index++] = function.apply(argument);
         }
 
         return expressions;
-    }
-
-    public static IExpression[] createExpressions(Function<String, IExpression> function, String[] arguments) {
-        return createExpressions(function, Arrays.asList(arguments));
     }
 
     public static IExpression[] createLitExpressions(String[] arguments) {
@@ -153,40 +203,42 @@ public class XPathBuilder implements ICommon {
         return and(first, expressions);
     }
 
-    public static IExpression descendants(IExpression first, IExpression... expressions) {
-        return new Descendants(first, expressions);
+    public static IExpression selfDescendant(IExpression... expressions) {
+        return descendant(DOT, expressions);
     }
 
-    public static IExpression descendants(String first, IExpression... expressions) {
-        return descendants(lit(first), expressions);
+    public static IExpression selfDescendantWildcard(IExpression... expressions) {
+        return descendantWildcard(DOT, expressions);
     }
 
-    public static IExpression descendantsSelf(IExpression... expressions) {
-        return descendants(DOT, expressions);
+    public static IExpression descendant(IExpression first, IExpression... expressions) {
+        return new Descendant(first, expressions);
     }
 
-    public static IExpression descendantsAll(IExpression first) {
-        return descendants(first, lit(WILDCARD));
+    public static IExpression descendant(String first, IExpression... expressions) {
+        return descendant(lit(first), expressions);
     }
 
-    public static IExpression descendantsAll(String first) {
-        return descendants(first, lit(WILDCARD));
+    public static IExpression descendantWildcard(IExpression first, IExpression... expressions) {
+        return descendant(first, all(expressions));
     }
 
-    public static String descendantsWithTagNames(String xPath, String tagName, String... tagNames) {
-        return descendants(xPath, join(lit(WILDCARD), predicate(or(equalTagName(tagName), equalTagNames(tagNames)))))
-                .build();
+    public static IExpression descendantWildcard(String first, IExpression... expressions) {
+        return descendantWildcard(lit(first), expressions);
     }
 
     public static IExpression equal(IExpression first, IExpression second) {
         return Operator.equal(first, second);
     }
 
-    public static IExpression equalAttribute(Map.Entry<String, String> entry) {
+    private static IExpression equalAttribute(Map.Entry<String, String> entry) {
         return equalAttribute(entry.getKey(), entry.getValue());
     }
 
     public static IExpression equalAttribute(String name, String value) {
+        if (value == null)
+            return attr(name);
+
         return equal(attr(name), quote(value));
     }
 
@@ -214,16 +266,29 @@ public class XPathBuilder implements ICommon {
         return Operator.greater(first, second);
     }
 
-    public static String hasAttributeNames(String firstAttributeName, String... attributeNames) {
-        return hasXPathAttributeNames(WILDCARD, firstAttributeName, attributeNames);
+    public static IExpression greaterEqual(int second) {
+        return greaterEqual(POSITION, second);
     }
 
-    public static String hasXPathAttributeNames(IExpression expression, String firstAttributeName, String... attributeNames) {
-        return join(expression, predicate(or(attr(firstAttributeName), createAttrExpressions(attributeNames)))).build();
+    public static IExpression greaterEqual(IExpression first, int second) {
+        return greaterEqual(first, lit(second));
     }
 
-    public static String hasXPathAttributeNames(String xPath, String firstAttributeName, String... attributeNames) {
-        return hasXPathAttributeNames(lit(xPath), firstAttributeName, attributeNames);
+    public static IExpression greaterEqual(IExpression first, IExpression second) {
+        return Operator.greaterEqual(first, second);
+    }
+
+    public static IExpression hasAnyAttributeNames(String attributeName, String... attributeNames) {
+        return xPathHasAnyAttributeNames(WILDCARD, attributeName, attributeNames);
+    }
+
+    public static IExpression xPathHasAnyAttributeNames(IExpression expression, String attributeName,
+                                                        String... attributeNames) {
+        return xPathPredicate(expression, or(attr(attributeName), createAttrExpressions(attributeNames)));
+    }
+
+    public static IExpression xPathHasAnyAttributeNames(String xPath, String attributeName, String... attributeNames) {
+        return xPathHasAnyAttributeNames(lit(xPath), attributeName, attributeNames);
     }
 
     public static IExpression join(IExpression first, IExpression... expressions) {
@@ -234,8 +299,12 @@ public class XPathBuilder implements ICommon {
         return join(lit(first), expressions);
     }
 
-    public static IExpression xPathPredicate(String xPath, Object predicate) {
-        return join(lit(xPath), predicate(lit(predicate)));
+    public static IExpression xPathPredicate(IExpression xPath, IExpression... expressions) {
+        return join(xPath, wrap(XPathBuilder::predicate, expressions));
+    }
+
+    public static IExpression xPathPredicate(String xPath, IExpression... expressions) {
+        return xPathPredicate(lit(xPath), expressions);
     }
 
     public static IExpression less(int second) {
@@ -248,6 +317,18 @@ public class XPathBuilder implements ICommon {
 
     public static IExpression less(IExpression first, IExpression second) {
         return Operator.less(first, second);
+    }
+
+    public static IExpression lessEqual(int second) {
+        return lessEqual(POSITION, second);
+    }
+
+    public static IExpression lessEqual(IExpression first, int second) {
+        return lessEqual(first, lit(second));
+    }
+
+    public static IExpression lessEqual(IExpression first, IExpression second) {
+        return Operator.lessEqual(first, second);
     }
 
     public static IExpression lit(Object value) {
@@ -286,20 +367,32 @@ public class XPathBuilder implements ICommon {
         return new UnaryExpression(expression);
     }
 
-    public static String parenthesesPredicate(String xPath, String predicate) {
-        return join(parentheses(lit(xPath)), predicate(lit(predicate))).build();
+    public static IExpression parenthesesPredicate(IExpression xPath, IExpression expression) {
+        return xPathPredicate(parentheses(xPath), expression);
+    }
+
+    public static IExpression parenthesesPredicate(IExpression xPath, String predicate) {
+        return parenthesesPredicate(xPath, lit(predicate));
+    }
+
+    public static IExpression parenthesesPredicate(String xPath, String predicate) {
+        return parenthesesPredicate(lit(xPath), predicate);
     }
 
     public static IExpression path(IExpression first, IExpression... expressions) {
         return new Path(first, expressions);
     }
 
+    public static IExpression path(IExpression first, String... expressions) {
+        return path(first, createLitExpressions(expressions));
+    }
+
     public static IExpression path(String first, IExpression... expressions) {
         return path(lit(first), expressions);
     }
 
-    public static String paths(String first, String... others) {
-        return path(first, createLitExpressions(others)).build();
+    public static IExpression path(String first, String... expressions) {
+        return path(first, createLitExpressions(expressions));
     }
 
     public static IExpression predicate(IExpression expression) {
@@ -307,7 +400,15 @@ public class XPathBuilder implements ICommon {
     }
 
     public static IExpression quote(String value) {
-        return new Lit(XPathUtil.quote(value));
+        return new Quote(value);
+    }
+
+    public static IExpression pathParent(IExpression xPath) {
+        return path(xPath, lit(DOUBLE_DOT));
+    }
+
+    public static IExpression pathParent(String xPath) {
+        return pathParent(lit(xPath));
     }
 
     public static IExpression self() {
@@ -315,7 +416,15 @@ public class XPathBuilder implements ICommon {
     }
 
     public static IExpression self(String value) {
-        return new Self(value);
+        return new Lit(AXIS_SELF + value);
+    }
+
+    public static IExpression ancestor(String value) {
+        return new Lit(AXIS_ANCESTOR + value);
+    }
+
+    public static IExpression ancestorNode() {
+        return new Lit(AXIS_ANCESTOR + NODE);
     }
 
     public static IExpression startsWith(IExpression first, IExpression second) {
@@ -326,6 +435,10 @@ public class XPathBuilder implements ICommon {
         return new Translate(first, second, third);
     }
 
+    public static IExpression translateDateTime(IExpression first) {
+        return translate(first, quote("-T:"), quote(""));
+    }
+
     public static IExpression union(IExpression first, IExpression... expressions) {
         return new Union(first, expressions);
     }
@@ -334,11 +447,7 @@ public class XPathBuilder implements ICommon {
         return union(lit(first), expressions);
     }
 
-    public static String unions(String first, IExpression... others) {
-        return union(first, others).build();
-    }
-
-    public static String unions(String first, String... others) {
-        return unions(first, createLitExpressions(others));
+    public static IExpression union(String first, String... expressions) {
+        return union(first, createLitExpressions(expressions));
     }
 }

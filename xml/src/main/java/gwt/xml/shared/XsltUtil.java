@@ -9,12 +9,12 @@ import org.w3c.dom.Element;
 import java.util.HashMap;
 
 public class XsltUtil {
-    private static final HashMap<AbstractSetting, Xslt> cachedMap = new HashMap<AbstractSetting, Xslt>();
+    private static final HashMap<AbstractSetting, Xslt> cachedMap = new HashMap<>();
 
     private XsltUtil() {
     }
 
-    private static Xslt getXSLT(AbstractSetting setting) {
+    private static Xslt getXslt(AbstractSetting setting) {
         Xslt xslt = cachedMap.get(setting);
 
         if (xslt == null) {
@@ -33,11 +33,11 @@ public class XsltUtil {
         if (element == null)
             return;
 
-        getXSLT(setting).performReplacement(element);
+        getXslt(setting).performReplacement(element);
     }
 
     public static String getMinMax(Document document, MinMaxSetting setting) {
-        Xslt xslt = getXSLT(setting);
+        Xslt xslt = getXslt(setting);
 
         xslt.importSource(document);
 
@@ -45,6 +45,6 @@ public class XsltUtil {
     }
 
     public static String getMinMax(Element element, MinMaxSetting setting) {
-        return getXSLT(setting).transformToString(element);
+        return getXslt(setting).transformToString(element);
     }
 }

@@ -20,8 +20,16 @@ public class Operator {
         return new Greater(first, second);
     }
 
+    public static IExpression greaterEqual(IExpression first, IExpression second) {
+        return new GreaterEqual(first, second);
+    }
+
     public static IExpression less(IExpression first, IExpression second) {
         return new Less(first, second);
+    }
+
+    public static IExpression lessEqual(IExpression first, IExpression second) {
+        return new LessEqual(first, second);
     }
 
     public static IExpression minus(IExpression first, IExpression second) {
@@ -80,6 +88,17 @@ public class Operator {
         }
     }
 
+    private static class GreaterEqual extends Join {
+        private GreaterEqual(IExpression first, IExpression second) {
+            super(first, second);
+        }
+
+        @Override
+        protected StringBuilder operator(StringBuilder target) {
+            return target.append(GREATER_EQUAL_THAN);
+        }
+    }
+
     private static class Less extends Join {
         private Less(IExpression first, IExpression second) {
             super(first, second);
@@ -88,6 +107,17 @@ public class Operator {
         @Override
         protected StringBuilder operator(StringBuilder target) {
             return target.append(_LESS_THAN);
+        }
+    }
+
+    private static class LessEqual extends Join {
+        private LessEqual(IExpression first, IExpression second) {
+            super(first, second);
+        }
+
+        @Override
+        protected StringBuilder operator(StringBuilder target) {
+            return target.append(LESS_EQUAL_THAN);
         }
     }
 

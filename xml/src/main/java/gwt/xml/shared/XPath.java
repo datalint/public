@@ -221,7 +221,7 @@ public class XPath implements ICommon {
     }
 
     public static String evaluateText(Element element) {
-        return evaluateString(element, TEXT_F);
+        return evaluateString(element, XPathBuilder.TEXT.build());
     }
 
     public static String evaluateText(Document document) {

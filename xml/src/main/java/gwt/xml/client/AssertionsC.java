@@ -26,14 +26,7 @@ public class AssertionsC implements ICommon {
     }
 
     public static <E, A> void assertEquals(E expected, A actual, BiPredicate<E, A> predicate, String message) {
-        Paragraph paragraph;
-        if (predicate.test(expected, actual))
-            paragraph = Paragraph.create(createMessage(expected, actual, true)).setColor(Color.GREEN);
-        else
-            paragraph = Paragraph.create(message == null ? createMessage(expected, actual, false) : message).
-                    setColor(Color.RED);
-
-        DominoElement.body().appendChild(paragraph);
+        appendMessage(expected, actual, predicate.test(expected, actual), false, message);
     }
 
     public static <E, A> void assertEquals(E expected, A actual, BiPredicate<E, A> predicate) {
@@ -49,12 +42,16 @@ public class AssertionsC implements ICommon {
     }
 
     public static <E, A> void assertNotEquals(E expected, A actual, BiPredicate<E, A> predicate, String message) {
+        appendMessage(expected, actual, !predicate.test(expected, actual), true, message);
+    }
+
+    private static <E, A> void appendMessage(E expected, A actual, boolean isPositive, boolean mask, String message) {
         Paragraph paragraph;
-        if (!predicate.test(expected, actual))
-            paragraph = Paragraph.create(createMessage(expected, actual, false)).setColor(Color.BLUE);
+        if (isPositive)
+            paragraph = Paragraph.create(createMessage(expected, actual, !mask)).setColor(Color.GREEN);
         else
-            paragraph = Paragraph.create(message == null ? createMessage(expected, actual, true) : message).
-                    setColor(Color.RED);
+            paragraph = Paragraph.create(message == null ? createMessage(expected, actual, mask) : message)
+                    .setColor(Color.RED);
 
         DominoElement.body().appendChild(paragraph);
     }
@@ -69,6 +66,14 @@ public class AssertionsC implements ICommon {
 
     public static void assertNotEquals(Object expected, Object actual, String message) {
         assertNotEquals(expected, actual, Objects::equals, message);
+    }
+
+    public static void assertNull(Object actual) {
+        assertEquals(null, actual);
+    }
+
+    public static void assertTrue(Object actual) {
+        assertEquals(Boolean.TRUE, actual);
     }
 
     private static String createMessage(Object actual, boolean equals) {

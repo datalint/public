@@ -3,8 +3,8 @@ package gwt.xml.shared.xpath;
 import gwt.xml.shared.expression.IExpression;
 import gwt.xml.shared.expression.Join;
 
-public class Descendants extends Join {
-    public Descendants(IExpression first, IExpression[] expressions) {
+public class Descendant extends Join {
+    public Descendant(IExpression first, IExpression[] expressions) {
         super(first, expressions);
     }
 

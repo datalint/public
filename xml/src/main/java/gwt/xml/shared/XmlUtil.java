@@ -199,7 +199,7 @@ public class XmlUtil implements ICommon {
     }
 
     public static boolean copyTextIfUnequal(Element element, String text) {
-        Node textNode = XPath.evaluateNode(element, TEXT_F);
+        Node textNode = XPath.evaluateNode(element, XPathBuilder.TEXT.build());
 
         if (textNode == null) {
             if (text != null && text.length() > 0) {

@@ -111,6 +111,8 @@ public class XmlClient implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
+        CommonTestC.getInstance().testAfterAndBefore();
+
         testCompareDocumentPosition();
         testTextContent();
         testIsEqualNode();
@@ -118,5 +120,6 @@ public class XmlClient implements EntryPoint {
 
         XPathBuilderTestC.getInstance().testBuild();
         XPathTestC.getInstance().testEvaluate();
+        XPathUtilTestC.getInstance().testUtil();
     }
 }
