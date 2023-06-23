@@ -118,6 +118,7 @@ public class XmlClient implements EntryPoint {
         testIsEqualNode();
         testImportNode();
 
+        XmlBuilderTestC.getInstance().testBuild();
         XPathBuilderTestC.getInstance().testBuild();
         XPathTestC.getInstance().testEvaluate();
         XPathUtilTestC.getInstance().testUtil();

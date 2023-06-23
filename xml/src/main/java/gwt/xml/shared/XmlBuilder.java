@@ -4,26 +4,34 @@ import gwt.xml.shared.expression.IExpression;
 import gwt.xml.shared.xml.XmlAttribute;
 import gwt.xml.shared.xml.XmlElement;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XmlBuilder {
     private XmlBuilder() {
     }
 
-    public static XmlElement createXmlElement(String tagName, List<String> attributes) {
+    public static IExpression createXmlElement(String tagName, String text) {
+        return new XmlElement(tagName, text);
+    }
+
+    public static IExpression createXmlElement(String tagName, IExpression... children) {
+        return new XmlElement(tagName, children);
+    }
+
+    public static IExpression createXmlElement(String tagName, List<String> attributes) {
         return new XmlElement(tagName, createAttrExpressions(attributes));
     }
 
-    public static XmlElement createXmlElement(String tagName, String... attributes) {
-        return createXmlElement(tagName, Arrays.asList(attributes));
+    public static IExpression createXmlElement(String tagName, List<String> attributes, List<IExpression> children) {
+        return new XmlElement(tagName, createAttrExpressions(attributes), children);
     }
 
-    private static IExpression[] createAttrExpressions(List<String> attributes) {
-        IExpression[] expressions = new IExpression[attributes.size() >> 1];
+    private static List<IExpression> createAttrExpressions(List<String> attributes) {
+        List<IExpression> expressions = new ArrayList<>(attributes.size() >> 1);
 
-        for (int i = 0, j = 0; i < expressions.length; i++, j++) {
-            expressions[i] = new XmlAttribute(attributes.get(j++), attributes.get(j));
+        for (int i = 1; i < attributes.size(); i += 2) {
+            expressions.add(new XmlAttribute(attributes.get(i - 1), attributes.get(i)));
         }
 
         return expressions;

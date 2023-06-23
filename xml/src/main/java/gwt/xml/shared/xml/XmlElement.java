@@ -2,36 +2,30 @@ package gwt.xml.shared.xml;
 
 import gwt.xml.shared.expression.IExpression;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class XmlElement implements IExpression {
     private final String tagName;
-
-    private IExpression child;
-    private IExpression[] attributes;
-
-    public XmlElement(String tagName) {
-        this.tagName = tagName;
-    }
+    private final List<IExpression> attributes;
+    private final List<IExpression> children;
 
     public XmlElement(String tagName, String text) {
-        this.tagName = tagName;
-
-        setChild(new XmlText(text));
+        this(tagName, new XmlText(text));
     }
 
-    public XmlElement(String tagName, IExpression... attributes) {
-        this.tagName = tagName;
+    public XmlElement(String tagName, IExpression... children) {
+        this(tagName, null, Arrays.asList(children));
+    }
 
+    public XmlElement(String tagName, List<IExpression> attributes) {
+        this(tagName, attributes, null);
+    }
+
+    public XmlElement(String tagName, List<IExpression> attributes, List<IExpression> children) {
+        this.tagName = tagName;
         this.attributes = attributes;
-    }
-
-    public void setChild(IExpression child) {
-        this.child = child;
-    }
-
-    public XmlElement withChild(IExpression child) {
-        setChild(child);
-
-        return this;
+        this.children = children;
     }
 
     @Override
@@ -44,13 +38,18 @@ public class XmlElement implements IExpression {
             }
         }
 
-        if (child == null || child.isEmpty())
+        if (children == null || children.isEmpty()) {
             target.append(_SLASH).append(_GREATER_THAN);
-        else
-            child.append(target.append(_GREATER_THAN)).append(_LESS_THAN).append(_SLASH).append(tagName)
-                    .append(_GREATER_THAN);
+        } else {
+            target.append(_GREATER_THAN);
+
+            for (IExpression child : children) {
+                child.append(target);
+            }
+
+            target.append(_LESS_THAN).append(_SLASH).append(tagName).append(_GREATER_THAN);
+        }
 
         return target;
     }
-
 }
