@@ -47,6 +47,8 @@ public interface ICommon {
     String AT = "@";
     String COMMA_SPACE = ", ";
     String COUNT_ALL = "count(*)";
+    String DATA_DIV = "data-div";
+    String DIV = "div";
     String DOLLAR = "$";
     String DOT = ".";
     String DOUBLE_DOT = "..";

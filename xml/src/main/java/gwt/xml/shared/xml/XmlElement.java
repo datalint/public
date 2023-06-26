@@ -3,6 +3,7 @@ package gwt.xml.shared.xml;
 import gwt.xml.shared.expression.IExpression;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class XmlElement implements IExpression {
@@ -19,7 +20,11 @@ public class XmlElement implements IExpression {
     }
 
     public XmlElement(String tagName, List<IExpression> attributes) {
-        this(tagName, attributes, null);
+        this(tagName, attributes, Collections.emptyList());
+    }
+
+    public XmlElement(String tagName, List<IExpression> attributes, String text) {
+        this(tagName, attributes, Collections.singletonList(new XmlText(text)));
     }
 
     public XmlElement(String tagName, List<IExpression> attributes, List<IExpression> children) {

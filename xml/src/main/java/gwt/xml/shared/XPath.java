@@ -204,6 +204,14 @@ public class XPath implements ICommon {
         return evaluateListElementsMap(document.getDocumentElement(), xPath, attributeName);
     }
 
+    public static List<Element> evaluateListElements(Element element) {
+        return evaluateNodes(element, WILDCARD);
+    }
+
+    public static List<Element> evaluateListElements(Document document) {
+        return evaluateListElements(document.getDocumentElement());
+    }
+
     public static Element evaluateElement(Element element) {
         return evaluateNode(element, WILDCARD);
     }
