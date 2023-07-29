@@ -62,6 +62,7 @@ public interface ICommon {
     String NULL = "null";
     String ONE = "1";
     String OR_WITH_SPACE = " or ";
+    String PLUS = "+";
     String PLUS_WITH_SPACE = " + ";
     String SPACE = " ";
     String UNDERSCORE = "_";

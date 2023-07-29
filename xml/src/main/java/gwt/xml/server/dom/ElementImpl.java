@@ -109,10 +109,8 @@ public class ElementImpl extends ParentNode implements Element {
             if (ID.equals(name) && getParentNode() != null) {
                 Document ownerDocument = getOwnerDocument();
 
-                if (ownerDocument instanceof DocumentImpl) {
+                if (ownerDocument instanceof DocumentImpl)
                     ((DocumentImpl) ownerDocument).updateIdMap(oldValue, this);
-                    ((DocumentImpl) ownerDocument).updateIdMap(value, this);
-                }
             }
         }
     }
