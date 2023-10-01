@@ -125,6 +125,14 @@ public interface ICommon {
         return null;
     }
 
+    default <T extends Node> T append(T node, Node... children) {
+        for (Node child : children) {
+            node.appendChild(child);
+        }
+
+        return node;
+    }
+
     default String simpleName(Class<?> clazz) {
         return clazz.getSimpleName();
     }
