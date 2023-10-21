@@ -43,7 +43,7 @@ public abstract class AbstractSetting implements ICommon {
 
     @Override
     public String toString() {
-        return new StringBuilder(xPath).append(xPathChild).append(nameSpace).append(isMax).append(isNumber).toString();
+        return xPath + xPathChild + nameSpace + isMax + isNumber;
     }
 
     public abstract String styleSheet();

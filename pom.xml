@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>xml</module>
-        <module>xml-client</module>
+        <module>xml-test</module>
     </modules>
 
     <name>Public Parent</name>

@@ -12,7 +12,7 @@ import static gwt.xml.client.AssertionsC.assertEquals;
 import static gwt.xml.client.AssertionsC.assertNotEquals;
 import static org.w3c.dom.Node.*;
 
-public class XmlClient implements EntryPoint {
+public class XmlTest implements EntryPoint {
     private static void testCompareDocumentPosition() {
         Document parse = XmlParser.parse("<root><a/><b/></root>");
 
