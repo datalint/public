@@ -13,7 +13,22 @@ import static gwt.xml.client.AssertionsC.assertNotEquals;
 import static org.w3c.dom.Node.*;
 
 public class XmlTest implements EntryPoint {
-    private static void testCompareDocumentPosition() {
+    @Override
+    public void onModuleLoad() {
+        CommonTestC.getInstance().testAfterAndBefore();
+
+        testCompareDocumentPosition();
+        testTextContent();
+        testIsEqualNode();
+        testImportNode();
+
+        XmlBuilderTestC.getInstance().testBuild();
+        XPathBuilderTestC.getInstance().testBuild();
+        XPathTestC.getInstance().testEvaluate();
+        XPathUtilTestC.getInstance().testUtil();
+    }
+
+    private void testCompareDocumentPosition() {
         Document parse = XmlParser.parse("<root><a/><b/></root>");
 
         Node a = XPath.evaluateNode(parse, "a");
@@ -29,7 +44,7 @@ public class XmlTest implements EntryPoint {
                 (int) parse.compareDocumentPosition(parse.getDocumentElement()));
     }
 
-    private static void testTextContent() {
+    private void testTextContent() {
         String xml = "<div id=\"divA\">This is <span>some</span> text!</div>";
         Element element = XmlParser.parse(xml).getDocumentElement();
         assertEquals("<div id=\"divA\">This is <span>some</span> text!</div>", element.toString());
@@ -41,7 +56,7 @@ public class XmlTest implements EntryPoint {
         assertEquals("This text is different!", element.getTextContent());
     }
 
-    private static void testIsEqualNode() {
+    private void testIsEqualNode() {
         String xml = "<div id='divA'>This is <span>some</span> text!</div>";
         Document document = XmlParser.parse(xml);
         Element element = document.getDocumentElement();
@@ -107,20 +122,5 @@ public class XmlTest implements EntryPoint {
 
         assertEquals("<a id=\"a1\"><b name=\"b1\"><c name=\"c1\"/></b><b name=\"b1\"><c name=\"c1\"/></b></a>",
                 document3.toString());
-    }
-
-    @Override
-    public void onModuleLoad() {
-        CommonTestC.getInstance().testAfterAndBefore();
-
-        testCompareDocumentPosition();
-        testTextContent();
-        testIsEqualNode();
-        testImportNode();
-
-        XmlBuilderTestC.getInstance().testBuild();
-        XPathBuilderTestC.getInstance().testBuild();
-        XPathTestC.getInstance().testEvaluate();
-        XPathUtilTestC.getInstance().testUtil();
     }
 }
