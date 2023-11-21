@@ -32,8 +32,7 @@
         <jetty.version>9.4.51.v20230217</jetty.version>
         <saxon.version>10.8</saxon.version>
         <basex.version>10.0</basex.version>
-        <elemental2.version>1.1.0</elemental2.version>
-        <dominoui.version>1.0.3</dominoui.version>
+        <dominoui.version>1.0.5</dominoui.version>
     </properties>
 
     <repositories>
@@ -271,6 +270,11 @@
                     <exclusion>
                         <groupId>javax.servlet</groupId>
                         <artifactId>javax.servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <!-- conflict with elemental2-*:1.2.1 -->
+                        <groupId>com.google.jsinterop</groupId>
+                        <artifactId>jsinterop-annotations</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
