@@ -2,14 +2,15 @@ package gwt.xml.shared;
 
 import com.google.common.collect.Sets;
 import gwt.xml.shared.impl.XmlUtilImpl;
+import gwt.xml.shared.xpath.NormalizeSpace;
 import org.w3c.dom.*;
 
 import java.util.*;
 
+import static gwt.xml.shared.XPathBuilder.*;
+
 public class XmlUtil implements ICommon {
     private static final String ROOT_WRAPPER = "root";
-
-    private static final String XPAHT_WHITE_SPACE = "//text()[normalize-space(.) = '']";
 
     private static final XmlUtil instance = new XmlUtil();
 
@@ -29,8 +30,9 @@ public class XmlUtil implements ICommon {
         return null;
     }
 
-    public static void removeWhiteSpace(Element target) {
-        List<Node> nodes = XPath.evaluateNodes(target, XPAHT_WHITE_SPACE);
+    public static void normalizeSpace(Element target) {
+        String xPath = selfDescendant(join(TEXT, predicate(equal(new NormalizeSpace(), quote(EMPTY))))).build();
+        List<Node> nodes = XPath.evaluateNodes(target, xPath);
         for (Node node : nodes) {
             node.getParentNode().removeChild(node);
         }
@@ -380,6 +382,15 @@ public class XmlUtil implements ICommon {
         return element;
     }
 
+    /**
+     * Tests whether two elements are equal.
+     *
+     * @param elementOne The first element to compare equality with.
+     * @param elementTwo The second element to compare equality with.
+     * @return Returns <code>true</code> if the elements are equal, <code>false</code> otherwise.
+     * @deprecated use {@link Node#isEqualNode(Node)},
+     */
+    @Deprecated
     public static boolean equals(Element elementOne, Element elementTwo) {
         return XmlUtilImpl.getInstance().equals(elementOne, elementTwo);
     }

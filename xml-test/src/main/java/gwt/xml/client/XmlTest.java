@@ -23,6 +23,9 @@ public class XmlTest implements EntryPoint {
         testImportNode();
 
         XmlBuilderTestC.getInstance().testBuild();
+        XmlUtilTestC.getInstance().testNormalizeSpace();
+        XmlUtilTestC.getInstance().testEqualsTrue();
+        XmlUtilTestC.getInstance().testEqualsFalse();
         XPathBuilderTestC.getInstance().testBuild();
         XPathTestC.getInstance().testEvaluate();
         XPathUtilTestC.getInstance().testUtil();
