@@ -30,6 +30,10 @@ public class XmlUtil implements ICommon {
         return null;
     }
 
+    public static void normalizeSpace(Document target) {
+        normalizeSpace(target.getDocumentElement());
+    }
+
     public static void normalizeSpace(Element target) {
         String xPath = selfDescendant(join(TEXT, predicate(equal(new NormalizeSpace(), quote(EMPTY))))).build();
         List<Node> nodes = XPath.evaluateNodes(target, xPath);
