@@ -15,7 +15,7 @@
     <name>Public Parent</name>
     <url>https://public.datalint.com</url>
     <properties>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -28,7 +28,7 @@
         <project.gwt.module>gwt.xml.Xml</project.gwt.module>
         <project.gwt.codeserver.extra.src/>
 
-        <gwt.version>2.10.0</gwt.version>
+        <gwt.version>2.11.0</gwt.version>
         <jetty.version>9.4.51.v20230217</jetty.version>
         <saxon.version>10.8</saxon.version>
         <basex.version>10.0</basex.version>
