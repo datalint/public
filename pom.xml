@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.datalint.public</groupId>
@@ -32,7 +31,7 @@
         <jetty.version>9.4.51.v20230217</jetty.version>
         <saxon.version>10.8</saxon.version>
         <basex.version>10.0</basex.version>
-        <dominoui.version>1.0.5</dominoui.version>
+        <dominoui.version>1.0.6</dominoui.version>
     </properties>
 
     <repositories>
