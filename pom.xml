@@ -392,6 +392,12 @@
                 <artifactId>playwright</artifactId>
                 <version>1.41.2</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.opentest4j</groupId>
+                        <artifactId>opentest4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
